@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="" />
+	<meta property="og:title" content="" />
+	<meta property="og:url" content="" />
+	<meta property="og:image" content="" />
+	<meta property="og:description" content="" />
+	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+	
+	<title>ZENA.Biz :: 관리자</title>
+	
+	<!-- Custom fonts for this template-->
+	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> 
+		
+	<!-- Custom styles for this template-->
+	<link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/sb-admin-2.min.css" rel="stylesheet">
+	<link href="css/common.css" rel="stylesheet">
+	<link href="css/layout.css" rel="stylesheet">
+	
+	<!-- Bootstrap core JavaScript-->
+  	<script src="vendor/jquery/dist/jquery.min.js"></script>
+  	<script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  	<!-- Core plugin JavaScript-->
+  	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  	<!-- Custom scripts for all pages-->
+  	<script src="js/sb-admin-2.js"></script>
+		
+	<script type="text/javascript">
+		var base = '.';	
+	</script>
+	
+	<!-- datepicker -->
+	<link rel="stylesheet" href="js/lib/jquery-ui/1.12.1/themes/dark-hive/jquery-ui.min.css" media="screen, projection"/>
+	<script src="js/lib/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	
+	<script src="js/lib/josa.js"></script>
+	<script src="js/common.js"></script>
+	<script src="js/storage.js"></script>
+	
+	<script src="js/validation/jquery.alerts-1.1/jquery.alerts.js"></script>
+	<script src="js/validation/common.js"></script>	
+	<script type="text/javascript" src="js/lib/jquery.i18n.properties.js"></script>	
+	<link rel="stylesheet" href="js/validation/jquery.alerts-1.1/jquery.alerts.css">
+	<style>
+		@media (min-width: 576px) {
+		    .container {
+		        max-width: 540px;
+		    }
+		}
+		@media (min-width: 768px) {
+		    .container {
+		        max-width: 720px;
+		    }
+		}
+		@media (min-width: 992px) {
+		    .container {
+		        max-width: 720px;
+		    }
+		}
+		@media (min-width: 1200px) {
+		    .container {
+		        max-width: 720px;
+		    }
+		}
+		form.user .form-control-user {
+			padding:0 1rem;
+			font-size:14px;
+			height:50px;
+			line-height:50px;
+		}
+	</style>
+</head>
+<body class="bg-gradient-primary">
+
+	<!-- //Container -->
+	<script type="text/javascript">
+		$(function(){
+			var saveLoginId = getLocalStorage("saveLoginId");
+			if(storageNotEmpty(saveLoginId)){
+				$('#adminId').val(saveLoginId);
+				$('#save_id').attr("checked", true);
+			}
+			
+			var param = locationParameter();
+			if(param.loginFail == 'T') {
+				jsAlert.alert("경고", "아이디나 비밀번호를 확인해주세요.");
+			}
+		});
+		
+		//로그인 실행
+		function fn_login(){
+			if(checkValidation('loginFrm')){
+				if($('#save_id').is(":checked")){
+					setLocalStorage("saveLoginId", $('#adminId').val());
+				}else{
+					removeLocalStorage("saveLoginId");
+				}
+				
+				submitExecute('loginFrm', '/login/check', 'post');
+			}	
+		}
+		
+		$(document).ready(function(){
+			if(!fn_br_chrome_browser_check()){
+				$('#loginBtn').hide();
+				$('#loginGuide').show();
+			}
+		});	
+	</script>
+
+	<div class="container container-login">
+		<!-- Outer Row -->
+		<div class="row justify-content-center mt20p">
+			<div class="col-xl-10 col-lg-12 col-md-9">
+				<div class="card border-0 shadow-lg my-5">
+					<div class="card-body p-0">					
+						<!-- Nested Row within Card Body -->
+						<div class="row">
+							<div class="col-lg-6 flex-basis-all max-width-all">
+								<div class="p-5">
+									<div class="text-center login-collabo-x">
+										<img src="images/login_logo.png" class="login-logo" alt="CELEBTWO LOGO">
+										<h1 class="h4 text-gray-900 mb-4">Welcome Back</h1>
+
+										<!-- s:F&B 업체로고 -->
+										<h1 class="h4 text-gray-900"><i class="fas fa-times"></i></h1>
+										<div class="login-logo-box" style="background-image:url('images/logo_adup.png');"></div>
+										<!-- e:F&B 업체로고 -->
+
+									</div>
+									<form name="loginFrm" id="loginFrm" class="user">
+										<div class="form-group">
+											<input type="email" class="form-control form-control-user" name="adminId" id="adminId" aria-describedby="emailHelp" placeholder="Enter Id or Email Address...">
+										</div>
+										<div class="form-group">
+											<input type="password" class="form-control form-control-user" name="pwd" id="pwd" placeholder="Password" onkeydown="if(event.keyCode==13) fn_login();">
+										</div>
+										<div class="form-group">
+											<div class="custom-control custom-checkbox small">
+												<input type="checkbox" class="custom-control-input" id="save_id"> 
+												<label class="custom-control-label" for="save_id">Remember Me</label>
+											</div>
+										</div>
+										<a id="loginBtn" href="javascript:fn_login();" class="btn btn-primary btn-user btn-block">Login </a>
+									</form>
+									<hr>
+									<div class="login_btm text-center">
+										<a href="#">GA 가입신청</a>
+										<a href="#">F&amp;B</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //Container -->
+</body>
+</html>
