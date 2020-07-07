@@ -107,6 +107,74 @@
 				fn_daum_zipcode_search('coZipcode', 'coAddr', 'coAddrDtl');
 			});
 		});
+
+		function checkAll(){
+			if($("#chk_m1").is(':checked')){
+				$("input[name=chk_mr]").prop("checked", true);
+			} else{
+				$("input[name=chk_mr").prop("checked", false);
+			}
+			if($("#chk_m2").is(':checked')){
+				$("input[name=chk_mw]").prop("checked", true);
+			} else{
+				$("input[name=chk_mw").prop("checked", false);
+			}
+
+			if($("#chk_i1").is(':checked')){
+				$("input[name=chk_ir]").prop("checked", true);
+			} else{
+				$("input[name=chk_ir").prop("checked", false);
+			}
+			if($("#chk_i2").is(':checked')){
+				$("input[name=chk_iw]").prop("checked", true);
+			} else{
+				$("input[name=chk_iw").prop("checked", false);
+			}
+
+			if($("#chk_p1").is(':checked')){
+				$("input[name=chk_pr]").prop("checked", true);
+			} else{
+				$("input[name=chk_pr").prop("checked", false);
+			}
+			if($("#chk_p2").is(':checked')){
+				$("input[name=chk_pw]").prop("checked", true);
+			} else{
+				$("input[name=chk_pw").prop("checked", false);
+			}
+
+			if($("#chk_c1").is(':checked')){
+				$("input[name=chk_cr]").prop("checked", true);
+			} else{
+				$("input[name=chk_cr").prop("checked", false);
+			}
+			if($("#chk_c2").is(':checked')){
+				$("input[name=chk_cw]").prop("checked", true);
+			} else{
+				$("input[name=chk_cw").prop("checked", false);
+			}
+
+			if($("#chk_o1").is(':checked')){
+				$("input[name=chk_or]").prop("checked", true);
+			} else{
+				$("input[name=chk_or").prop("checked", false);
+			}
+			if($("#chk_o2").is(':checked')){
+				$("input[name=chk_ow]").prop("checked", true);
+			} else{
+				$("input[name=chk_ow").prop("checked", false);
+			}
+
+			if($("#chk_s1").is(':checked')){
+				$("input[name=chk_sr]").prop("checked", true);
+			} else{
+				$("input[name=chk_sr").prop("checked", false);
+			}
+			if($("#chk_s2").is(':checked')){
+				$("input[name=chk_sw]").prop("checked", true);
+			} else{
+				$("input[name=chk_sw").prop("checked", false);
+			}
+		}
 	</script>
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 </head>
@@ -359,16 +427,268 @@
 											</colgroup>
 											<tbody>
 												<tr>
-													<th scope="row" class="bg-gray-100 text-center">
-														<tr>
-															<td>hihih</td>
-															<td>asdfasd</td>
-														</tr>
+													<th scope="row" rowspan="4" class="bg-gray-100 text-center">관리자 관리</th>
+													<th></th>
+													<th>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="" id="chk_m1" value="" onclick="checkAll();"/>
+															<label class="custom-control-label" for="chk_m1">전체</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="" id="chk_m2" value="" onclick="checkAll();"/>
+															<label class="custom-control-label" for="chk_m2">전체</label>
+														</div>
 													</th>
+												</tr>
+												<tr>
+													<td>F&B 환경설정</td>
+													<td><div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_mr" id="chk_mr1" value="" />
+															<label class="custom-control-label" for="chk_mr1">읽기</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_mw" id="chk_mw1" value="" />
+															<label class="custom-control-label" for="chk_mw1">쓰기</label>
+														</div></td>
+												</tr>
+												<tr>
+													<td>사용자 관리</td>
+													<td><div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_mr" id="chk_mr2" value="" />
+															<label class="custom-control-label" for="chk_mr2">읽기</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_mw" id="chk_mw2" value="" />
+															<label class="custom-control-label" for="chk_mw2">쓰기</label>
+														</div></td>
+												</tr>
+												<tr>
+													<td>로그인 로그</td>
+													<td><div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_mr" id="chk_mr3" value="" />
+															<label class="custom-control-label" for="chk_mr3">읽기</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_mw" id="chk_mw3" value="" />
+															<label class="custom-control-label" for="chk_mw3">쓰기</label>
+														</div></td>
+												</tr>
+												<tr>
+													<th scope="row" rowspan="3" class="bg-gray-100 text-center">상품 관리</th>
+													<th></th>
+													<th>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="" id="chk_i1" value="" onclick="checkAll();"/>
+															<label class="custom-control-label" for="chk_i1">전체</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="" id="chk_i2" value="" onclick="checkAll();"/>
+															<label class="custom-control-label" for="chk_i2">전체</label>
+														</div>
+													</th>
+												</tr>
+												<tr>
+													<td>카테고리 관리</td>
+													<td><div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_ir" id="chk_ir1" value="" />
+															<label class="custom-control-label" for="chk_ir1">읽기</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_iw" id="chk_iw1" value="" />
+															<label class="custom-control-label" for="chk_iw1">쓰기</label>
+														</div></td>
+												</tr>
+												<tr>
+													<td>상품 관리</td>
+													<td><div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_ir" id="chk_ir2" value="" />
+															<label class="custom-control-label" for="chk_ir2">읽기</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_iw" id="chk_ir2" value="" />
+															<label class="custom-control-label" for="chk_ir2">쓰기</label>
+														</div></td>
+												</tr>
+												<tr>
+													<th scope="row" rowspan="2" class="bg-gray-100 text-center">주문 관리</th>
+													<th></th>
+													<th>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="" id="chk_o1" value="" onclick="checkAll();"/>
+															<label class="custom-control-label" for="chk_o1">전체</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="" id="chk_o2" value="" onclick="checkAll();"/>
+															<label class="custom-control-label" for="chk_o2">전체</label>
+														</div>
+													</th>
+												</tr>
+												<tr>
+													<td>실시간 주문관리</td>
+													<td><div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_or" id="chk_or1" value="" />
+															<label class="custom-control-label" for="chk_or1">읽기</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_ow" id="chk_ow1" value="" />
+															<label class="custom-control-label" for="chk_ow1">쓰기</label>
+														</div></td>
+												</tr>
+												<tr>
+													<th scope="row" rowspan="4" class="bg-gray-100 text-center">게시물 관리</th>
+													<th></th>
+													<th>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="" id="chk_p1" value="" onclick="checkAll();"/>
+															<label class="custom-control-label" for="chk_p1">전체</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="" id="chk_p2" value="" onclick="checkAll();"/>
+															<label class="custom-control-label" for="chk_p2">전체</label>
+														</div>
+													</th>
+												</tr>
+												<tr>
+													<td>공지사항</td>
+													<td><div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_pr" id="chk_pr1" value="" />
+															<label class="custom-control-label" for="chk_pr1">읽기</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_pw" id="chk_pw1" value="" />
+															<label class="custom-control-label" for="chk_pw1">쓰기</label>
+														</div></td>
+												</tr>
+												<tr>
+													<td>FAQ</td>
+													<td><div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_pr" id="chk_pr2" value="" />
+															<label class="custom-control-label" for="chk_pr2">읽기</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_pw" id="chk_pw2" value="" />
+															<label class="custom-control-label" for="chk_pw2">쓰기</label>
+														</div></td>
+												</tr>
+												<tr>
+													<td>Q&A</td>
+													<td><div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_pr" id="chk_pr3" value="" />
+															<label class="custom-control-label" for="chk_pr3">읽기</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_pw" id="chk_pw3" value="" />
+															<label class="custom-control-label" for="chk_pw3">쓰기</label>
+														</div></td>
+												</tr>
+												<tr>
+													<th scope="row" rowspan="3" class="bg-gray-100 text-center">통계 관리</th>
+													<th></th>
+													<th>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="" id="chk_s1" value="" onclick="checkAll();"/>
+															<label class="custom-control-label" for="chk_s1">전체</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="" id="chk_s2" value="" onclick="checkAll();"/>
+															<label class="custom-control-label" for="chk_s2">전체</label>
+														</div>
+													</th>
+												</tr>
+												<tr>
+													<td>년/월/일 결제</td>
+													<td>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_sr" id="chk_sr1" value="" />
+															<label class="custom-control-label" for="chk_sr1">읽기</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_sw" id="chk_sw2" value="" />
+															<label class="custom-control-label" for="chk_sw2">쓰기</label>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td>수익 통계</td>
+													<td><div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_sr" id="chk_sr2" value="" />
+															<label class="custom-control-label" for="chk_sr2">읽기</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_sw" id="chk_sw2" value="" />
+															<label class="custom-control-label" for="chk_sw2">쓰기</label>
+														</div></td>
+												</tr>
+												<tr>
+													<th scope="row" rowspan="4" class="bg-gray-100 text-center">정산 관리</th>
+													<th></th>
+													<th>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="" id="chk_c1" value="" onclick="checkAll();"/>
+															<label class="custom-control-label" for="chk_c1">전체</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="" id="chk_c2" value="" onclick="checkAll();"/>
+															<label class="custom-control-label" for="chk_c2">전체</label>
+														</div>
+													</th>
+												</tr>
+												<tr>
+													<td>정산 신청 관리</td>
+													<td><div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_cr" id="chk_cr1" value="" />
+															<label class="custom-control-label" for="chk_cr1">읽기</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_cw" id="chk_cw1" value="" />
+															<label class="custom-control-label" for="chk_cw1">쓰기</label>
+														</div></td>
+												</tr>
+												<tr>
+													<td>정산 내역 관리</td>
+													<td><div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_cr" id="chk_cr2" value="" />
+															<label class="custom-control-label" for="chk_cr2">읽기</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_cw" id="chk_cw2" value="" />
+															<label class="custom-control-label" for="chk_cw2">쓰기</label>
+														</div></td>
+												</tr>
+												<tr>
+													<td>세금계산서 설정</td>
+													<td><div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_cr" id="chk_cr3" value="" />
+															<label class="custom-control-label" for="chk_cr3">읽기</label>
+														</div>
+														<div class="custom-control custom-checkbox custom-control-inline checkbox">
+															<input type="checkbox" class="custom-control-input" name="chk_cw" id="chk_cw3" value="" />
+															<label class="custom-control-label" for="chk_cw3">쓰기</label>
+														</div></td>
 												</tr>
 											</tbody>
 										</table>
 									</form>
+								</div>
+								<div class="card-body pt-0">
+									<div class="d-flex justify-content-between">
+										<div class="input-group justify-content-start" role="group">
+											<a href="" class="btn btn-secondary btn-sm btn-icon-split">
+												   <span class="icon text-white-50">
+													<i class="fas fa-list"></i>
+												   </span>
+												   <span class="text">목록</span>
+											</a>
+										</div>
+										<div class="input-group justify-content-end" role="group">
+											<a href="" class="btn btn-warning btn-sm btn-icon-split ml-2">
+												<span class="icon text-white-50">
+													<i class="fas fa-edit"></i>
+												</span>
+												<span class="text">수정</span>
+											</a>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
