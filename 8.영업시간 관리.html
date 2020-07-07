@@ -13,7 +13,7 @@
 	<meta property="og:description" content="" />
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 	
-	<title>F&B 환경설정</title>
+	<title>영업시간 관리</title>
 	
 	<!-- Custom fonts for this template-->
 	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -135,19 +135,6 @@
 				return false;
 			});
 		});
-
-		function modifyPw(){
-			var chk = $("#chk_a").is(":checked");
-			if(chk==true){
-				$(".hihi").removeAttr("disabled");
-				// $("input[id=newPw1]").removeAttr("disabled");
-				// $("input[id=newPw1]").removeAttr("disabled");
-			} else{
-				$(".hihi").attr('disabled', true);
-				// $("input[id=newPw1]").attr('disabled', true);
-				// $("input[id=newPw1]").attr('disabled', true);
-			}
-		}
 	</script>
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 </head>
@@ -309,8 +296,8 @@
 											<td>
 												<p class="text-justify txt-normal">gakorea</p>
 											</td>
-											<th scope="row" rowspan="3" class="bg-gray-100 text-center">로고</th>
-											<td rowspan="3">
+											<th scope="row" class="bg-gray-100 text-center">로고</th>
+											<td>
 												<div class="input-group text-center">
 													<div class="input-group text-center profile-group">
 														<img id="profileImageView" src="" class="img-thumbnail img-celeb-profile" alt="" style="display:none;">
@@ -321,140 +308,6 @@
 														<label class="custom-file-label input-group-right-btn icon-btn-background-opacity-20 bbrr-0" for="profileImage"></label>
 													</div>
 												</div>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">비밀번호</th>
-											<td>
-												<div class="custom-control custom-checkbox custom-control-inline checkbox">
-													<input type="checkbox" class="custom-control-input" name="" id="chk_a" value="" onclick="modifyPw();"/>
-													<label class="custom-control-label" for="chk_a">비밀번호 변경</label>
-												</div>
-												<div class="input-group mb-1 hihi" id="oldPw">
-													<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="현재 비밀번호 입력" disabled />
-												</div>
-												<div class="input-group mb-1 hihi" id="newPw1">
-													<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="신규 비밀번호 입력"/>
-												</div>
-												<div class="input-group mb-0 hihi" id="newPw2">
-													<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="신규 비밀번호 확인"/>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">회사명(한글)</th>
-											<td>
-												<p class="text-justify txt-normal">지에이코리아</p>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">회사명(영문)</th>
-											<td>
-												<p class="text-justify txt-normal">GA Korea</p>
-											</td>							
-											<th scope="row" class="bg-gray-100 text-center">사업자 등록번호</th>
-											<td>
-												<p class="text-justify txt-normal">123-45-67890</p>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>전화번호</th>
-											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="전화번호 입력" />
-											</td>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>업종 카테고리</th>
-											<td>
-												<select name="" id="" class="custom-select input-group-prepend">
-													<option value="">업종 선택</option>
-													<option value="">식당</option>
-													<option value="">까페 / 베이커리</option>
-													<option value="">뷰티</option>
-													<option value="">엔터</option>
-												</select>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>주소</th>
-											<td colspan="3">
-												<div class="input-group mb-1 post_wrap">
-													<input type="text" name="" id="coZipcode" value="" class="form-control form-control-sm input-radius" placeholder="우편번호" />
-													<div class="input-group-append">
-														<button class="btn btn-secondary btn-sm input-radius-button" type="button" id="coZipcodeBtn">우편번호 검색</button>
-													</div>
-												</div>
-												<div class="input-group mb-1">
-													<input type="text" name="" id="coAddr" value="" class="form-control form-control-sm" placeholder="기본주소 입력" readOnly />
-												</div>
-												<div class="input-group mb-0">
-													<input type="text" name="" id="coAddrDtl" value="" class="form-control form-control-sm" placeholder="상세주소 입력" />
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>대표자명</th>
-											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="대표자명 입력" />
-											</td>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>대표자 연락처</th>
-											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="대표자 연락처 입력" />
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>정산 계좌 정보</th>
-											<td>
-												<div>
-													<select name="" id="" class="custom-select input-group-prepend input-radius" style="width: 70px;" float="left">
-														<option value="">은행</option>
-														<option value="">우리</option>
-														<option value="">비씨</option>
-														<option value="">국민</option>
-													</select>
-													<input type="text" class="form-control form-control-sm" placeholder="계좌 입력" style="width: 100px;">
-												</div>
-											</td>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>통장 사본</th>
-											<td>
-												<div class="input-group">
-													<div class="custom-file">
-														<input type="file" class="custom-file-input" name="uploadFile" id="uploadFile" alt="" data-display-target="uploadFileLabel" required />
-														<label class="custom-file-label" for="uploadFile" id="uploadFileLabel" data-browse="첨부">등록할 첨부파일 선택</label>
-													</div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>업체 수수료율</th>
-											<td colspan="3">2.3%</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>요금 담당자 이름</th>
-											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="요금 담당자 이름 입력" />
-											</td>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>요금 담당자 연락처</th>
-											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="요금 담당자 연락처 입력" />
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>요금 담당자 이메일</th>
-											<td colspan="3">
-												<input type="text" name="" id="" value="" class="form-control form-control-sm mr-1" style="width:70%;float:left;" placeholder="요금 담당자 이메일 입력" />
-												<p class="pt-2">이메일이 2개 이상인 경우 컴마(,)로 구분</p>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>업체 소개</th>
-											<td colspan="3">
-												<textarea name="" id="" class="form-control form-control-sm mr-1" style="height: 100px;" placeholder="업체 소개"></textarea>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>해시 태그</th>
-											<td colspan="3">
-												<input type="text" name="" id="" value="" class="form-control form-control-sm mr-1" style="width:70%;float:left;" placeholder="해시태그 입력" />
-												<p class="pt-2">해시 태그 10개까지 등록 가능</p>
 											</td>
 										</tr>
 									</tbody>
