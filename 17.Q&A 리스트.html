@@ -13,7 +13,7 @@
 	<meta property="og:description" content="" />
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 	
-	<title>로그인 로그ddd</title>
+	<title>ZENA.Biz :: 관리자</title>
 	
 	<!-- Custom fonts for this template-->
 	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -123,7 +123,7 @@
 
 			    <div class="clearfix"></div>
 
-			    <!-- sidebar menu -->
+				<!-- sidebar menu -->
 				<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 					<div class="menu_section">
 						<ul class="nav side-menu">
@@ -172,7 +172,7 @@
 						</ul>
 					</div>
 				</div>
-			    <!-- /sidebar menu -->
+				<!-- /sidebar menu -->
 			  </div>
 			</div>
 			<!-- e:left_col -->
@@ -283,30 +283,44 @@
 
 			<script type="text/javascript">
 				$(document).ready(function(){
+					$('#searchDrop .dropdown-menu a').bind('click', function (e) {
+						var html = $(this).html();
+						var value = $(this).attr('value');
+						$('#searchDrop button.dropdown-toggle').html(html);
+						$('#searchFilter').val(value);
+					});
+					
 					var enterTbl = $('#enter-tbl').DataTable({
 						language: {
 							"emptyTable": "조회된 기획사 정보가 없습니다."
 						},
-						ajax: "8.로그인 로그.txt",
+						ajax: "25.Q&A 리스트.txt",
 						columns: [
 							{"data": "col1"},
-							{"data": "col2"},
-							{"data": "col3"}, 
+							{"data": "col2",
+								"render": function(data, type, row){
+									//console.log('data : ' + data + ", type : " + type + ", row : " + JSON.stringify(row));
+									if(type=='display'){
+										data = '<a href="#">'+row.col2+'</a>\n';
+									}
+									return data;
+								}
+							},
+							{"data": "col3"},
 							{"data": "col4"},
-							{"data": "col5"},
-							{"data": "col6"}
+							{"data": "col5"}
 						],
 						columnDefs: [
 							{	//tbody 텍스트 가운데 정렬 클레스 추가
-								targets: [ 0, 1, 2, 3, 4, 5],
+								targets: [ 0, 2, 3, 4 ],
 								className: 'tbl-align-center'
 							},
 							{	//헤더 정렬 기능 제외 처리
-								targets: [ 0, 1, 2, 3, 4, 5],
+								targets: [ 0, 1, 2, 3, 4 ],
 								orderable: false
 							},
 							{	//검색 제외 처리
-								targets: [ 0, 3, 4, 5],
+								targets: [ 0, 1, 2, 3, 4 ],
 								searchable: false
 							}
 						],
@@ -316,10 +330,10 @@
 						processing: false,
 						lengthChange: true,
 						select: true,
-						//ordering: false,		//헤더 정렬 기능 사용 여부
+						ordering: false,		//헤더 정렬 기능 사용 여부
 						order: [[ 0, "desc" ]]	//첫 로딩 후 데이터 정렬 기준
 					});
-					
+			
 					//테이블 내 데이터 조회 설정을 하면 생성되는 내부 조회 입력폼을 숨겨준다.
 					//$("#enter-tbl_filter").hide();
 					$('.dt-buttons').hide();
@@ -332,57 +346,24 @@
 					//3. 생성된 그룹 내 각 조회 조건 생성
 					$('#search_filter_div').append(fn_input_search_make());
 
-					$('#enter-tbl_length > label').css("float", "left");
-					$('#enter-tbl_length').append(fn_check_search_make());
-					$('#enter-tbl_length').parents('.row').addClass('none');
-
 					//검색 버튼 조회 실행
 					$(document).on('click', '#searchBtn', function(){
 						fn_search();
 					});
-
-					$(document).on('click', '#searchDrop .dropdown-menu a', function(){
-						var html = $(this).html();
-						
-						var value = $(this).attr('value');
-						$('#searchDrop button.dropdown-toggle').html(html);
-						$('#searchFilter').val(value);
-					});
-
-					$(document).on('click', '.datepiker-wrapper', function(){
-						$(".ui-datepicker-trigger").remove();
-						$("#startYmd").removeClass('hasDatepicker').datepicker({dateFormat:'yy.mm.dd'});
-						$("#endYmd").removeClass('hasDatepicker').datepicker({dateFormat:'yy.mm.dd'});
-
-						$('#' + $(this).data('target')).focus();
-					});
 				});
 
-				//체크박스 추가
-				function fn_check_search_make(){
-					var html = '';
-					html += '<div class="input-group justify-content-end pt-0" role="group" style="position: absolute;top:0px;">\n';
-					html += '	<div class="datepiker-wrapper" data-target="startYmd">\n';
-					html += '		<input type="text" name="startYmd" id="startYmd" data-search-type="start" value="" class="form-control form-control-sm datepicker hasDatepicker" alt="시작일자" placeholder="시작일자" readonly="">\n';
-					html += '	</div>\n';
-					html += '	<div class="text-center text-wrap" style="width:2rem;padding:.5rem .4rem;"> ~ </div>\n';
-					html += '	<div class="datepiker-wrapper mr-1" data-target="endYmd">\n';
-					html += '		<input type="text" name="endYmd" id="endYmd" data-search-type="end" value="" class="form-control form-control-sm datepicker hasDatepicker" alt="종료일자" placeholder="종료일자" readonly="">\n';
-					html += '	</div>\n';
-					html += '</div>\n';
-					return html;
-				}
-				
 				//입력 필드 및 버튼 추가
 				function fn_input_search_make(){
 					var html = '';
 					
 					html += '<div class="input-group mb-0">\n';
 					html += '	<select name="" id="searchFilter" class="custom-select input-group-prepend input-radius">\n';
-					html += '		<option value="1">아이디</option>\n';
-					html += '		<option value="2">이름</option>\n';
+					html += '		<option value="">상태 전체</option>\n';
+					html += '		<option value="">대기</option>\n';
+					html += '		<option value="">접수</option>\n';
+					html += '		<option value="">완료</option>\n';
 					html += '	</select>\n';
-					html += '	<input type="text" id="searchText" class="form-control ml-0 input-radius type2" onkeydown="if(event.keyCode==13) fn_search();" placeholder="검색어를 입력해주세요." aria-label="검색어를 입력해주세요." aria-describedby="searchBtn">\n';
+					html += '	<input type="text" id="searchText" class="form-control ml-0 input-radius type2" onkeydown="if(event.keyCode==13) fn_search();" placeholder="제목 검색어 입력" aria-label="제목 검색어 입력" aria-describedby="searchBtn">\n';
 					html += '	<div class="input-group-append">\n';
 					html += '		<button class="btn btn-success input-radius-button" type="button" id="searchBtn">조회</button>\n';
 					html += '	</div>\n';
@@ -392,8 +373,8 @@
 
 				//검색 버튼 & input enter..
 				function fn_search(){
-					var column_idx = Number($('#searchFilter').val());
-					$('#enter-tbl').DataTable().column(column_idx).search($('#searchText').val()).draw();
+					//var column_idx = Number($('#searchFilter').val());
+					$('#enter-tbl').DataTable().column(1).search($('#searchText').val()).draw();
 				}
 			</script>
 
@@ -404,49 +385,49 @@
 				<nav aria-label="breadcrumb">
 					<ol id="global-nav" class="breadcrumb">
 						<li class="breadcrumb-item"><a href="/index"><i class="fas fa-home"></i></a></li>
-						<li class="breadcrumb-item"><a href="#;">관리자 관리</a></li>
-						<li class="breadcrumb-item active" aria-current="page">로그인 로그</li>
+						<li class="breadcrumb-item"><a href="#;">게시글 관리</a></li>
+						<li class="breadcrumb-item active" aria-current="page">Q&A</li>
 					</ol>
 				</nav>
 
 				<div class="card shadow">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">로그인 로그</h6>
+						<h6 class="m-0 font-weight-bold text-primary">Q&A</h6>
 						<div class="dropdown no-arrow">
 							<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
 								<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
 								<div class="dropdown-header">SELECT MENU : </div>
-								<a class="dropdown-item" href=""><i class="fas fa-plus-circle"></i> 사용자 등록</a> 
+								<a class="dropdown-item" href=""><i class="fas fa-plus-circle"></i>신규 등록</a>
 							</div>
 						</div>
 					</div>
-
-					<div class="card-body">
-						<div class="table-responsive-sm">
-							<table id="enter-tbl" class="table table-bordered table-striped table-sm tbl-td-pd-1 mb-0" style="width:100%">
-								<colgroup>
-									<col width="5%"/>
-									<col width="*"/>
-									<col width="20%"/>
-									<col width="15%"/>
-									<col width="20%"/>
-									<col width="15%"/>
-								</colgroup>
-								<thead class="thead-dark">
-									<tr>
-										<th scope="col" class="text-center noExport">No.</th>
-										<th scope="col" class="text-center">아이디</th>
-										<th scope="col" class="text-center">이름</th>
-										<th scope="col" class="text-center">직급</th>
-										<th scope="col" class="text-center">부서</th>
-										<th scope="col" class="text-center">일시</th>
-									</tr>
-								</thead>
-								<tbody>
-								</tbody>
-							</table>
+					
+					<div class="collapse show" id="regManager">
+						<div class="card-body">
+							<div class="table-responsive-sm">
+								<table id="enter-tbl" class="table table-bordered table-striped table-sm tbl-td-pd-1 mb-0" style="width:100%">
+									<colgroup>
+										<col width="5%"/>
+										<col width="*"/>
+										<col width="12%"/>
+										<col width="7%"/>
+										<col width="5%"/>
+									</colgroup>
+									<thead class="thead-dark">
+										<tr>
+											<th scope="col" class="text-center noExport">No.</th>
+											<th scope="col" class="text-center">제목</th>
+											<th scope="col" class="text-center">등록자</th>
+											<th scope="col" class="text-center">등록일</th>
+											<th scope="col" class="text-center">상태</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>	

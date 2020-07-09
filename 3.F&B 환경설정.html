@@ -13,7 +13,7 @@
 	<meta property="og:description" content="" />
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 	
-	<title>사용자 등록</title>
+	<title>F&B 환경설정</title>
 	
 	<!-- Custom fonts for this template-->
 	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -106,7 +106,48 @@
 			$('#coZipcode, #coZipcodeBtn').bind('click', function(){
 				fn_daum_zipcode_search('coZipcode', 'coAddr', 'coAddrDtl');
 			});
+
+			$("#profileImage").change(function () {
+				var file = $(this).val().split('\\').pop();
+				file = file.substring(file.lastIndexOf(".") + 1).toLowerCase();
+				if ($.inArray(file, [ 'gif', 'png', 'jpg', 'jpeg' ]) == -1) {
+					jsAlert.alert("알림", "gif, png, jpg, jpeg 의 파일만 등록 가능합니다.", $(this));
+					$(this).val("");
+					$('#profileImageView').hide();
+					$('#profileNoImageText').show();
+				}else{
+					//var o = $(this).parent().parent();
+					var id = $(this).attr('id');
+					var file = document.getElementById(id).files[0];
+					
+					var reader = new FileReader();
+					reader.onload = function (e) {
+						//$(o).css('background-image', 'url(\"' + e.target.result + '\")');
+						$('#profileImageView').attr('src', e.target.result);
+						$('#profileImageView').addClass("attach");
+						$('#profileImageView').css("height","auto");
+						$('#profileImageView').show();
+						$('#profileNoImageText').hide();
+					}
+					reader.readAsDataURL(file);
+				}
+				
+				return false;
+			});
 		});
+
+		function modifyPw(){
+			var chk = $("#chk_a").is(":checked");
+			if(chk==true){
+				$(".passwd").removeAttr("disabled");
+				// $("input[id=newPw1]").removeAttr("disabled");
+				// $("input[id=newPw1]").removeAttr("disabled");
+			} else{
+				$(".passwd").attr('disabled', 'disabled');
+				// $("input[id=newPw1]").attr('disabled', true);
+				// $("input[id=newPw1]").attr('disabled', true);
+			}
+		}
 	</script>
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 </head>
@@ -244,13 +285,13 @@
 					<ol id="global-nav" class="breadcrumb">
 						<li class="breadcrumb-item"><a href="/index"><i class="fas fa-home"></i></a></li>
 						<li class="breadcrumb-item"><a href="#;">관리자 관리</a></li>
-						<li class="breadcrumb-item active" aria-current="page">사용자 관리</li>
+						<li class="breadcrumb-item active" aria-current="page">F&B 환경설정</li>
 					</ol>
 				</nav>
 
-				<div class="card shadow mb-3">
+				<div class="card shadow">
 					<a href="#regManager" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="regManager">
-						<h6 class="m-0 font-weight-bold text-primary">사용자 등록</h6>
+						<h6 class="m-0 font-weight-bold text-primary">F&B 환경설정</h6>
 					</a>
 					<div class="collapse show in" id="regManager">
 						<div class="card-body">
@@ -264,32 +305,160 @@
 									</colgroup>
 									<tbody>
 										<tr>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>아이디</th>
-											<td colspan="3">
-												<input type="text" name="" id="" value="" class="form-control" max="2000" placeholder="아이디 입력">
-												<!-- <textarea name="" id="" class="form-control" alt="아이디" max="2000" placeholder="아이디 입력"></textarea> -->
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>이름</th>
+											<th scope="row" class="bg-gray-100 text-center">아이디</th>
 											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="이름 입력" />
+												<p class="text-justify txt-normal">gakorea</p>
 											</td>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>직급</th>
+											<th scope="row" rowspan="3" class="bg-gray-100 text-center">로고</th>
+											<td rowspan="3">
+												<div class="input-group text-center">
+													<div class="input-group text-center profile-group">
+														<img id="profileImageView" src="" class="img-thumbnail img-celeb-profile" alt="" style="display:none;">
+														<p id="profileNoImageText" class="text-monospace img-thumbnail img-celeb-profile img-celeb-profile-no">No image</p>
+													</div>
+													<div class="input-group-append custom-file-right-btn">
+														<input type="file" class="custom-file-input" name="profileImage" id="profileImage" alt="프로필 사진" imagefile="true" required="">
+														<label class="custom-file-label input-group-right-btn icon-btn-background-opacity-20 bbrr-0" for="profileImage"></label>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row" class="bg-gray-100 text-center">비밀번호</th>
 											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="직급 입력" />
+												<div class="custom-control custom-checkbox custom-control-inline checkbox">
+													<input type="checkbox" class="custom-control-input" name="" id="chk_a" value="" checked="true" onclick="modifyPw();"/>
+													<label class="custom-control-label" for="chk_a">비밀번호 변경</label>
+												</div>
+												<div class="input-group mb-1 passwd" id="oldPw">
+													<input type="text" name="" id="" value="" class="form-control form-control-sm passwd" placeholder="현재 비밀번호 입력"/>
+												</div>
+												<div class="input-group mb-1 passwd" id="newPw1">
+													<input type="text" name="" id="" value="" class="form-control form-control-sm passwd" placeholder="신규 비밀번호 입력"/>
+												</div>
+												<div class="input-group mb-0 passwd" id="newPw2">
+													<input type="text" name="" id="" value="" class="form-control form-control-sm passwd" placeholder="신규 비밀번호 확인"/>
+												</div>
 											</td>
 										</tr>
 										<tr>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>연락처</th>
-											<td colspan="3">
-												<input type="text" name="" id="" value="" class="form-control" max="2000" placeholder="전화번호 입력">
+											<th scope="row" class="bg-gray-100 text-center">회사명(한글)</th>
+											<td>
+												<p class="text-justify txt-normal">지에이코리아</p>
 											</td>
 										</tr>
 										<tr>
-											<th scope="row" class="bg-gray-100 text-center">메모</th>
+											<th scope="row" class="bg-gray-100 text-center">회사명(영문)</th>
+											<td>
+												<p class="text-justify txt-normal">GA Korea</p>
+											</td>							
+											<th scope="row" class="bg-gray-100 text-center">사업자 등록번호</th>
+											<td>
+												<p class="text-justify txt-normal">123-45-67890</p>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>전화번호</th>
+											<td>
+												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="전화번호 입력" />
+											</td>
+											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>업종 카테고리</th>
+											<td>
+												<select name="" id="" class="custom-select input-group-prepend">
+													<option value="">업종 선택</option>
+													<option value="">식당</option>
+													<option value="">까페 / 베이커리</option>
+													<option value="">뷰티</option>
+													<option value="">엔터</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>주소</th>
 											<td colspan="3">
-												<textarea name="" id="" class="form-control" alt="메모" max="2000" placeholder="메모 입력" style="height:200px;"></textarea>
+												<div class="input-group mb-1 post_wrap">
+													<input type="text" name="" id="coZipcode" value="" class="form-control form-control-sm input-radius" placeholder="우편번호" />
+													<div class="input-group-append">
+														<button class="btn btn-secondary btn-sm input-radius-button" type="button" id="coZipcodeBtn">우편번호 검색</button>
+													</div>
+												</div>
+												<div class="input-group mb-1">
+													<input type="text" name="" id="coAddr" value="" class="form-control form-control-sm" placeholder="기본주소 입력" readOnly />
+												</div>
+												<div class="input-group mb-0">
+													<input type="text" name="" id="coAddrDtl" value="" class="form-control form-control-sm" placeholder="상세주소 입력" />
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>대표자명</th>
+											<td>
+												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="대표자명 입력" />
+											</td>
+											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>대표자 연락처</th>
+											<td>
+												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="대표자 연락처 입력" />
+											</td>
+										</tr>
+										<tr>
+											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>정산 계좌 정보</th>
+											<td>
+												<div class="form-row">
+													<div class="input-group mb-1 col-3">
+														<select name="" id="" class="custom-select input-group-prepend">
+															<option value="">은행</option>
+															<option value="">우리</option>
+															<option value="">비씨</option>
+															<option value="">국민</option>
+														</select>
+													</div>
+													<div class="input-group mb-1 col">
+														<input type="text" class="form-control form-control-sm" placeholder="계좌 입력">
+													</div>
+												</div>
+											</td>
+											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>통장 사본</th>
+											<td>
+												<div class="input-group">
+													<div class="custom-file">
+														<input type="file" class="custom-file-input" name="uploadFile" id="uploadFile" alt="" data-display-target="uploadFileLabel" required />
+														<label class="custom-file-label" for="uploadFile" id="uploadFileLabel" data-browse="첨부">등록할 첨부파일 선택</label>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>업체 수수료율</th>
+											<td colspan="3">2.3%</td>
+										</tr>
+										<tr>
+											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>요금 담당자 이름</th>
+											<td>
+												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="요금 담당자 이름 입력" />
+											</td>
+											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>요금 담당자 연락처</th>
+											<td>
+												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="요금 담당자 연락처 입력" />
+											</td>
+										</tr>
+										<tr>
+											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>요금 담당자 이메일</th>
+											<td colspan="3">
+												<input type="text" name="" id="" value="" class="form-control form-control-sm mr-1" style="width:70%;float:left;" placeholder="요금 담당자 이메일 입력" />
+												<p class="pt-2">이메일이 2개 이상인 경우 컴마(,)로 구분</p>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>업체 소개</th>
+											<td colspan="3">
+												<textarea name="" id="" class="form-control form-control-sm mr-1" style="height: 100px;" placeholder="업체 소개"></textarea>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>해시 태그</th>
+											<td colspan="3">
+												<input type="text" name="" id="" value="" class="form-control form-control-sm mr-1" style="width:70%;float:left;" placeholder="해시태그 입력" />
+												<p class="pt-2">해시 태그 10개까지 등록 가능</p>
 											</td>
 										</tr>
 									</tbody>
@@ -298,15 +467,7 @@
 						</div>
 						<div class="card-body pt-0">
 							<div class="d-flex justify-content-between">
-								<div class="input-group justify-content-start" role="group">
-									<a href="" class="btn btn-secondary btn-sm btn-icon-split">
-					                   	<span class="icon text-white-50">
-											<i class="fas fa-list"></i>
-					                   	</span>
-					                   	<span class="text">목록</span>
-									</a>
-								</div>
-								<div class="input-group justify-content-end" role="group">
+								<div class="input-group justify-content-end" role="group" style="margin-bottom:0;">
 									<a href="" class="btn btn-primary btn-sm btn-icon-split">
 					                   	<span class="icon text-white-50">
 											<i class="fas fa-check"></i>

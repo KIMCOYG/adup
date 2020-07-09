@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="" />
+	<meta property="og:title" content="" />
+	<meta property="og:url" content="" />
+	<meta property="og:image" content="" />
+	<meta property="og:description" content="" />
+	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+	
+	<title>카테고리 리스트</title>
+	
+	<!-- Custom fonts for this template-->
+	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> 
+		
+	<!-- Custom styles for this template-->
+	<link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/sb-admin-2.min.css" rel="stylesheet">
+	<link href="css/common.css" rel="stylesheet">
+	<link href="css/custom.min.css" rel="stylesheet">
+	<link href="css/layout.css" rel="stylesheet">
+	
+	<!-- Bootstrap core JavaScript-->
+  	<script src="vendor/jquery/dist/jquery.min.js"></script>
+  	<script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  	<!-- Core plugin JavaScript-->
+  	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  	<!-- Custom scripts for all pages-->
+  	<script src="js/sb-admin-2.js"></script>
+		
+	<script type="text/javascript">
+		var base = '.';	
+	</script>
+	
+	<!-- datepicker -->
+	<link rel="stylesheet" href="js/lib/jquery-ui/1.12.1/themes/dark-hive/jquery-ui.min.css" media="screen, projection"/>
+	<script src="js/lib/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	
+	<script src="js/lib/josa.js"></script>
+	<script src="js/common.js"></script>
+	<script src="js/storage.js"></script>
+	
+	<script src="js/validation/jquery.alerts-1.1/jquery.alerts.js"></script>
+	<script src="js/validation/common.js"></script>	
+	<script type="text/javascript" src="js/lib/jquery.i18n.properties.js"></script>	
+	<link rel="stylesheet" href="js/validation/jquery.alerts-1.1/jquery.alerts.css">
+	
+	<script type="text/javascript">
+		var dtNow = new Date();
+		
+		$(function() {
+			$(".datepicker").datepicker({
+				buttonImageOnly: false,
+				prevText: '이전달',
+				nextText: '다음달',
+				monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+				dayNamesMin:['일','월','화','수','목','금','토'],
+				changeYear: true,
+				/* minDate: '-100y', */
+				/* yearRange: 'c-100:c+1', */
+				changeMonth: true,
+				showMonthAfterYear: true,
+				dateFormat: 'yy-mm-dd',
+				duration: '',
+				isRTL: false,
+				/* beforeShow : function(input, inst) {
+			        if($(this).val() != ""){
+			        	var selectYear = new Date($(this).val());
+			        	var nowYear = dtNow.getFullYear();
+			        	var num = parseInt(selectYear.getFullYear()) - nowYear;
+			        	if(num > 100){
+							inst.settings.yearRange = Number(nowYear) - 1 + ':' + Number(Number(nowYear) + num);
+						} else if (num < -100){
+							inst.settings.yearRange = Number(Number(Number(nowYear) + num) - 1) + ':' + Number(Number(nowYear) + 1);
+						} else {
+							inst.settings.yearRange = Number(nowYear) - 100 + ':' + Number(Number(nowYear) + 1);
+						}
+					}
+			    } */
+			}).keyup(function(e) {
+		    if(e.keyCode == 8 || e.keyCode == 46) {
+		        $.datepicker._clearDate(this);
+		    }});
+			
+			//datepicker 달력 아이콘 클릭 시 활성
+			$('.datepiker-wrapper').bind('click', function(){
+				$('#' + $(this).data('target')).focus();
+			});
+		});
+		
+		if(!fn_br_chrome_browser_check()){
+			jsAlert.alert('경고', '해당 사이트는 크롬브라우저에 최적화되어 있습니다.<br/>크롬브라우저에서 이용해주세요.', null, fn_login, '확인');
+		}
+
+		$(document).ready(function(){
+			//다음 주소 검색
+			$('#coZipcode, #coZipcodeBtn').bind('click', function(){
+				fn_daum_zipcode_search('coZipcode', 'coAddr', 'coAddrDtl');
+			});
+		});
+
+		var conId = 0; //에러 가능성
+		function addCategory(){ //카테고리 추가 버튼
+			// var id = $(".creat").size();
+			conId = conId + 1;
+			$("#inputCategory").append(createInput(conId+1));
+			console.log(conId+1);
+			
+		}
+
+		function registInput(clickId){ //카테고리 입력 부분 등록 버튼
+			var id = clickId.substring(9,10);
+			var val = $("#inputValue").val();
+			$("#registCategory").append(registHtml(val, id));
+			console.log(id);
+			$("#creat"+id).remove();
+		}
+
+		function removeInput(clickId){ //카테고리 입력 부분 삭제 버튼
+			var id = clickId.substring(9,10);
+			$("#creat"+id).remove();
+		}
+
+		function removeRegit(clickId){
+			var id = clickId.substring(14,15);
+			console.log(id);
+			
+			$("#regit"+id).remove();
+		}
+
+		function changeTag(clickId){ //태그 변경
+			var id = clickId.substring(9,10);
+			var clk = $("#regitVal"+id).is(":disabled");
+			
+			if(clk==true){
+				$("#regitVal"+id).removeAttr('disabled');
+			} else{
+				$("#regitVal"+id).attr('disabled', true);
+			}
+		}
+		
+		function allowDrag(clickId){ //드래그 버튼
+			var id = clickId.substring(7,8);
+			$("#regit"+id).attr("draggable", true);
+		}
+
+
+		function createInput(id){
+			var html = '';
+
+			html += '<div class="container m-2 creat" id="creat'+id+'">\n';
+			html += '<div class="form-inline span12 border border-0">\n';
+			html += '<div class="col-11">\n';
+			html += '<input type="text" value="" id="inputValue" placeholder="카테고리 입력">\n';
+			html += '</div>\n';
+			html += '<div class="form-group float-right">\n';
+			html += '<button type="button" class="btn btn-default" id="registBtn'+id+'" onclick="registInput(this.id);"><span class="glyphicon glyphicon-ok" style="color: blue;"></span></button>\n';
+			html += '<button type="button" class="btn btn-default" id="removeBtn'+id+'" onclick="removeInput(this.id);"><span class="glyphicon glyphicon-remove-sign" style="color: red;"></span></button>\n';
+			html += '</div>\n';
+			html += '</div>\n';
+			html += '</div>\n';
+
+			return html;
+		}
+
+		function registHtml(val, id){
+			var html = '';
+
+			html += '<div class="container m-2 regit" id="regit'+id+'" draggable="true">\n';
+			html += '<div class="span12 border border-secondary d-flex justify-content-between p-1">\n';
+			html += '<input type="text" class="ml-3" id="regitVal'+id+'" value="'+val+'" disabled>\n';
+			html += '<div class="btn-group" role="group" aria-label="regitBtnGroup">\n';
+			html += '<button type="button" class="btn btn-default" id= "changeBtn'+id+'" onclick="changeTag(this.id);"><span class="glyphicon glyphicon-pencil"></span></button>\n';
+			html += '<button type="button" class="btn btn-default" id="removeRegitBtn'+id+'" onclick="removeRegit(this.id);"><span class="glyphicon glyphicon-trash"></span></button>\n';
+			html += '<button type="button" class="btn btn-default" id="dragBtn'+id+'" onclick="allowDrag();"><span class="glyphicon glyphicon-align-justify"></span></button>\n';
+			html += '</div>\n';
+			html += '</div>\n';
+			html += '</div>\n';
+
+			return html;
+		}
+
+		//Drag
+
+		dragula([
+				document.getElementById("registCategory"),
+			]);
+			removeOnSpill: false
+				.on("drag", function (el) {
+					el.className.replace("ex-moved", "");
+				})
+				.on("drop", function (el) {
+					el.className += "ex-moved";
+				})
+				.on("over", function (el, container) {
+					container.className += "ex-over";
+				})
+				.on("out", function (el, container) {
+					container.className.replace("ex-over", "");
+				});
+	
+	function allowDrop(ev){
+		ev.preventDefault();
+	}
+	function drag(ev){
+		ev.dataTransfer.setData("text", ev.target.id);
+	}
+	function drop(ev){
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("text");
+		ev.target.appendChild(document.getElementById(data));
+	}
+	</script>
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.js"></script>
+</head>
+<body class="nav-md">
+	<div class="container body">
+		<div class="main_container">
+
+			<!-- s:left_col -->
+			<div class="col-md-3 left_col">
+			  <div class="left_col scroll-view">
+			    <div class="navbar nav_title" style="border: 0;">
+			      <a href="index.html" class="site_title"><img src="images/login_logo_wht.png" alt="" /></a>
+			    </div>
+
+			    <div class="clearfix"></div>
+
+			    <!-- sidebar menu -->
+				<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+					<div class="menu_section">
+						<ul class="nav side-menu">
+							<li class="fnb"><img src="images/logo_adup.png" width="100%" alt=""></li>
+							<li><a><i class="fas fa-fw fa-tachometer-alt"></i> Dashboard </a></li>
+							<li><a><i class="fas fa-fw fa-cog"></i> 관리자 관리 <span class="fa fa-chevron-down"></span></a>
+								<ul class="nav child_menu">
+									<li><a href="#">F&B 환경설정</a></li>
+									<li><a href="#">사용자 관리</a></li>
+									<li><a href="#">영업시간 관리</a></li>
+									<li><a href="#">로그인 로그</a></li>
+								</ul>
+							</li>
+							<li><a><i class="fas fa-users"></i> 상품 관리 <span class="fa fa-chevron-down"></span></a>
+								<ul class="nav child_menu">
+									<li><a href="#">카테코리 관리</a></li>
+									<li><a href="#">상품 관리</a></li>
+								</ul>
+							</li>
+							<li><a><i class="fas fa-building"></i> 주문 관리 <span class="fa fa-chevron-down"></span></a>
+								<ul class="nav child_menu">
+									<li><a href="#">실시간 주문 관리</a></li>
+								</ul>
+							</li>
+							<li><a><i class="fas fa-book-open"></i> 게시글 관리 <span class="fa fa-chevron-down"></span></a>
+								<ul class="nav child_menu">
+									<li><a href="#">공지사항</a></li>
+									<li><a href="#">FAQ</a></li>
+									<li><a href="#">Q&A</a></li>
+								</ul>
+							</li>
+							<li><a><i class="fas fa-chart-line"></i> 통계 관리 <span class="fa fa-chevron-down"></span></a>
+								<ul class="nav child_menu">
+									<li><a href="#">기간별 결제</a></li>
+									<li><a href="#">데이터 통계</a></li>
+									<li><a href="#">수익통계</a></li>
+								</ul>
+							</li>
+							<li><a><i class="fas fa-chart-line"></i> 정산 관리 <span class="fa fa-chevron-down"></span></a>
+								<ul class="nav child_menu">
+									<li><a href="#">정산 신청 관리</a></li>
+									<li><a href="#">정산 내역 관리</a></li>
+									<li><a href="#">세금계산서 설정</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+			    <!-- /sidebar menu -->
+			  </div>
+			</div>
+			<!-- e:left_col -->
+
+			<!-- s:top_nav -->
+			<div class="top_nav">
+	          <div class="nav_menu">
+	            <nav>
+	              <div class="nav toggle">
+	                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+	              </div>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<span>진선미 차장</span>
+							<a href="login.html" class="user-profile" aria-expanded="false">
+								 <i class="fa fa-sign-out"></i>
+							</a>
+						</li>
+						<li role="presentation" class="dropdown">
+							<a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+								<i class="fa fa-bell-o"></i>
+								<span class="badge bg-green">6</span>
+							</a>
+							<ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+			                    <li>
+			                    	<a href="#">
+			                    		<p class="cate">공지사항</p>
+			                    		<p class="content">신규공지사항이 있습니다.</p>
+			                    	</a>
+			                    </li>
+			                    <li>
+			                    	<a href="#">
+			                    		<p class="cate">모집글</p>
+			                    		<p class="content">신규공지사항이 있습니다.</p>
+			                    	</a>
+			                    </li>
+			                    <li>
+			                    	<a href="#">
+			                    		<p class="cate">Q&amp;A</p>
+			                    		<p class="content">신규공지사항이 있습니다.</p>
+			                    	</a>
+			                    </li>
+			                    <li>
+			                    	<a href="#">
+			                    		<p class="cate">결제</p>
+			                    		<p class="content">신규공지사항이 있습니다.신규공지사항이 있습니다.신규공지사항이 있습니다.신규공지사항이 있습니다.</p>
+			                    	</a>
+			                    </li>
+			                </ul>
+						</li>
+						<li>
+							<a class="nav-link" href="#;">
+							<span class="d-none d-lg-inline text-gray-600">2020.04.22(수)</span></span> 
+							</a>
+						</li>
+					</ul>
+
+	            </nav>
+	          </div>
+	        </div>
+	        <!-- e:top_nav -->
+
+	        <!-- s:right_col -->
+			<div class="right_col" role="main">
+
+				<!-- s:레이아웃 -->
+				<nav aria-label="breadcrumb">
+					<ol id="global-nav" class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/index"><i class="fas fa-home"></i></a></li>
+						<li class="breadcrumb-item"><a href="#;">상품 관리</a></li>
+						<li class="breadcrumb-item active" aria-current="page">카테고리 관리</li>
+					</ol>
+				</nav>
+
+				<div class="card shadow mb-3">
+					<a href="" class="d-block card-header py-3">
+						<h6 class="m-0 font-weight-bold text-primary">카테고리 리스트</h6>
+                    </a>
+                    <div class="collapse show in">
+						<div class="card-body">
+							<form action="" method="post">
+								<div class="card bg-gray-100" style="margin-bottom: 5px;">
+									<div class="card-body" style="padding: 15px;">
+			                            <ul style="font-size: small;">
+			                                <li>· 판매하는 상품 목록의 카테고리를 설정 가능합니다.</li>
+											<li>· 카테고리를 추가하여 카테고리명을 입력해주세요</li>
+											<li>· (메뉴) 아이콘을 이동하여 사용자에게 노출되는 순서를 변경할 수 있습니다.</li>
+			                            </ul>
+			                        </div>
+								</div>
+								<table class="table table-boredred table-sm tbl-td-pd-1 mb-0 custom-tbl mt-2">
+									<tbody>
+										<tr id="addCategory">
+											<div class="row">
+												<div class="container m-2">
+													<div class="span12 border border-secondary">
+														<button type="button" class="btn btn-default" id="addBtn" onclick="addCategory();">
+															<span class="glyphicon glyphicon-plus"></span>
+														</button>
+														<span>카테고리 추가</span>
+													</div>
+												</div>
+											</div>
+										</tr>
+										<tr>
+											<div class="form-row" id="inputCategory">
+												<!-- <div class="container m-2">
+													<div class="form-inline span12 border border-0">
+														<div class="col-11">
+															<input type="text" id="categoryName"placeholder="카테고리 입력">
+														</div>
+														<div class="form-group float-right">
+															<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-ok" style="color: blue;"></span></button>
+															<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove-sign" style="color: red;"></span></button>
+														</div>
+													</div>
+												</div> -->
+											</div>
+										</tr>
+										<tr>
+											<div class="form-row" id="registCategory">
+												<!-- <div class="container m-2">
+													<div class="span12 border border-secondary d-flex justify-content-between p-1">
+														<input type="text" class="ml-3" value="coffee" disabled>
+														<div class="btn-group" role="group" aria-label="regitBtnGroup">
+															<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>
+															<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
+															<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span></button>
+														</div>
+													</div>
+												</div> -->
+											</div>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+						</div>
+					</div>
+				</div>	
+				<!-- e:레이아웃 -->
+
+			</div>
+	        <!-- e:right_col -->
+
+	        <!-- s:footer -->
+	        <footer>
+	        	<div class="row footer_row">
+					<div class="second">
+	        			<div class="sitemap">
+	        				<ul>
+	        					<li>
+	        						<h1>관리자 관리</h1>
+	        						<ul>
+	        							<li><a href="#">GA 환경경설정</a></li>
+	        							<li><a href="#">사용자 관리</a></li>
+	        							<li><a href="#">로그인 로그</a></li>
+	        						</ul>
+	        					</li>
+	        					<li>
+	        						<h1>설계사 관리</h1>
+	        						<ul>
+	        							<li><a href="#">설계사 관리</a></li>
+	        						</ul>
+	        					</li>
+	        					<li>
+	        						<h1>보험상품 관리</h1>
+	        						<ul>
+	        							<li><a href="#">상품 관리</a></li>
+	        							<li><a href="#">모집글 관리</a></li>
+	        						</ul>
+	        					</li>
+	        					<li>
+	        						<h1>피보험자 관리</h1>
+	        						<ul>
+	        							<li><a href="#">정보제공자 조회</a></li>
+	        							<li><a href="#">설계사 분배설정</a></li>
+	        							<li><a href="#"></a></li>
+	        							<li><a href="#"></a></li>
+	        						</ul>
+	        					</li>
+	        					<li>
+	        						<h1>게시글 관리</h1>
+	        						<ul>
+	        							<li><a href="#">공지사항</a></li>
+	        							<li><a href="#">FAQ</a></li>
+	        							<li><a href="#">Q&amp;A</a></li>
+	        							<li><a href="#">커뮤니티</a></li>
+	        						</ul>
+	        					</li>
+	        					<li>
+	        						<h1>통계 관리</h1>
+	        						<ul>
+	        							<li><a href="#">피보험자 통계</a></li>
+	        							<li><a href="#">상품계약 통계</a></li>
+	        							<li><a href="#">GA 통계</a></li>
+	        							<li><a href="#">수익 통계</a></li>
+	        							<li><a href="#">손익분석</a></li>
+	        						</ul>
+	        					</li>
+	        					<li>
+	        						<h1>결제 관리</h1>
+	        						<ul>
+	        							<li><a href="#">결제 내역</a></li>
+	        							<li><a href="#">결제 예정금액</a></li>
+	        							<li><a href="#">결제 수단관리</a></li>
+	        							<li><a href="#">세금계산서 설정</a></li>
+	        						</ul>
+	        					</li>
+	        				</ul>
+	        			</div>
+	        		</div>
+	        		<div class="first">
+	        			<h1><img src="images/login_logo_blk.png" width="100" alt=""></h1>
+	        			<h2>(주)제나</h2>
+	        			<ul class="info">
+	        				<li>
+	        					<div class="th">대표이사</div>
+	        					<div class="td">윤명철</div>
+	        				</li>
+	        				<li>
+	        					<div class="th">개인정보책임관리자</div>
+	        					<div class="td">강은주</div>
+	        				</li>
+	        				<li>
+	        					<div class="th">사업자번호</div>
+	        					<div class="td">320-88-00921</div>
+	        				</li>
+	        				<li>
+	        					<div class="th">사무실</div>
+	        					<div class="td">(본사)대구광역시 달서구 성서공단로 46-17(대천동)<br>(지사)서울시 성동구 연무장5길 9-16 블루스톤타워 606호</div>
+	        				</li>
+	        				<li>
+	        					<div class="th"><b>고객지원</b></div>
+	        					<div class="td">
+	        						02-523-6500 | <a href="mailto:info@zenacare.net">info@zenacare.net</a><br>
+	        						AM 09:00 ~ PM 06:00 (평일)<br>
+	        						AM 11:30 ~ PM 12:30 (점심시간)
+	        					</div>
+	        				</li>
+	        			</ul>
+	        		</div>
+	        	</div>
+	        	<div class="clearfix"></div>
+	        </footer>
+	        <!-- e:footer -->
+
+		</div>
+	</div>
+
+	<script src="js/custom.min.js"></script>
+</body>
+</html>

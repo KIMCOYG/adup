@@ -437,7 +437,16 @@
 					<div class="collapse show in" id="regManager">
 						<div class="card-body">
 							<form name="" id="" method="post">
-								<table class="table table-bordered table-sm tbl-td-pd-1 mb-0 custom-tbl">
+								<div class="card bg-gray-100" style="margin-bottom: 5px;">
+									<div class="card-body" style="padding: 15px;">
+			                            <ul style="font-size: small;">
+			                                <li>· 가맹점의 영업 시간 설정 페이지 입니다.</li>
+											<li>· 영업 시간이 다를 경우 전체 시간 설정 이후 별도 수정해주세요.</li>
+											<li>· 영업의 일시정지가 있을 경우 기간을 설정하여 저장해주세요.</li>
+			                            </ul>
+			                        </div>
+			                    </div>
+								<table class="table table-bordered table-sm tbl-td-pd-1 mb-0 custom-tbl mt-2">
 									<colgroup>
 										<col width="10%"/>
 										<col width="40%"/>
@@ -489,7 +498,7 @@
 														<div class="col-2">
 															<input type="text" class="form-control holiMon" placeholder="00">
 														</div>
-														<div class="col-1 form-check">
+														<div class="col-1 text-center">
 															<input type="checkbox" class="form-check-input" id="holi_mon" onclick="setHoliday();">
 														</div>
 													</div>
@@ -512,7 +521,7 @@
 														<div class="col-2">
 															<input type="text" class="form-control holiTue" placeholder="00">
 														</div>
-														<div class="col-1 form-check">
+														<div class="col-1 text-center">
 															<input type="checkbox" class="form-check-input" id="holi_tue" onclick="setHoliday();">
 														</div>
 													</div>
@@ -535,7 +544,7 @@
 														<div class="col-2">
 															<input type="text" class="form-control holiWed" placeholder="00">
 														</div>
-														<div class="col-1 form-check">
+														<div class="col-1 text-center">
 															<input type="checkbox" class="form-check-input" id="holi_wed" onclick="setHoliday();">
 														</div>
 													</div>
@@ -558,7 +567,7 @@
 														<div class="col-2">
 															<input type="text" class="form-control holiThu" placeholder="00">
 														</div>
-														<div class="col-1 form-check">
+														<div class="col-1 text-center">
 															<input type="checkbox" class="form-check-input" id="holi_thu" onclick="setHoliday();">
 														</div>
 													</div>
@@ -581,7 +590,7 @@
 														<div class="col-2">
 															<input type="text" class="form-control holiFri" placeholder="00">
 														</div>
-														<div class="col-1 form-check">
+														<div class="col-1 text-center">
 															<input type="checkbox" class="form-check-input" id="holi_fri" onclick="setHoliday();">
 														</div>
 													</div>
@@ -604,7 +613,7 @@
 														<div class="col-2">
 															<input type="text" class="form-control holiSat" placeholder="00">
 														</div>
-														<div class="col-1 form-check">
+														<div class="col-1 text-center">
 															<input type="checkbox" class="form-check-input" id="holi_sat" onclick="setHoliday();">
 														</div>
 													</div>
@@ -627,7 +636,7 @@
 														<div class="col-2">
 															<input type="text" class="form-control holiSun" placeholder="00">
 														</div>
-														<div class="col-1 form-check">
+														<div class="col-1 text-center">
 															<input type="checkbox" class="form-check-input" id="holi_sun" onclick="setHoliday();">
 														</div>
 													</div>
@@ -654,7 +663,7 @@
 														<div class="col-2">
 															<input type="text" class="form-control" placeholder="00">
 														</div>
-														<div class="col-1">
+														<div class="col-1 text-center">
 															
 														</div>
 													</div>
@@ -851,7 +860,7 @@
 													<span class="ml-4">※ 일시정지 기간 저장 후 즉시 반영 됩니다.</span>
 												</div>
 												<div>
-													<textarea class="w-100" name="" id="" placeholder="영업 휴무/일시정지 안내" style="height: 100px;"></textarea>
+													<textarea class="form-control" name="" id="" placeholder="영업 휴무/일시정지 안내" style="height: 200px;"></textarea>
 												</div>
 											</td>
 										</tr>

@@ -136,41 +136,55 @@
 			});
 		});
 
-		function modifyPw(){ //비밀번호 disabled 함수
-			var chk = $("#chk_a").is(":checked");
-			if(chk==true){
-				$(".hihi").removeAttr("disabled");
-				// $("input[id=newPw1]").removeAttr("disabled");
-				// $("input[id=newPw1]").removeAttr("disabled");
-			} else{
-				$(".hihi").attr('disabled', true);
-				// $("input[id=newPw1]").attr('disabled', true);
-				// $("input[id=newPw1]").attr('disabled', true);
-			}
-		}
-
 		function appendOp1(){
-			$("#addOption1").append(option1());
-			var i = $("#addOption1").size();
-			confirm(i);
+			var i = $(".ao1").size();
+			$("#addOption1").append(option1(i+1));
+			// confirm(i);
 		}
 
-		function appendOp2(){
-			confirm("ssss");
+		function appendOp2(id){
+			// confirm("ssss");
+			// var detailID = "detailOp"+id;
+			
+			$("#detailOp"+id).append(option2(id));
 		}
 		
-		function option1(){
+		function option1(count){
 			var html = '';
-			html += '<div>\n';
+
+			html += '<div id="option'+count+'"">\n';
+			html += '<div class="form-inline ao1" id="option'+count+'">\n';
 			html += '<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>\n';
 			html += '<input type="text" name="" id="" value="" class="" placeholder="상품 설명 입력"/>\n';
-			html += '<button class="btn btn-dark glyphicon glyphicon-plus ml-1" id="plusBtn2" onclick="appendOp2();"></button>\n';
-			html += '<label class="mr-2" for="chk_option">옵션 필수</label>\n';
-			html += '<input type="checkbox" id="chk_option" class="text-center">\n';
-			html += '<div>\n';
+			html += '<button class="btn btn-dark glyphicon glyphicon-plus ml-1 mt-1" id="'+count+'" onclick="appendOp2(this.id);"></button>\n';
+			html += '<div class="form-group">\n';
+			html += '<label class="mr-2 pl-2 form-check-label" for="chk_option">옵션 필수</label>\n';
+			html += '<input type="checkbox" id="chk_option" class="form-check-input">\n';
+			html += '</div>\n';
+			html += '</div>\n'; //
+			html += '<div class="form-group" id="detailOp'+count+'"></div>\n';
 
 			return html;
 		}
+
+		function option2(id){
+			var html = '';
+			
+			// html += '<div class="form-group">\n';
+			html += '<div class="pl-5 mt-2 form-inline row detail_row" id="detailRow'+id+'">\n';
+			html += '<input type="text" placeholder="상세 옵션 값'+id+'">\n';
+			html += '<input type="text" class="ml-2" placeholder="금액" style="width: 100px;">\n';
+			html += '<button class="btn btn-default btn_remove"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true" style="color: red;"></span></button>\n';
+			html += '</div>\n';
+
+			return html;
+		}
+		//추가 상세옵션 삭제
+		$(document).on("click",".btn_remove",function(e){
+			e.preventDefault();
+
+			$(this).parents(".detail_row").remove();
+		});
 	</script>
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 </head>
@@ -336,10 +350,10 @@
 											</td>
 											<th scope="row" rowspan="5" class="bg-gray-100 text-center">상품 사진</th>
 											<td rowspan="5">
-												<div class="input-group text-center">
-													<div class="input-group text-center profile-group">
+												<div class="input-group text-center mb-0">
+													<div class="input-group text-center profile-group mb-0">
 														<img id="profileImageView" src="" class="img-thumbnail img-celeb-profile" alt="" style="display:none;">
-														<p id="profileNoImageText" class="text-monospace img-thumbnail img-celeb-profile img-celeb-profile-no">No image</p>
+														<p id="profileNoImageText" class="text-monospace img-thumbnail img-celeb-profile img-celeb-profile-no" style="height:500px;">No image</p>
 													</div>
 													<div class="input-group-append custom-file-right-btn">
 														<input type="file" class="custom-file-input" name="profileImage" id="profileImage" alt="프로필 사진" imagefile="true" required="">
@@ -359,11 +373,13 @@
 										<tr>
 											<th scope="row" class="bg-gray-100 text-center">가격</th>
 											<td>
-												<div class="input-group mb-1 text-center">
-													<input type="text" name="" id="" value="12000" class="form-control form-control-sm" placeholder="상품명 입력"/>
-													<div class="custom-control custom-checkbox custom-control-inline checkbox">
-														<input type="checkbox" class="custom-control-input" name="" id="chk_a" value="" onclick="modifyPw();"/>
-														<label class="custom-control-label" for="chk_a">가격 정보 없음</label>
+												<div class="form-row">
+													<div class="col">
+														<input type="text" name="" id="" value="12000" class="form-control form-control-sm" placeholder="상품명 입력"/>
+													</div>
+													<div class="col form-check form-check-inline">
+														<input type="checkbox" class="form-check-input" name="" id="price" value=""/>
+														<label class="form-check-label" for="price">가격 정보 없음</label>
 													</div>
 												</div>
 											</td>
@@ -371,10 +387,14 @@
 										<tr>
 											<th scope="row" class="bg-gray-100 text-center">할인판매적용</th>
 											<td>
-												<div class="input-group mb-1">
-													<input type="text" name="" id="" value="8.3" class="form-control form-control-sm col-xs-2" placeholder=""/>
-                                                    <input type="text" name="" id="" value="11,000" class="form-control form-control-sm col-xs-2" placeholder=""/>
-                                                    <p>* 입력 시 자동 계산</p>
+												<div class="form-row pt-1">
+													<div class="col input-group">
+														<input type="text" name="" id="" value="8.3" class="form-control form-control-sm col-xs-2" placeholder=""/>
+													</div>
+													<div class="col">
+														<input type="text" name="" id="" value="11,000" class="form-control form-control-sm col-xs-2" placeholder=""/>
+													</div>
+                                                    <span class="col"><b>* 입력 시 자동 계산</b></span>
                                                 </div>
 											</td>							
 											
@@ -387,19 +407,15 @@
 										</tr>
 										<tr>
 											<th scope="row" rowspan="2" class="bg-gray-100 text-center"><span class="text-danger">* </span>옵션 설정</th>
-											<th colspan="3">
+											<td colspan="3">
 												<div>
 													<span>옵션 추가</span>
 													<button class="btn btn-dark glyphicon glyphicon-plus ml-1" id="plusBtn1" onclick="appendOp1();"></button>
 												</div>
-											</th>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3" id="addOption1">
-												<div class="float-left">
-													<!-- jquery로 구현 -->
+												<div id="addOption1">
+													
 												</div>
-                                            </td>
+											</td>
                                         </tr>
 									</tbody>
 								</table>

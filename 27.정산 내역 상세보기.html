@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="" />
+	<meta property="og:title" content="" />
+	<meta property="og:url" content="" />
+	<meta property="og:image" content="" />
+	<meta property="og:description" content="" />
+	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+	
+	<title>ZENA.Biz :: 관리자</title>
+	
+	<!-- Custom fonts for this template-->
+	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> 
+		
+	<!-- Custom styles for this template-->
+	<link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/sb-admin-2.min.css" rel="stylesheet">
+	<link href="css/common.css" rel="stylesheet">
+	<link href="css/custom.min.css" rel="stylesheet">
+	<link href="css/layout.css" rel="stylesheet">
+	
+	<!-- Bootstrap core JavaScript-->
+  	<script src="vendor/jquery/dist/jquery.min.js"></script>
+  	<script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  	<!-- Core plugin JavaScript-->
+  	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  	<!-- Custom scripts for all pages-->
+  	<script src="js/sb-admin-2.js"></script>
+		
+	<script type="text/javascript">
+		var base = '.';	
+	</script>
+	
+	<!-- datepicker -->
+	<link rel="stylesheet" href="js/lib/jquery-ui/1.12.1/themes/dark-hive/jquery-ui.min.css" media="screen, projection"/>
+	<script src="js/lib/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	
+	<script src="js/lib/josa.js"></script>
+	<script src="js/common.js"></script>
+	<script src="js/storage.js"></script>
+	
+	<script src="js/validation/jquery.alerts-1.1/jquery.alerts.js"></script>
+	<script src="js/validation/common.js"></script>	
+	<script type="text/javascript" src="js/lib/jquery.i18n.properties.js"></script>	
+	<link rel="stylesheet" href="js/validation/jquery.alerts-1.1/jquery.alerts.css">
+	
+	<script type="text/javascript">
+		var dtNow = new Date();
+		
+		$(function() {
+			$(".datepicker").datepicker({
+				buttonImageOnly: false,
+				prevText: '이전달',
+				nextText: '다음달',
+				monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+				dayNamesMin:['일','월','화','수','목','금','토'],
+				changeYear: true,
+				/* minDate: '-100y', */
+				/* yearRange: 'c-100:c+1', */
+				changeMonth: true,
+				showMonthAfterYear: true,
+				dateFormat: 'yy-mm-dd',
+				duration: '',
+				isRTL: false,
+				/* beforeShow : function(input, inst) {
+			        if($(this).val() != ""){
+			        	var selectYear = new Date($(this).val());
+			        	var nowYear = dtNow.getFullYear();
+			        	var num = parseInt(selectYear.getFullYear()) - nowYear;
+			        	if(num > 100){
+							inst.settings.yearRange = Number(nowYear) - 1 + ':' + Number(Number(nowYear) + num);
+						} else if (num < -100){
+							inst.settings.yearRange = Number(Number(Number(nowYear) + num) - 1) + ':' + Number(Number(nowYear) + 1);
+						} else {
+							inst.settings.yearRange = Number(nowYear) - 100 + ':' + Number(Number(nowYear) + 1);
+						}
+					}
+			    } */
+			}).keyup(function(e) {
+		    if(e.keyCode == 8 || e.keyCode == 46) {
+		        $.datepicker._clearDate(this);
+		    }});
+			
+			//datepicker 달력 아이콘 클릭 시 활성
+			$('.datepiker-wrapper').bind('click', function(){
+				$('#' + $(this).data('target')).focus();
+			});
+		});
+		
+		if(!fn_br_chrome_browser_check()){
+			jsAlert.alert('경고', '해당 사이트는 크롬브라우저에 최적화되어 있습니다.<br/>크롬브라우저에서 이용해주세요.', null, fn_login, '확인');
+		}
+
+		$(document).ready(function(){
+			//다음 주소 검색
+			$('#coZipcode, #coZipcodeBtn').bind('click', function(){
+				fn_daum_zipcode_search('coZipcode', 'coAddr', 'coAddrDtl');
+			});
+		});
+	</script>
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+</head>
+<body class="nav-md">
+	<div class="container body">
+		<div class="main_container">
+
+			<!-- s:left_col -->
+			<div class="col-md-3 left_col">
+				<div class="left_col scroll-view">
+				  <div class="navbar nav_title" style="border: 0;">
+					<a href="index.html" class="site_title"><img src="images/login_logo_wht.png" alt="" /></a>
+				  </div>
+  
+				  <div class="clearfix"></div>
+  
+				  <!-- sidebar menu -->
+				  <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+					  <div class="menu_section">
+						  <ul class="nav side-menu">
+							  <li class="fnb"><img src="images/logo_adup.png" width="100%" alt=""></li>
+							  <li><a><i class="fas fa-fw fa-tachometer-alt"></i> Dashboard </a></li>
+							  <li><a><i class="fas fa-fw fa-cog"></i> 관리자 관리 <span class="fa fa-chevron-down"></span></a>
+								  <ul class="nav child_menu">
+									  <li><a href="#">F&B 환경설정</a></li>
+									  <li><a href="#">사용자 관리</a></li>
+									  <li><a href="#">영업시간 관리</a></li>
+									  <li><a href="#">로그인 로그</a></li>
+								  </ul>
+							  </li>
+							  <li><a><i class="fas fa-users"></i> 상품 관리 <span class="fa fa-chevron-down"></span></a>
+								  <ul class="nav child_menu">
+									  <li><a href="#">카테코리 관리</a></li>
+									  <li><a href="#">상품 관리</a></li>
+								  </ul>
+							  </li>
+							  <li><a><i class="fas fa-building"></i> 주문 관리 <span class="fa fa-chevron-down"></span></a>
+								  <ul class="nav child_menu">
+									  <li><a href="#">실시간 주문 관리</a></li>
+								  </ul>
+							  </li>
+							  <li><a><i class="fas fa-book-open"></i> 게시글 관리 <span class="fa fa-chevron-down"></span></a>
+								  <ul class="nav child_menu">
+									  <li><a href="#">공지사항</a></li>
+									  <li><a href="#">FAQ</a></li>
+									  <li><a href="#">Q&A</a></li>
+								  </ul>
+							  </li>
+							  <li><a><i class="fas fa-chart-line"></i> 통계 관리 <span class="fa fa-chevron-down"></span></a>
+								  <ul class="nav child_menu">
+									  <li><a href="#">기간별 결제</a></li>
+									  <li><a href="#">데이터 통계</a></li>
+									  <li><a href="#">수익통계</a></li>
+								  </ul>
+							  </li>
+							  <li><a><i class="fas fa-chart-line"></i> 정산 관리 <span class="fa fa-chevron-down"></span></a>
+								  <ul class="nav child_menu">
+									  <li><a href="#">정산 신청 관리</a></li>
+									  <li><a href="#">정산 내역 관리</a></li>
+									  <li><a href="#">세금계산서 설정</a></li>
+								  </ul>
+							  </li>
+						  </ul>
+					  </div>
+				  </div>
+				  <!-- /sidebar menu -->
+				</div>
+			  </div>
+			  <!-- e:left_col -->
+  
+			  <!-- s:top_nav -->
+			  <div class="top_nav">
+				<div class="nav_menu">
+				  <nav>
+					<div class="nav toggle">
+					  <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+					</div>
+  
+					  <ul class="nav navbar-nav navbar-right">
+						  <li>
+							  <span>진선미 차장</span>
+							  <a href="login.html" class="user-profile" aria-expanded="false">
+								   <i class="fa fa-sign-out"></i>
+							  </a>
+						  </li>
+						  <li role="presentation" class="dropdown">
+							  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+								  <i class="fa fa-bell-o"></i>
+								  <span class="badge bg-green">6</span>
+							  </a>
+							  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+								  <li>
+									  <a href="#">
+										  <p class="cate">공지사항</p>
+										  <p class="content">신규공지사항이 있습니다.</p>
+									  </a>
+								  </li>
+								  <li>
+									  <a href="#">
+										  <p class="cate">모집글</p>
+										  <p class="content">신규공지사항이 있습니다.</p>
+									  </a>
+								  </li>
+								  <li>
+									  <a href="#">
+										  <p class="cate">Q&amp;A</p>
+										  <p class="content">신규공지사항이 있습니다.</p>
+									  </a>
+								  </li>
+								  <li>
+									  <a href="#">
+										  <p class="cate">결제</p>
+										  <p class="content">신규공지사항이 있습니다.신규공지사항이 있습니다.신규공지사항이 있습니다.신규공지사항이 있습니다.</p>
+									  </a>
+								  </li>
+							  </ul>
+						  </li>
+						  <li>
+							  <a class="nav-link" href="#;">
+							  <span class="d-none d-lg-inline text-gray-600">2020.04.22(수)</span></span> 
+							  </a>
+						  </li>
+					  </ul>
+  
+				  </nav>
+				</div>
+			  </div>
+			  <!-- e:top_nav -->
+
+			<!-- Page level plugins -->
+			<link rel="stylesheet" href="vendor/datatables/dataTables.bootstrap4.min.css" />
+			<link rel="stylesheet" href="vendor/datatables/buttons.dataTables.min.css" />
+			<link rel="stylesheet" href="vendor/datatables/responsive.dataTables.min.css" /> 
+			<link rel="stylesheet" href="vendor/datatables/select.dataTables.min.css" />  
+			<link rel="stylesheet" href="css/tables.css" />
+			<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+			<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+			<script src="vendor/datatables/dataTables.buttons.min.js"></script>
+			<script src="vendor/datatables/buttons.html5.min.js"></script>
+			<script src="vendor/datatables/jszip.min.js"></script>
+			<script src="vendor/datatables/dataTables.responsive.min.js"></script>
+			<script src="vendor/datatables/dataTables.select.min.js"></script>
+
+			<!-- monthpicker -->
+			<script src="js/lib/jquery.mtz.monthpicker.js"></script>
+			<style>
+				.mtz-monthpicker select {color:#ffffff;background-color:#000000;}
+			</style>
+
+<script type="text/javascript">
+	//Setting Defaults
+	$.extend( $.fn.dataTable.defaults, {
+		language: {
+			"emptyTable": "조회된 데이터가 없습니다.",
+			"lengthMenu": "Show _MENU_ entries",
+			"info": "현재 _START_ - _END_ / _TOTAL_건",
+			"infoEmpty": "데이터 없음",
+			"infoFiltered": "( _MAX_건의 데이터에서 필터링됨 )",
+			"search": "에서 검색: ",
+			"zeroRecords": "일치하는 데이터가 없습니다.",
+			"loadingRecords": "Loading...",
+			"processing":     "잠시만 기다려 주세요...",
+			"paginate": {
+				"next": "Next →",
+				"previous": "← Previous"
+			}
+		},
+		ajax:{
+			headers: {"AJAX": true}
+		},
+		searching: true,
+		paging: true,
+		responsive: false,
+		processing: false,
+		lengthChange: true,
+		select: false,
+		ordering: true
+	} );
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#searchDrop .dropdown-menu a').bind('click', function (e) {
+				var html = $(this).html();
+				var value = $(this).attr('value');
+				$('#searchDrop button.dropdown-toggle').html(html);
+				$('#searchFilter').val(value);
+			});
+			
+			var enterTbl = $('#enter-tbl').DataTable({
+				language: {
+					"emptyTable": "조회된 기획사 정보가 없습니다."
+				},
+				ajax: "24.FAQ 리스트.txt",
+				columns: [
+					{"data": "col1"},
+					{"data": "col2"},
+					{"data": "col3",
+						"render": function(data, type, row){
+							//console.log('data : ' + data + ", type : " + type + ", row : " + JSON.stringify(row));
+							if(type=='display'){
+								data = '<a href="#" onclick="$(\'.answer\').hide();$(\'#answer'+row.col1+'\').show();">'+row.col3+'</a>\n';
+								data += '<div id="answer'+row.col1+'" class="answer" style="margin-top: 5px;border-top: 2px solid #ddd;width: 100%;padding: 5px;display:none;">\n';
+								data += '결제일자는 10일, 15일, 20일, 25일 4개의 일자를 선택하실 수 있습니다.<br/>\n';
+								data += '최초 가입신청 시 희망 하는 결제일자를 선택하시게 됩니다.<br/><br/>\n';
+								data += '변경을 원하실 경우는 고객센터 02-523-6500으로 전화 주시면 변경처리 가능합니다.<br/>\n';
+								data += '변경된 결제일자는 익월부터 적용되어집니다.<br/><br/>\n';
+								data += '변경을 원하신 달에는 기존 결제일이 적용되니 주의해 주시기 바랍니다.</div>';
+							}
+							return data;
+						}
+					},
+					{"data": "col4"},
+					{"data": "col5"},
+					{"data": "col6"}
+				],
+				columnDefs: [
+					{	//tbody 텍스트 가운데 정렬 클레스 추가
+						targets: [ 0, 1 ],
+						className: 'tbl-align-center'
+					},
+					{	//헤더 정렬 기능 제외 처리
+						targets: [ 0, 1, 2 ],
+						orderable: false
+					},
+					{	//검색 제외 처리
+						targets: [ 0, 1, 2 ],
+						searchable: false
+					}
+				],
+				footerCallback: function (row, data, start, end, display) {
+							var api = this.api();
+							
+							tblRows = api.rows({ page: 'current' }).data().length;
+							
+							// Remove the formatting to get integer data for summation
+							var intVal = function (i) {
+								return typeof i === 'string' ? i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0;
+							};
+							
+							// 정산 합계
+							var totsum1 = api.column().data().reduce(function () {
+								var tot = 0
+								api.column(3).data().filter(function (v, i) {
+									tot += intVal(api.column(3).data()[i]);
+								});
+								return tot;
+							}, 0);
+							
+							$("#totsum1").html(totsum1.toLocaleString() + '원');
+
+							var totsum2 = api.column().data().reduce(function () {
+								var tot = 0
+								api.column(4).data().filter(function (v, i) {
+									tot += intVal(api.column(4).data()[i]);
+								});
+								return tot;
+							}, 0);
+							
+							$("#totsum2").html(totsum2.toLocaleString() + '원');
+				},
+				info: true,
+				searching: false, 		//테이블 내 데이터 검색 사용 여부(이때 생성되는 조회창은 사용하지 않을 경우 따로 숨겨주어야 한다.)
+				paging: true,			//페이징 사용 여부
+				responsive: true,		//테이블 크기 보정
+				processing: false,
+				lengthChange: true,
+				select: true,
+				//ordering: false,		//헤더 정렬 기능 사용 여부
+				order: [[ 0, "desc" ]]	//첫 로딩 후 데이터 정렬 기준
+			});
+	
+			//테이블 내 데이터 조회 설정을 하면 생성되는 내부 조회 입력폼을 숨겨준다.
+			//$("#enter-tbl_filter").hide();
+			$('.dt-buttons').hide();
+
+			//테이블 내 데이터 조회 필터 추가
+			//1. 기존 검색 필터 삭제
+			$('#enter-tbl_filter').html('');
+			//2. input 그룹 생성
+			$('#enter-tbl_filter').append('<div id="search_filter_div" class="input-group mb-0"></div>');
+			//3. 생성된 그룹 내 각 조회 조건 생성
+			$('#search_filter_div').append(fn_input_search_make());
+
+			//검색 버튼 조회 실행
+			$(document).on('click', '#searchBtn', function(){
+				fn_search();
+			});
+		});
+
+		//입력 필드 및 버튼 추가
+		function fn_input_search_make(){
+			var html = '';
+			
+			html += '<div class="input-group mb-0">\n';
+			html += '	<select name="" id="searchFilter" class="custom-select input-group-prepend input-radius">\n';
+			html += '		<option value="">구분 전체</option>\n';
+			html += '		<option value="">회원</option>\n';
+			html += '		<option value="">GA</option>\n';
+			html += '		<option value="">F&B</option>\n';
+			html += '		<option value="">마이데이터</option>\n';
+			html += '		<option value="">결제</option>\n';
+			html += '		<option value="">제나 페이</option>\n';
+			html += '		<option value="">기타</option>\n';
+			html += '	</select>\n';
+			html += '	<input type="text" id="searchText" class="form-control ml-0 input-radius type2" onkeydown="if(event.keyCode==13) fn_search();" placeholder="제목 검색어 입력" aria-label="제목 검색어 입력" aria-describedby="searchBtn">\n';
+			html += '	<div class="input-group-append">\n';
+			html += '		<button class="btn btn-success input-radius-button" type="button" id="searchBtn">조회</button>\n';
+			html += '	</div>\n';
+			html += '</div>\n';
+			return html;
+		}
+
+		//검색 버튼 & input enter..
+		function fn_search(){
+			//var column_idx = Number($('#searchFilter').val());
+			$('#enter-tbl').DataTable().column(1).search($('#searchText').val()).draw();
+		}
+	</script>
+
+	        <!-- s:right_col -->
+			<div class="right_col" role="main">
+
+				<!-- s:레이아웃 -->
+				<nav aria-label="breadcrumb">
+					<ol id="global-nav" class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/index"><i class="fas fa-home"></i></a></li>
+						<li class="breadcrumb-item"><a href="#;">정산 관리</a></li>
+						<li class="breadcrumb-item active" aria-current="page">정산 내역 관리</li>
+					</ol>
+				</nav>
+
+				<div class="card shadow mb-3">
+					<a href="#regManager" class="d-block card-header py-3" role="button" aria-expanded="true" aria-controls="regManager">
+						<h6 class="m-0 font-weight-bold text-primary">정산 내역 상세보기</h6>
+					</a>
+					<div class="collapse show in" id="regManager">
+						<div class="card-body">
+							<div class="tab-content">
+								<div class="tab-pane fade in active" id="tab1">
+									<div class="table-responsive-sm">
+										<table class="table table-bordered table-sm tbl-td-pd-1 mb-0 custom-tbl">
+											<colgroup>
+												<col width="20%"/>
+												<col width="30%"/>
+												<col width="10%"/>
+												<col width="15%"/>
+												<col width="10%"/>
+												<col width="15%"/>
+											</colgroup>
+											<tbody>
+												<tr>
+													<th scope="row" class="bg-gray-100 text-center">정산 신청 일시</th>
+													<td>
+														<p class="text-justify txt-normal">2020-05-13 13:15:08</p>
+													</td>
+													<th scope="row" class="bg-gray-100 text-center">거래 기간</th>
+													<td colspan="5">
+														<p class="text-justify txt-normal">2020-04-01 ~ 2020-04-30</p>
+													</td>
+												</tr>
+												<tr>
+													<th scope="row" class="bg-gray-100 text-center">정산 완료 일시</th>
+													<td>
+														<p class="text-justify txt-normal">2020-06-10 11:05:37</p>
+													</td>
+													<th scope="row" class="bg-gray-100 text-center">심사 상태</th>
+													<td>
+														<p class="text-justify txt-normal">승인완료</p>
+													</td>
+													<th scope="row" class="bg-gray-100 text-center">지급 상태</th>
+													<td>
+														<p class="text-justify txt-normal">지급완료</p>
+													</td>
+												</tr>
+												<tr>
+													<th scope="row" class="bg-gray-100 text-center bdr-none">금액</th>
+													<th colspan="5" class="bg-gray-100 bdl-none">&nbsp;</th>
+												</tr>
+												<tr>
+													<th scope="row" class="bg-gray-100 text-center">정산 신청 금액 (A)</th>
+													<td colspan="5">
+														<p class="text-justify txt-normal" style="color:#64b7ea;">1,245,000 원</p>
+													</td>
+												</tr>
+												<tr>
+													<th scope="row" class="bg-gray-100 text-center">차감금액 (B)</th>
+													<td colspan="5">
+														<p class="text-justify txt-normal" style="color: red">139,300 원</p>
+													</td>
+												</tr>
+												<tr>
+													<th scope="row" class="bg-gray-100 text-center">정산 금액 (A-B)</th>
+													<td colspan="5">
+														<p class="text-justify txt-normal" style="color: green; font-weight: 700;">1,005,700 원</p>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+                <div class="card shadow mb-3">
+					<a href="#regManager" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="regManager">
+						<h6 class="m-0 font-weight-bold text-primary">정산 신청 금액(A) 내역</h6>
+					</a>
+					<div class="collapse show in" id="regManager">
+						<div class="card-body">
+							<div class="table-responsive-sm">
+								<table id="enter-tbl" class="table table-bordered table-striped table-sm tbl-td-pd-1 mb-0" style="width:100%">
+									<colgroup>
+										<col width="4%"/>
+										<col width="10%"/>
+										<col width="6%"/>
+										<col width="11%"/>
+										<col width="*"/>
+									</colgroup>
+									<thead class="thead-dark">
+										<tr>
+											<th scope="col" class="text-center noExport">No.</th>
+											<th scope="col" class="text-center">주문번호</th>
+											<th scope="col" class="text-center">주문시간</th>
+											<th scope="col" class="text-center">예약시간</th>
+                                            <th scope="col" class="text-center">주문내역</th>
+                                            <th scope="col" class="text-center">판매금액</th>
+										</tr>
+									</thead>
+									<tbody>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3" class="text-center">페이지 합계</td>
+                                            <td id = "totsum1"></td>
+                                            <td class="text-center">전체 합계</td>
+                                            <td id = "totsum2"></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="card-body pt-4 pl-0 pr-0">
+                                    <div class="d-flex justify-content-between">
+										<div class="d-flex justify-content-between mt-4">
+											<div class="input-group justify-content-end" role="group">
+												<a href="#" class="btn btn-secondary btn-sm btn-icon-split">
+													<span class="icon text-white-50">
+														<i class="fas fa-list"></i>
+													</span>
+													<span class="text">목록</span>
+												</a>
+											</div>
+										</div>
+                                        <div class="d-flex justify-content-between mt-4">
+											<div class="input-group justify-content-end" role="group">
+												<a href="#" class="btn btn-success btn-sm btn-icon-split">
+													<span class="icon text-white-50">
+														<i class="fas fa-file-excel"></i>
+													</span>
+													<span class="text">EXCEL</span>
+												</a>
+											</div>
+										</div>
+                                    </div>
+                                </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- e:레이아웃 -->
+
+			</div>
+	        <!-- e:right_col -->
+
+	        <!-- s:footer -->
+	        <footer>
+	        	<div class="row footer_row">
+					<div class="second">
+	        			<div class="sitemap">
+	        				<ul>
+	        					<li>
+	        						<h1>관리자 관리</h1>
+	        						<ul>
+	        							<li><a href="#">GA 환경경설정</a></li>
+	        							<li><a href="#">사용자 관리</a></li>
+	        							<li><a href="#">로그인 로그</a></li>
+	        						</ul>
+	        					</li>
+	        					<li>
+	        						<h1>설계사 관리</h1>
+	        						<ul>
+	        							<li><a href="#">설계사 관리</a></li>
+	        						</ul>
+	        					</li>
+	        					<li>
+	        						<h1>보험상품 관리</h1>
+	        						<ul>
+	        							<li><a href="#">상품 관리</a></li>
+	        							<li><a href="#">모집글 관리</a></li>
+	        						</ul>
+	        					</li>
+	        					<li>
+	        						<h1>피보험자 관리</h1>
+	        						<ul>
+	        							<li><a href="#">정보제공자 조회</a></li>
+	        							<li><a href="#">설계사 분배설정</a></li>
+	        							<li><a href="#"></a></li>
+	        							<li><a href="#"></a></li>
+	        						</ul>
+	        					</li>
+	        					<li>
+	        						<h1>게시글 관리</h1>
+	        						<ul>
+	        							<li><a href="#">공지사항</a></li>
+	        							<li><a href="#">FAQ</a></li>
+	        							<li><a href="#">Q&amp;A</a></li>
+	        							<li><a href="#">커뮤니티</a></li>
+	        						</ul>
+	        					</li>
+	        					<li>
+	        						<h1>통계 관리</h1>
+	        						<ul>
+	        							<li><a href="#">피보험자 통계</a></li>
+	        							<li><a href="#">상품계약 통계</a></li>
+	        							<li><a href="#">GA 통계</a></li>
+	        							<li><a href="#">수익 통계</a></li>
+	        							<li><a href="#">손익분석</a></li>
+	        						</ul>
+	        					</li>
+	        					<li>
+	        						<h1>결제 관리</h1>
+	        						<ul>
+	        							<li><a href="#">결제 내역</a></li>
+	        							<li><a href="#">결제 예정금액</a></li>
+	        							<li><a href="#">결제 수단관리</a></li>
+	        							<li><a href="#">세금계산서 설정</a></li>
+	        						</ul>
+	        					</li>
+	        				</ul>
+	        			</div>
+	        		</div>
+	        		<div class="first">
+	        			<h1><img src="images/login_logo_blk.png" width="100" alt=""></h1>
+	        			<h2>(주)제나</h2>
+	        			<ul class="info">
+	        				<li>
+	        					<div class="th">대표이사</div>
+	        					<div class="td">윤명철</div>
+	        				</li>
+	        				<li>
+	        					<div class="th">개인정보책임관리자</div>
+	        					<div class="td">강은주</div>
+	        				</li>
+	        				<li>
+	        					<div class="th">사업자번호</div>
+	        					<div class="td">320-88-00921</div>
+	        				</li>
+	        				<li>
+	        					<div class="th">사무실</div>
+	        					<div class="td">(본사)대구광역시 달서구 성서공단로 46-17(대천동)<br>(지사)서울시 성동구 연무장5길 9-16 블루스톤타워 606호</div>
+	        				</li>
+	        				<li>
+	        					<div class="th"><b>고객지원</b></div>
+	        					<div class="td">
+	        						02-523-6500 | <a href="mailto:info@zenacare.net">info@zenacare.net</a><br>
+	        						AM 09:00 ~ PM 06:00 (평일)<br>
+	        						AM 11:30 ~ PM 12:30 (점심시간)
+	        					</div>
+	        				</li>
+	        			</ul>
+	        		</div>
+	        	</div>
+	        	<div class="clearfix"></div>
+	        </footer>
+	        <!-- e:footer -->
+
+		</div>
+	</div>
+
+	<script src="js/custom.min.js"></script>
+</body>
+</html>
