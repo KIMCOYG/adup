@@ -114,16 +114,16 @@
 	<div class="container body">
 		<div class="main_container">
 
-			<!-- s:left_col -->
-			<div class="col-md-3 left_col">
-				<div class="left_col scroll-view">
-				  <div class="navbar nav_title" style="border: 0;">
-					<a href="index.html" class="site_title"><img src="images/login_logo_wht.png" alt="" /></a>
-				  </div>
-  
-				  <div class="clearfix"></div>
-  
-				  <!-- sidebar menu -->
+		<!-- s:left_col -->
+		<div class="col-md-3 left_col">
+			<div class="left_col scroll-view">
+				<div class="navbar nav_title" style="border: 0;">
+				<a href="index.html" class="site_title"><img src="images/login_logo_wht.png" alt="" /></a>
+				</div>
+
+				<div class="clearfix"></div>
+
+				<!-- sidebar menu -->
 				<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 					<div class="menu_section">
 						<ul class="nav side-menu">
@@ -172,69 +172,244 @@
 						</ul>
 					</div>
 				</div>
-				  <!-- /sidebar menu -->
+				<!-- /sidebar menu -->
+			</div>
+			</div>
+			<!-- e:left_col -->
+
+			<!-- s:top_nav -->
+			<div class="top_nav">
+			<div class="nav_menu">
+				<nav>
+				<div class="nav toggle">
+					<a id="menu_toggle"><i class="fa fa-bars"></i></a>
 				</div>
-			  </div>
-			  <!-- e:left_col -->
-  
-			  <!-- s:top_nav -->
-			  <div class="top_nav">
-				<div class="nav_menu">
-				  <nav>
-					<div class="nav toggle">
-					  <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-					</div>
-  
-					  <ul class="nav navbar-nav navbar-right">
-						  <li>
-							  <span>진선미 차장</span>
-							  <a href="login.html" class="user-profile" aria-expanded="false">
-								   <i class="fa fa-sign-out"></i>
-							  </a>
-						  </li>
-						  <li role="presentation" class="dropdown">
-							  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-								  <i class="fa fa-bell-o"></i>
-								  <span class="badge bg-green">6</span>
-							  </a>
-							  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-								  <li>
-									  <a href="#">
-										  <p class="cate">공지사항</p>
-										  <p class="content">신규공지사항이 있습니다.</p>
-									  </a>
-								  </li>
-								  <li>
-									  <a href="#">
-										  <p class="cate">모집글</p>
-										  <p class="content">신규공지사항이 있습니다.</p>
-									  </a>
-								  </li>
-								  <li>
-									  <a href="#">
-										  <p class="cate">Q&amp;A</p>
-										  <p class="content">신규공지사항이 있습니다.</p>
-									  </a>
-								  </li>
-								  <li>
-									  <a href="#">
-										  <p class="cate">결제</p>
-										  <p class="content">신규공지사항이 있습니다.신규공지사항이 있습니다.신규공지사항이 있습니다.신규공지사항이 있습니다.</p>
-									  </a>
-								  </li>
-							  </ul>
-						  </li>
-						  <li>
-							  <a class="nav-link" href="#;">
-							  <span class="d-none d-lg-inline text-gray-600">2020.04.22(수)</span></span> 
-							  </a>
-						  </li>
-					  </ul>
-  
-				  </nav>
-				</div>
-			  </div>
-			  <!-- e:top_nav -->
+
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<span>진선미 차장</span>
+							<a href="login.html" class="user-profile" aria-expanded="false">
+								<i class="fa fa-sign-out"></i>
+							</a>
+						</li>
+						<li role="presentation" class="dropdown">
+							<a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+								<i class="fa fa-bell-o"></i>
+								<span class="badge bg-green">6</span>
+							</a>
+							<ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+								<li>
+									<a href="#">
+										<p class="cate">공지사항</p>
+										<p class="content">신규공지사항이 있습니다.</p>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<p class="cate">모집글</p>
+										<p class="content">신규공지사항이 있습니다.</p>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<p class="cate">Q&amp;A</p>
+										<p class="content">신규공지사항이 있습니다.</p>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<p class="cate">결제</p>
+										<p class="content">신규공지사항이 있습니다.신규공지사항이 있습니다.신규공지사항이 있습니다.신규공지사항이 있습니다.</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a class="nav-link" href="#;">
+							<span class="d-none d-lg-inline text-gray-600">2020.04.22(수)</span></span> 
+							</a>
+						</li>
+					</ul>
+
+				</nav>
+			</div>
+			</div>
+			<!-- e:top_nav -->
+
+	        <!-- Page level plugins -->
+			<link rel="stylesheet" href="vendor/datatables/dataTables.bootstrap4.min.css" />
+			<link rel="stylesheet" href="vendor/datatables/buttons.dataTables.min.css" />
+			<link rel="stylesheet" href="vendor/datatables/responsive.dataTables.min.css" /> 
+			<link rel="stylesheet" href="vendor/datatables/select.dataTables.min.css" />  
+			<link rel="stylesheet" href="css/tables.css" />
+			<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+			<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+			<script src="vendor/datatables/dataTables.buttons.min.js"></script>
+			<script src="vendor/datatables/buttons.html5.min.js"></script>
+			<script src="vendor/datatables/jszip.min.js"></script>
+			<script src="vendor/datatables/dataTables.responsive.min.js"></script>
+			<script src="vendor/datatables/dataTables.select.min.js"></script>
+
+			<script src="vendor/chart.js/Chart.min.js"></script>
+
+            <script type="text/javascript">
+				var joinChart;
+
+				var data = [
+					{label:'판매금액', type:'line',data:[125, 100, 80, 12, 37, 27, 0, 0, 0, 0, 0, 0 ]},
+				];
+
+				var labels = ['2020.01', '2020.02', '2020.03', '2020.04', '2020.05', '2020.06', '2020.07', '2020.08', '2020.09', '2020.10', '2020.11', '2020.12'];
+				
+				$(document).ready(function(){
+					joinChart = fn_make_Chart("joinChart", data, labels, "bottom", "line");
+				});
+
+				function fn_make_Chart(idNm, data, labels, legend_position, chartType){
+				
+					if(legend_position == null) legend_position = 'top';
+					
+					var ctx = document.getElementById(idNm);
+					
+					var chart_data = {
+							labels: labels,
+							datasets: [],
+					};
+
+					var dataset = new Array();
+					for(var i=0;i<data.length;i++){
+						var yAxisId = 'y-axis-1';
+						if (i<1) {
+							yAxisId = 'y-axis-2';
+						}
+						var tmp_dataset = {
+								type: data[i].type,
+								label: data[i].label,
+								fill: false,
+								lineTension: 0.3,
+								backgroundColor: chart_colors[i],
+								borderColor: chart_colors[i],
+								pointRadius: 3,
+								pointBackgroundColor: "#fff",
+								pointBorderColor: chart_colors[i],
+								pointHoverRadius: 3,
+								pointHoverBackgroundColor: "#fff",
+								pointHoverBorderColor: chart_colors_hover[i],
+								pointHitRadius: 10,
+								pointBorderWidth: 2,
+								yAxisID:yAxisId,
+								data: data[i].data,
+						};
+						
+						chart_data.datasets.push(tmp_dataset);
+					}
+					
+					var options = {
+						responsive: true,
+						maintainAspectRatio: false,
+						layout: {
+						  padding: {
+							left: 10,
+							right: 25,
+							top: 25,
+							bottom: 0
+						  }
+						},
+						scales: {
+						  xAxes: [{
+							stacked: true,
+							time: {
+							  unit: 'date'
+							},
+							gridLines: {
+							  display: false,
+							  drawBorder: false
+							},
+							ticks: {	          
+							  maxTicksLimit: 7
+							}
+						  }],
+						  yAxes: [{
+							position: 'right',
+							id: 'y-axis-1',
+							stacked: true,
+							ticks: {
+							  min: 0,
+							  maxTicksLimit: 5,
+							  padding: 10,
+							  // Include a dollar sign in the ticks
+							  callback: function(value, index, values) {
+								return number_format(value);
+							  }
+							},
+							gridLines: {
+							  color: "rgb(234, 236, 244)",
+							  zeroLineColor: "rgb(234, 236, 244)",
+							  drawBorder: false,
+							  borderDash: [2],
+							  zeroLineBorderDash: [2]
+							}
+						  },{
+							position: 'left',
+							id: 'y-axis-2',
+							stacked: true,
+							ticks: {
+							  min: 0,
+							  maxTicksLimit: 5,
+							  padding: 10,
+							  // Include a dollar sign in the ticks
+							  callback: function(value, index, values) {
+								return number_format(value);
+							  }
+							},
+							gridLines: {
+							  color: "rgb(234, 236, 244)",
+							  zeroLineColor: "rgb(234, 236, 244)",
+							  drawBorder: false,
+							  borderDash: [2],
+							  zeroLineBorderDash: [2]
+							}
+						  }],
+						},
+						legend: {
+						  display: true,
+						  position:legend_position,
+						  labels: {
+							  boxWidth:12
+						  }	      
+						},
+						tooltips: {
+						  backgroundColor: "rgb(255,255,255)",
+						  bodyFontColor: "#858796",
+						  titleMarginBottom: 10,
+						  titleFontColor: '#6e707e',
+						  titleFontSize: 14,
+						  borderColor: '#dddfeb',
+						  borderWidth: 1,
+						  xPadding: 15,
+						  yPadding: 15,
+						  displayColors: false,
+						  intersect: false,
+						  mode: 'index',
+						  caretPadding: 10,
+						  callbacks: {
+							label: function(tooltipItem, chart) {
+							  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+							  return datasetLabel + ' : ' + number_format(tooltipItem.yLabel);
+							}
+						  }
+						}
+					  };
+					
+					var myLineChart = new Chart(ctx, {
+						  type: chartType,
+						  data: chart_data,
+						  options: options
+					});
+					
+					return myLineChart;
+				}
+			</script>
 
 	        <!-- s:right_col -->
 			<div class="right_col" role="main">
@@ -243,144 +418,49 @@
 				<nav aria-label="breadcrumb">
 					<ol id="global-nav" class="breadcrumb">
 						<li class="breadcrumb-item"><a href="/index"><i class="fas fa-home"></i></a></li>
-						<li class="breadcrumb-item"><a href="#;">정산 관리</a></li>
-						<li class="breadcrumb-item active" aria-current="page">세금계산서 설정</li>
+						<li class="breadcrumb-item"><a href="#;">통계 관리</a></li>
+						<li class="breadcrumb-item active" aria-current="page">기간별 결제</li>
 					</ol>
 				</nav>
 
-				<div class="card shadow">
-					<a href="#regManager" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="regManager">
-						<h6 class="m-0 font-weight-bold text-primary">세금계산서 설정</h6>
-					</a>
-					<div class="collapse show in" id="regManager">
-						<div class="card bg-gray-100" style="margin: 20px; margin-bottom: 5px;">
-							<div class="card-body" style="padding: 15px;">
-								<ul style="font-size: small;">
-									<li>· 세금계산서 설정 페이지 입니다.</li>
-									<li>· 정확한 정보를 입력해 주세요.
-									</li>
-								</ul>
-							</div>
-						</div>
+				<div class="card shadow mb-3">
+					<div class="card-header d-flex flex-row align-items-center justify-content-between">
+						<h6 class="m-0 font-weight-bold text-primary">기간별 결제</h6>
+					</div>
+                    <div class="card bg-gray-100" style="margin: 20px; margin-bottom: 5px;">
+                        <div class="card-body" style="padding: 15px;">
+                            <ul style="font-size: small;">
+                                <li>· 기간별 (일간/월간/년간) 결제 통계를 확인 가능합니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+					<div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div class="input-group justify-content-start">
+                                <div class="btn-group" role="group" aria-label="Basic example" style="margin-right : 20px; border-color: #d9d9d9;">
+                                    <a href="#"><button type="button" class="btn btn-light btn-sm" style="box-shadow: none; border-color: #d9d9d9; border-top-left-radius: 5px; border-bottom-left-radius: 5px; margin-right: -1px;">일간</button></a>
+                                    <a href="#"><button type="button" class="btn btn-light btn-sm active" style="box-shadow: none;  border-color: #d9d9d9; margin-left: -1px; margin-right: -1px">월간</button></a>
+                                    <a href="#"><button type="button" class="btn btn-light btn-sm" style="box-shadow: none;  border-color: #d9d9d9; border-top-right-radius: 5px; border-bottom-right-radius: 5px; margin-left: -1px;">년간</button></a>
+                                </div>
+                                <div class="dropdown no-arrow">					
+                                    <div class="input-group">							
+                                        <select type="select" class="custom-select w-auto selectYear" name="" id="" style="text-align-last: center; border-radius: 5px; height: 30px; padding-top: 3px;">
+                                            <option value="2020" selected>2020</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapse show">
 						<div class="card-body">
-							<form name="" id="" method="post">
-								<table class="table table-bordered table-sm tbl-td-pd-1 mb-0 custom-tbl">
-									<colgroup>
-										<col width="16%"/>
-										<col width="34%"/>
-										<col width="16%"/>
-										<col width="34%"/>
-									</colgroup>
-									<tbody>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">자동발행 여부</th>
-											<td colspan="3">
-												<div class="custom-control custom-checkbox custom-control-inline checkbox">
-													<input type="checkbox" class="custom-control-input" name="" id="chk_a" value="" checked />
-													<label class="custom-control-label" for="chk_a">세금계산서를 자동발행 합니다.</label>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center bdr-none">신청자 정보</th>
-											<th colspan="3" class="bg-gray-100 bdl-none">&nbsp;</th>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">신청자 이름</th>
-											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="신청자 이름 입력" />
-											</td>
-											<th scope="row" class="bg-gray-100 text-center">전화번호</th>
-											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="신청자 전화번호 입력" />
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">요금 담당자 이름</th>
-											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="요금 담당자 이름 입력" />
-											</td>
-											<th scope="row" class="bg-gray-100 text-center">핸드폰 번호</th>
-											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="신청자 휴대폰 번호 입력" />
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">담당자 이메일</th>
-											<td colspan="3">
-												<input type="text" name="" id="" value="" class="form-control form-control-sm mr-3" placeholder="담당자 이메일 입력" style="width:40%;float:left;" />
-												<div>입력하신 메일로 세금계산서 승인 메일이 발송 됩니다.<br/>발송된 승인 메일에서 반드시 승인 처리를 해주셔야 세금계산서 발행이 완료됩니다.</div>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center bdr-none">세금계산서 정보</th>
-											<th colspan="3" class="bg-gray-100 bdl-none">&nbsp;</th>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">사업자등록번호</th>
-											<td>
-												<input type="text" name="" id="" value="320-88-00921" class="form-control form-control-sm" placeholder="사업자등록번호 입력" />
-											</td>
-											<th scope="row" class="bg-gray-100 text-center">상호</th>
-											<td>
-												<input type="text" name="" id="" value="㈜제나" class="form-control form-control-sm" placeholder="상호 입력" />
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">대표자 명</th>
-											<td>
-												<input type="text" name="" id="" value="윤명철" class="form-control form-control-sm" placeholder="대표자 명 입력" />
-											</td>
-											<th scope="row" class="bg-gray-100 text-center">핸드폰 번호</th>
-											<td>
-												<input type="text" name="" id="" value="02-653-6503" class="form-control form-control-sm" placeholder="대표자 휴대폰 번호 입력" />
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">주소</th>
-											<td colspan="3">
-												<div class="input-group mb-1 post_wrap">
-													<input type="text" name="" id="coZipcode" value="" class="form-control form-control-sm input-radius" placeholder="우편번호" />
-													<div class="input-group-append">
-														<button class="btn btn-secondary btn-sm input-radius-button" type="button" id="coZipcodeBtn">우편번호 검색</button>
-													</div>
-												</div>
-												<div class="input-group mb-1">
-													<input type="text" name="" id="coAddr" value="" class="form-control form-control-sm" placeholder="기본주소 입력" readOnly />
-												</div>
-												<div class="input-group mb-0">
-													<input type="text" name="" id="coAddrDtl" value="" class="form-control form-control-sm" placeholder="상세주소 입력" />
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">업태</th>
-											<td>
-												<input type="text" name="" id="" value="서비스,도소매" class="form-control form-control-sm" placeholder="업태 입력" />
-											</td>
-											<th scope="row" class="bg-gray-100 text-center">종목</th>
-											<td>
-												<input type="text" name="" id="" value="소프트웨어개발,전자상거래업,S/W개발자문및공급" class="form-control form-control-sm" placeholder="종목 입력" />
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</form>
-						</div>
-						<div class="card-body pt-0">
-							<div class="d-flex justify-content-between">
-								<div class="input-group justify-content-end" role="group" style="margin-bottom:0;">
-									<a href="" class="btn btn-primary btn-sm btn-icon-split">
-					                   	<span class="icon text-white-50">
-											<i class="fas fa-check"></i>
-					                   	</span>
-					                   	<span class="text">저장</span>
-									</a>
-								</div>
+							<div class="chart-bar chart-body" style="height:700px !important;">
+								<canvas id="joinChart"></canvas>
 							</div>
 						</div>
 					</div>
-				</div>	
+				</div>
 				<!-- e:레이아웃 -->
 
 			</div>

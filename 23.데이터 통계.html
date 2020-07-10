@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="" />
+	<meta property="og:title" content="" />
+	<meta property="og:url" content="" />
+	<meta property="og:image" content="" />
+	<meta property="og:description" content="" />
+	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+	
+	<title>ZENA.Biz :: 관리자</title>
+	
+	<!-- Custom fonts for this template-->
+	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> 
+		
+	<!-- Custom styles for this template-->
+	<link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/sb-admin-2.min.css" rel="stylesheet">
+	<link href="css/common.css" rel="stylesheet">
+	<link href="css/custom.min.css" rel="stylesheet">
+	<link href="css/layout.css" rel="stylesheet">
+	
+	<!-- Bootstrap core JavaScript-->
+  	<script src="vendor/jquery/dist/jquery.min.js"></script>
+  	<script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  	<!-- Core plugin JavaScript-->
+  	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  	<!-- Custom scripts for all pages-->
+  	<script src="js/sb-admin-2.js"></script>
+		
+	<script type="text/javascript">
+		var base = '.';	
+	</script>
+	
+	<!-- datepicker -->
+	<link rel="stylesheet" href="js/lib/jquery-ui/1.12.1/themes/dark-hive/jquery-ui.min.css" media="screen, projection"/>
+	<script src="js/lib/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+	
+	<script src="js/lib/josa.js"></script>
+	<script src="js/common.js"></script>
+	<script src="js/storage.js"></script>
+	
+	<script src="js/validation/jquery.alerts-1.1/jquery.alerts.js"></script>
+	<script src="js/validation/common.js"></script>	
+	<script type="text/javascript" src="js/lib/jquery.i18n.properties.js"></script>	
+	<link rel="stylesheet" href="js/validation/jquery.alerts-1.1/jquery.alerts.css">
+	
+	<script type="text/javascript">
+		var dtNow = new Date();
+		
+		$(function() {
+			$(".datepicker").datepicker({
+				buttonImageOnly: false,
+				prevText: '이전달',
+				nextText: '다음달',
+				monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+				dayNamesMin:['일','월','화','수','목','금','토'],
+				changeYear: true,
+				/* minDate: '-100y', */
+				/* yearRange: 'c-100:c+1', */
+				changeMonth: true,
+				showMonthAfterYear: true,
+				dateFormat: 'yy-mm-dd',
+				duration: '',
+				isRTL: false,
+				/* beforeShow : function(input, inst) {
+			        if($(this).val() != ""){
+			        	var selectYear = new Date($(this).val());
+			        	var nowYear = dtNow.getFullYear();
+			        	var num = parseInt(selectYear.getFullYear()) - nowYear;
+			        	if(num > 100){
+							inst.settings.yearRange = Number(nowYear) - 1 + ':' + Number(Number(nowYear) + num);
+						} else if (num < -100){
+							inst.settings.yearRange = Number(Number(Number(nowYear) + num) - 1) + ':' + Number(Number(nowYear) + 1);
+						} else {
+							inst.settings.yearRange = Number(nowYear) - 100 + ':' + Number(Number(nowYear) + 1);
+						}
+					}
+			    } */
+			}).keyup(function(e) {
+		    if(e.keyCode == 8 || e.keyCode == 46) {
+		        $.datepicker._clearDate(this);
+		    }});
+			
+			//datepicker 달력 아이콘 클릭 시 활성
+			$('.datepiker-wrapper').bind('click', function(){
+				$('#' + $(this).data('target')).focus();
+			});
+		});
+		
+		if(!fn_br_chrome_browser_check()){
+			jsAlert.alert('경고', '해당 사이트는 크롬브라우저에 최적화되어 있습니다.<br/>크롬브라우저에서 이용해주세요.', null, fn_login, '확인');
+		}
+
+		$(document).ready(function(){
+			//다음 주소 검색
+			$('#coZipcode, #coZipcodeBtn').bind('click', function(){
+				fn_daum_zipcode_search('coZipcode', 'coAddr', 'coAddrDtl');
+			});
+
+			$("#profileImage").change(function () {
+				var file = $(this).val().split('\\').pop();
+				file = file.substring(file.lastIndexOf(".") + 1).toLowerCase();
+				if ($.inArray(file, [ 'gif', 'png', 'jpg', 'jpeg' ]) == -1) {
+					jsAlert.alert("알림", "gif, png, jpg, jpeg 의 파일만 등록 가능합니다.", $(this));
+					$(this).val("");
+					$('#profileImageView').hide();
+					$('#profileNoImageText').show();
+				}else{
+					//var o = $(this).parent().parent();
+					var id = $(this).attr('id');
+					var file = document.getElementById(id).files[0];
+					
+					var reader = new FileReader();
+					reader.onload = function (e) {
+						//$(o).css('background-image', 'url(\"' + e.target.result + '\")');
+						$('#profileImageView').attr('src', e.target.result);
+						$('#profileImageView').addClass("attach");
+						$('#profileImageView').css("height","auto");
+						$('#profileImageView').show();
+						$('#profileNoImageText').hide();
+					}
+					reader.readAsDataURL(file);
+				}
+				
+				return false;
+			});
+		});
+	</script>
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+</head>
+<body class="nav-md">
+	<div class="container body">
+		<div class="main_container">
+
+			<!-- s:left_col -->
+			<div class="col-md-3 left_col">
+			  <div class="left_col scroll-view">
+			    <div class="navbar nav_title" style="border: 0;">
+			      <a href="index.html" class="site_title"><img src="images/login_logo_wht.png" alt="" /></a>
+			    </div>
+
+			    <div class="clearfix"></div>
+
+			    <!-- sidebar menu -->
+				<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+					<div class="menu_section">
+						<ul class="nav side-menu">
+							<li class="fnb"><img src="images/logo_adup.png" width="100%" alt=""></li>
+							<li><a href="2.대시보드.html"><i class="fas fa-fw fa-tachometer-alt"></i> Dashboard </a></li>
+							<li><a><i class="fas fa-fw fa-cog"></i> 관리자 관리 <span class="fa fa-chevron-down"></span></a>
+								<ul class="nav child_menu">
+									<li><a href="3.F&B 환경설정.html">F&B 환경설정</a></li>
+									<li><a href="4.사용자 리스트.html">사용자 관리</a></li>
+									<li><a href="7.영업시간 관리.html">영업시간 관리</a></li>
+									<li><a href="8.로그인 로그.html">로그인 로그</a></li>
+								</ul>
+							</li>
+							<li><a><i class="fas fa-users"></i> 상품 관리 <span class="fa fa-chevron-down"></span></a>
+								<ul class="nav child_menu">
+									<li><a href="9.카테고리 리스트.html">카테코리 관리</a></li>
+									<li><a href="10.상품 리스트.html">상품 관리</a></li>
+								</ul>
+							</li>
+							<li><a><i class="fas fa-building"></i> 주문 관리 <span class="fa fa-chevron-down"></span></a>
+								<ul class="nav child_menu">
+									<li><a href="13.실시간 주문 관리.html">실시간 주문 관리</a></li>
+								</ul>
+							</li>
+							<li><a><i class="fas fa-book-open"></i> 게시글 관리 <span class="fa fa-chevron-down"></span></a>
+								<ul class="nav child_menu">
+									<li><a href="14.공지사항 리스트.html">공지사항</a></li>
+									<li><a href="16.FAQ 리스트.html">FAQ</a></li>
+									<li><a href="17.Q&A 리스트.html">Q&A</a></li>
+								</ul>
+							</li>
+							<li><a><i class="fas fa-chart-line"></i> 통계 관리 <span class="fa fa-chevron-down"></span></a>
+								<ul class="nav child_menu">
+									<li><a href="21.기간별 결제_A_일간.html">기간별 결제</a></li>
+									<li><a href="22.데이터 통계.html">데이터 통계</a></li>
+									<li><a href="23.수익 통계_A_월.html">수익통계</a></li>
+								</ul>
+							</li>
+							<li><a><i class="fas fa-chart-line"></i> 정산 관리 <span class="fa fa-chevron-down"></span></a>
+								<ul class="nav child_menu">
+									<li><a href="25.정산 신청 상세 내역.html">정산 신청 관리</a></li>
+									<li><a href="26.정산 내역 관리.html">정산 내역 관리</a></li>
+									<li><a href="29.세금계산서 설정.html">세금계산서 설정</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+			    <!-- /sidebar menu -->
+			  </div>
+			</div>
+			<!-- e:left_col -->
+
+			<!-- s:top_nav -->
+			<div class="top_nav">
+	          <div class="nav_menu">
+	            <nav>
+	              <div class="nav toggle">
+	                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+	              </div>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<span>진선미 차장</span>
+							<a href="login.html" class="user-profile" aria-expanded="false">
+								 <i class="fa fa-sign-out"></i>
+							</a>
+						</li>
+						<li role="presentation" class="dropdown">
+							<a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+								<i class="fa fa-bell-o"></i>
+								<span class="badge bg-green">6</span>
+							</a>
+							<ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+			                    <li>
+			                    	<a href="#">
+			                    		<p class="cate">공지사항</p>
+			                    		<p class="content">신규공지사항이 있습니다.</p>
+			                    	</a>
+			                    </li>
+			                    <li>
+			                    	<a href="#">
+			                    		<p class="cate">모집글</p>
+			                    		<p class="content">신규공지사항이 있습니다.</p>
+			                    	</a>
+			                    </li>
+			                    <li>
+			                    	<a href="#">
+			                    		<p class="cate">Q&amp;A</p>
+			                    		<p class="content">신규공지사항이 있습니다.</p>
+			                    	</a>
+			                    </li>
+			                    <li>
+			                    	<a href="#">
+			                    		<p class="cate">결제</p>
+			                    		<p class="content">신규공지사항이 있습니다.신규공지사항이 있습니다.신규공지사항이 있습니다.신규공지사항이 있습니다.</p>
+			                    	</a>
+			                    </li>
+			                </ul>
+						</li>
+						<li>
+							<a class="nav-link" href="#;">
+							<span class="d-none d-lg-inline text-gray-600">2020.04.22(수)</span></span> 
+							</a>
+						</li>
+					</ul>
+
+	            </nav>
+	          </div>
+	        </div>
+	        <!-- e:top_nav -->
+
+	        <!-- Page level plugins -->
+			<link rel="stylesheet" href="vendor/datatables/dataTables.bootstrap4.min.css" />
+			<link rel="stylesheet" href="vendor/datatables/buttons.dataTables.min.css" />
+			<link rel="stylesheet" href="vendor/datatables/responsive.dataTables.min.css" /> 
+			<link rel="stylesheet" href="vendor/datatables/select.dataTables.min.css" />  
+			<link rel="stylesheet" href="css/tables.css" />
+			<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+			<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+			<script src="vendor/datatables/dataTables.buttons.min.js"></script>
+			<script src="vendor/datatables/buttons.html5.min.js"></script>
+			<script src="vendor/datatables/jszip.min.js"></script>
+			<script src="vendor/datatables/dataTables.responsive.min.js"></script>
+			<script src="vendor/datatables/dataTables.select.min.js"></script>
+
+			<script src="vendor/chart.js/Chart.min.js"></script>
+
+			<script type="text/javascript">
+			//Setting Defaults
+			$.extend( $.fn.dataTable.defaults, {
+				language: {
+					"emptyTable": "조회된 데이터가 없습니다.",
+					"lengthMenu": "Show _MENU_ entries",
+					"info": "현재 _START_ - _END_ / _TOTAL_건",
+					"infoEmpty": "데이터 없음",
+					"infoFiltered": "( _MAX_건의 데이터에서 필터링됨 )",
+					"search": "에서 검색: ",
+					"zeroRecords": "일치하는 데이터가 없습니다.",
+					"loadingRecords": "Loading...",
+					"processing":     "잠시만 기다려 주세요...",
+					"paginate": {
+						"next": "Next →",
+						"previous": "← Previous"
+					}
+				},
+				ajax:{
+					headers: {"AJAX": true}
+				},
+				searching: true,
+				paging: true,
+				responsive: false,
+				processing: false,
+				lengthChange: true,
+				select: false,
+				ordering: true
+			} );
+            </script>
+            
+            <script type="text/javascript">
+				$(document).ready(function(){
+					$('#searchDrop .dropdown-menu a').bind('click', function (e) {
+						var html = $(this).html();
+						var value = $(this).attr('value');
+						$('#searchDrop button.dropdown-toggle').html(html);
+						$('#searchFilter').val(value);
+					});
+					
+					var enterTbl1 = $('#enter-tbl1').DataTable({
+						language: {
+							"emptyTable": "조회된 기획사 정보가 없습니다."
+						},
+						ajax: "",
+						columns: [
+							{"data": "col1"},
+							{"data": "col2",
+								"render": function(data, type, row){
+									//console.log('data : ' + data + ", type : " + type + ", row : " + JSON.stringify(row));
+									if(type=='display'){
+										if (row.col6 == 'title') {
+											data = '<span class="ml-2" style="font-weight:bold;">'+row.col2+'</span>';
+										} else {
+											data = '<span class="ml-5">'+row.col2+'</span>';
+										}
+									}
+									return data;
+								}
+							},
+							{"data": "col3"},
+							{"data": "col4"},
+							{"data": "col5"},
+							{"data": "col6"},
+							{"data": "col7"},
+							{"data": "col8"},
+							{"data": "col9"},
+							{"data": "col10"},
+							{"data": "col11"},
+							{"data": "col12"},
+							{"data": "col13"},
+							{"data": "col14"}
+						],
+						columnDefs: [
+							{	//tbody 텍스트 오른쪽 정렬 클레스 추가
+								targets: [ 1, 2, 3 ],
+								className: 'tbl-align-right'
+							},
+							{	//헤더 정렬 기능 제외 처리
+								targets: [ 0, 1, 2, 3 ],
+								orderable: false
+							},
+							{	//검색 제외 처리
+								targets: [ 0, 1, 2, 3 ],
+								searchable: false
+							}
+						],
+						info:false,
+						searching: true, 		//테이블 내 데이터 검색 사용 여부(이때 생성되는 조회창은 사용하지 않을 경우 따로 숨겨주어야 한다.)
+						paging: false,			//페이징 사용 여부
+						responsive: true,		//테이블 크기 보정
+						processing: false,
+						lengthChange: true,
+						select: true,
+						ordering: false,		//헤더 정렬 기능 사용 여부
+						order: [[ 0, "asc" ]]	//첫 로딩 후 데이터 정렬 기준
+					});
+
+					var enterTbl3 = $('#enter-tbl3').DataTable({
+						language: {
+							"emptyTable": "조회된 기획사 정보가 없습니다."
+						},
+						ajax: "37.손익분석_B_반기.txt",
+						columns: [
+							{"data": "col1"},
+							{"data": "col2",
+								"render": function(data, type, row){
+									//console.log('data : ' + data + ", type : " + type + ", row : " + JSON.stringify(row));
+									if(type=='display'){
+										if (row.col6 == 'title') {
+											data = '<span class="ml-2" style="font-weight:bold;">'+row.col2+'</span>';
+										} else {
+											data = '<span class="ml-5">'+row.col2+'</span>';
+										}
+									}
+									return data;
+								}
+							},
+							{"data": "col3"},
+							{"data": "col4"},
+							{"data": "col5"},
+							{"data": "col6"},
+							{"data": "col7"},
+							{"data": "col8"},
+							{"data": "col9"},
+							{"data": "col10"},
+							{"data": "col11"},
+							{"data": "col12"},
+							{"data": "col13"},
+							{"data": "col14"}
+						],
+						columnDefs: [
+							{	//tbody 텍스트 오른쪽 정렬 클레스 추가
+								targets: [ 1, 2, 3 ],
+								className: 'tbl-align-right'
+							},
+							{	//헤더 정렬 기능 제외 처리
+								targets: [ 0, 1, 2, 3 ],
+								orderable: false
+							},
+							{	//검색 제외 처리
+								targets: [ 0, 1, 2, 3 ],
+								searchable: false
+							}
+						],
+						info:false,
+						searching: true, 		//테이블 내 데이터 검색 사용 여부(이때 생성되는 조회창은 사용하지 않을 경우 따로 숨겨주어야 한다.)
+						paging: false,			//페이징 사용 여부
+						responsive: true,		//테이블 크기 보정
+						processing: false,
+						lengthChange: true,
+						select: true,
+						ordering: false,		//헤더 정렬 기능 사용 여부
+						order: [[ 0, "asc" ]]	//첫 로딩 후 데이터 정렬 기준
+					});
+			
+					//테이블 내 데이터 조회 설정을 하면 생성되는 내부 조회 입력폼을 숨겨준다.
+					$("#enter-tbl1_filter").hide();
+					$("#enter-tbl3_filter").hide();				
+					$('.dt-buttons').hide();
+				});
+			</script>
+
+			<script type="text/javascript">
+				var joinChart;
+				var joinChart2;
+				var joinChart3;
+				var joinChart4;
+				var data = [158,94,89,75,42];
+				var data2 = [221, 412];
+				var data3 = [
+					{label:'요일', type:'bar',data:[24, 59, 89, 75, 42, 118, 104]},
+					{label:'금액', type:'line',data:[62, 161, 245, 188, 95, 23, 0]}
+				];
+				var data4 = [
+					{label:'주문 건수', type:'bar',data:[145,137,128,116,108,91,84,75,59,42]},
+				];
+
+				var labels = ['아메리카노','자몽에이드','카페라떼','달고나','콜드브루'];
+				var labels2 = ['남자', '여자'];
+                var labels3 = ['월', '화', '수', '목', '금', '토', '일'];
+				var labels4 = ['14시 ~ 15시', '20시 ~ 21시', '21시 ~ 22시', '15시 ~ 16시', '12시 ~ 13시', '16시 ~ 17시', '19시 ~ 20시', '13시 ~ 14시', '17시 ~ 18시', '11시 ~ 12시'];
+				
+				$(document).ready(function(){
+					joinChart = fn_make_Chart_Doughnut("joinChart", data, labels, "left");
+					joinChart2 = fn_make_Chart_Pie("joinChart2", data2, labels2, "bottom");
+					joinChart3 = fn_make_Chart("joinChart3", data3, labels3, "bottom", "bar");
+					joinChart4 = fn_make_Chart("joinChart4", data4, labels4, "bottom", "bar");
+				});
+
+				function fn_make_Chart(idNm, data, labels, legend_position, chartType){
+				
+					if(legend_position == null) legend_position = 'top';
+					
+					var ctx = document.getElementById(idNm);
+					
+					var chart_data = {
+							labels: labels,
+							datasets: [],
+					};
+
+					var dataset = new Array();
+					for(var i=0;i<data.length;i++){		
+						var tmp_dataset = {
+								type: data[i].type,
+								label: data[i].label,
+								fill: false,
+								lineTension: 0.3,
+								backgroundColor: chart_colors[i],
+								borderColor: chart_colors[i],
+								pointRadius: 3,
+								pointBackgroundColor: "#fff",
+								pointBorderColor: chart_colors[i],
+								pointHoverRadius: 3,
+								pointHoverBackgroundColor: "#fff",
+								pointHoverBorderColor: chart_colors_hover[i],
+								pointHitRadius: 10,
+								pointBorderWidth: 2,
+								data: data[i].data,
+						};
+						
+						chart_data.datasets.push(tmp_dataset);
+					}
+					
+					var options = {
+						responsive: true,
+						maintainAspectRatio: false,
+						layout: {
+						  padding: {
+							left: 10,
+							right: 25,
+							top: 25,
+							bottom: 0
+						  }
+						},
+						scales: {
+						  xAxes: [{
+							time: {
+							  unit: 'date'
+							},
+							gridLines: {
+							  display: false,
+							  drawBorder: false
+							},
+							ticks: {	          
+							  maxTicksLimit: 7
+							}
+						  }],
+						  yAxes: [{
+							ticks: {
+							  min: 0,
+							  maxTicksLimit: 5,
+							  padding: 10,
+							  // Include a dollar sign in the ticks
+							  callback: function(value, index, values) {
+								return number_format(value);
+							  }
+							},
+							gridLines: {
+							  color: "rgb(234, 236, 244)",
+							  zeroLineColor: "rgb(234, 236, 244)",
+							  drawBorder: false,
+							  borderDash: [2],
+							  zeroLineBorderDash: [2]
+							}
+						  }],
+						},
+						legend: {
+						  display: true,
+						  position:legend_position,
+						  labels: {
+							  boxWidth:12
+						  }	      
+						},
+						tooltips: {
+						  backgroundColor: "rgb(255,255,255)",
+						  bodyFontColor: "#858796",
+						  titleMarginBottom: 10,
+						  titleFontColor: '#6e707e',
+						  titleFontSize: 14,
+						  borderColor: '#dddfeb',
+						  borderWidth: 1,
+						  xPadding: 15,
+						  yPadding: 15,
+						  displayColors: false,
+						  intersect: false,
+						  mode: 'index',
+						  caretPadding: 10,
+						  callbacks: {
+							label: function(tooltipItem, chart) {
+							  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+							  return datasetLabel + ' : ' + number_format(tooltipItem.yLabel);
+							}
+						  }
+						}
+					  };
+					
+					var myLineChart = new Chart(ctx, {
+						  type: chartType,
+						  data: chart_data,
+						  options: options
+					});
+					
+					return myLineChart;
+				}
+
+				function fn_make_Chart_Pie(idNm, data, labels, legend_position){
+	
+					if(legend_position == null) legend_position = 'top';
+					
+					var ctx = document.getElementById(idNm);
+					
+					var chart_data = {
+							datasets: [{
+								data: data,
+								backgroundColor: chart_colors,
+								hoverBackgroundColor: chart_colors_hover,
+								hoverBorderColor: "rgba(234, 236, 244, 1)",
+							}],
+
+							// These labels appear in the legend and in the tooltips when hovering different arcs
+							labels: labels
+						};
+					var options = {
+						maintainAspectRatio: false,
+						tooltips: {
+						  backgroundColor: "rgb(255,255,255)",
+						  bodyFontColor: "#858796",
+						  borderColor: '#dddfeb',
+						  borderWidth: 1,
+						  xPadding: 15,
+						  yPadding: 15,
+						  displayColors: true,
+						  caretPadding: 10
+						},
+						legend: {
+						  display: true,
+						  position:legend_position,
+						  labels: {
+							  boxWidth:12
+						  }	      
+						},
+						cutoutPercentage: 0	//도넛 구멍 크기 
+					  };
+					
+					var myPieChart = new Chart(ctx,{
+						type: 'pie',
+						data: chart_data,
+						options: options
+					});
+					
+					return myPieChart;
+				}
+
+                function fn_make_Chart_Doughnut(idNm, data, labels, legend_position){
+				
+					if(legend_position == null) legend_position = 'top';
+					
+					var ctx = document.getElementById(idNm);
+					
+					var chart_data = {
+							datasets: [{
+								data: data,
+								backgroundColor: chart_colors,
+								hoverBackgroundColor: chart_colors_hover,
+								hoverBorderColor: "rgba(234, 236, 244, 1)",
+							}],
+
+							// These labels appear in the legend and in the tooltips when hovering different arcs
+							labels: labels
+						};
+					var options = {
+						maintainAspectRatio: false,
+						tooltips: {
+						  backgroundColor: "rgb(255,255,255)",
+						  bodyFontColor: "#858796",
+						  borderColor: '#dddfeb',
+						  borderWidth: 1,
+						  xPadding: 15,
+						  yPadding: 15,
+						  displayColors: true,
+						  caretPadding: 20
+						},
+						legend: {
+						  display: true,
+						  position:legend_position,
+						  labels: {
+							  boxWidth:12
+						  }	      
+						},
+						cutoutPercentage: 30	//도넛 구멍 크기 
+					  };
+                
+                    var myDoughnutChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: chart_data,
+                        options: options
+                    });
+                
+                return myDoughnutChart;
+            }
+
+			</script>
+
+	        <!-- s:right_col -->
+			<div class="right_col" role="main">
+
+				<!-- s:레이아웃 -->
+				<nav aria-label="breadcrumb">
+					<ol id="global-nav" class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/index"><i class="fas fa-home"></i></a></li>
+						<li class="breadcrumb-item"><a href="#;">통계 관리</a></li>
+						<li class="breadcrumb-item active" aria-current="page">데이터 통계</li>
+					</ol>
+                </nav>
+                
+                <div class="card bg-gray-100" style="margin: 20px; margin-bottom: 5px; width: 500;">
+                    <div class="card-body" style="padding: 15px;">
+                        <ul style="font-size: small;">
+                            <li>· 메뉴별/성별별/요일별/시간별 데이터 통계를 확인 가능합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div class="input-group justify-content-end">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="dropdown no-arrow">					
+                                        <div class="input-group">							
+                                            <select type="select" class="custom-select w-auto selectYear input-radius" name="" id="">
+                                                <option value="2020" selected>2020</option>
+                                            </select>
+                                            <select type="select" class="custom-select w-auto selectMonth input-radius-button" name="" id="">
+                                                <option value="">1월</option>
+                                                <option value="">2월</option>
+                                                <option value="">3월</option>
+                                                <option value="">4월</option>
+                                                <option value="">5월</option>
+                                                <option value="">6월</option>
+                                                <option value="" selected>7월</option>
+                                                <option value="">8월</option>
+                                                <option value="">9월</option>
+                                                <option value="">10월</option>
+                                                <option value="">11월</option>
+                                                <option value="">12월</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class=" col-sm-12 col-md-6">
+                        <div class="card shadow mb-3">
+                            <div class="card-header d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">메뉴별 통계</h6>
+                            </div>
+                            <div class="collapse show">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="chart-bar chart-body" style="height:300px !important;">
+                                            <canvas id="joinChart"></canvas>
+                                        </div>  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
+                    <div class="col-sm-12 col-md-6">
+                        <div class="card shadow">
+                            <div class="card-header d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">성별 방문 통계</h6>
+                            </div>
+                            <div class="collapse show">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="chart-bar chart-body" style="height:300px !important;">
+                                            <canvas id="joinChart2"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="card shadow mb-3">
+                            <div class="card-header d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">요일별 통계</h6>
+                            </div>
+                            <div class="collapse show">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="chart-bar chart-body" style="height:300px !important;">
+                                            <canvas id="joinChart3"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
+                    <div class="col-sm-12 col-md-6">
+                        <div class="card shadow">
+                            <div class="card-header d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">시간별 통계</h6>
+                            </div>
+                            <div class="collapse show">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="chart-bar chart-body" style="height:300px !important;">
+                                            <canvas id="joinChart4"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+				<!-- e:레이아웃 -->
+
+			</div>
+	        <!-- e:right_col -->
+
+	        <!-- s:footer -->
+	        <footer>
+	        	<div class="row footer_row">
+					<div class="second">
+	        			<div class="sitemap">
+	        				<ul>
+	        					<li>
+	        						<h1>관리자 관리</h1>
+									<ul>
+										<li><a href="3.F&B 환경설정.html">F&B 환경설정</a></li>
+										<li><a href="4.사용자 리스트.html">사용자 관리</a></li>
+										<li><a href="7.영업시간 관리.html">영업시간 관리</a></li>
+										<li><a href="8.로그인 로그.html">로그인 로그</a></li>
+									</ul>
+	        					</li>
+	        					<li>
+	        						<h1>상품 관리</h1>
+									<ul>
+										<li><a href="9.카테고리 리스트.html">카테코리 관리</a></li>
+										<li><a href="10.상품 리스트.html">상품 관리</a></li>
+									</ul>
+	        					</li>
+	        					<li>
+	        						<h1>주문 관리</h1>
+	        						<ul>
+	        							<li><a href="13.실시간 주문 관리.html">실시간 주문 관리</a></li>
+	        						</ul>
+	        					</li>
+	        					<li>
+	        						<h1>게시글 관리</h1>
+									<ul>
+										<li><a href="14.공지사항 리스트.html">공지사항</a></li>
+										<li><a href="16.FAQ 리스트.html">FAQ</a></li>
+										<li><a href="17.Q&A 리스트.html">Q&A</a></li>
+									</ul>
+	        					</li>
+	        					<li>
+	        						<h1>통계 관리</h1>
+									<ul>
+										<li><a href="21.기간별 결제_A_일간.html">기간별 결제</a></li>
+										<li><a href="22.데이터 통계.html">데이터 통계</a></li>
+										<li><a href="23.수익 통계_A_월.html">수익통계</a></li>
+									</ul>
+	        					</li>
+	        					<li>
+	        						<h1>정산 관리</h1>
+									<ul>
+										<li><a href="25.정산 신청 상세 내역.html">정산 신청 관리</a></li>
+										<li><a href="26.정산 내역 관리.html">정산 내역 관리</a></li>
+										<li><a href="29.세금계산서 설정.html">세금계산서 설정</a></li>
+									</ul>
+	        					</li>
+	        				</ul>
+	        			</div>
+	        		</div>
+	        		<div class="first">
+	        			<h1><img src="images/login_logo_blk.png" width="100" alt=""></h1>
+	        			<h2>(주)제나</h2>
+	        			<ul class="info">
+	        				<li>
+	        					<div class="th">대표이사</div>
+	        					<div class="td">윤명철</div>
+	        				</li>
+	        				<li>
+	        					<div class="th">개인정보책임관리자</div>
+	        					<div class="td">강은주</div>
+	        				</li>
+	        				<li>
+	        					<div class="th">사업자번호</div>
+	        					<div class="td">320-88-00921</div>
+	        				</li>
+	        				<li>
+	        					<div class="th">사무실</div>
+	        					<div class="td">(본사)대구광역시 달서구 성서공단로 46-17(대천동)<br>(지사)서울시 성동구 연무장5길 9-16 블루스톤타워 606호</div>
+	        				</li>
+	        				<li>
+	        					<div class="th"><b>고객지원</b></div>
+	        					<div class="td">
+	        						02-523-6500 | <a href="mailto:info@zenacare.net">info@zenacare.net</a><br>
+	        						AM 09:00 ~ PM 06:00 (평일)<br>
+	        						AM 11:30 ~ PM 12:30 (점심시간)
+	        					</div>
+	        				</li>
+	        			</ul>
+	        		</div>
+	        	</div>
+	        	<div class="clearfix"></div>
+	        </footer>
+	        <!-- e:footer -->
+
+		</div>
+	</div>
+
+	<script src="js/custom.min.js"></script>
+</body>
+</html>

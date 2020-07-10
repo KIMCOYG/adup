@@ -39,7 +39,7 @@
 		
 	<script type="text/javascript">
 		var base = '.';	
-	</script>
+    </script>
 	
 	<!-- datepicker -->
 	<link rel="stylesheet" href="js/lib/jquery-ui/1.12.1/themes/dark-hive/jquery-ui.min.css" media="screen, projection"/>
@@ -54,61 +54,7 @@
 	<script type="text/javascript" src="js/lib/jquery.i18n.properties.js"></script>	
 	<link rel="stylesheet" href="js/validation/jquery.alerts-1.1/jquery.alerts.css">
 	
-	<script type="text/javascript">
-		var dtNow = new Date();
-		
-		$(function() {
-			$(".datepicker").datepicker({
-				buttonImageOnly: false,
-				prevText: '이전달',
-				nextText: '다음달',
-				monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-				dayNamesMin:['일','월','화','수','목','금','토'],
-				changeYear: true,
-				/* minDate: '-100y', */
-				/* yearRange: 'c-100:c+1', */
-				changeMonth: true,
-				showMonthAfterYear: true,
-				dateFormat: 'yy-mm-dd',
-				duration: '',
-				isRTL: false,
-				/* beforeShow : function(input, inst) {
-			        if($(this).val() != ""){
-			        	var selectYear = new Date($(this).val());
-			        	var nowYear = dtNow.getFullYear();
-			        	var num = parseInt(selectYear.getFullYear()) - nowYear;
-			        	if(num > 100){
-							inst.settings.yearRange = Number(nowYear) - 1 + ':' + Number(Number(nowYear) + num);
-						} else if (num < -100){
-							inst.settings.yearRange = Number(Number(Number(nowYear) + num) - 1) + ':' + Number(Number(nowYear) + 1);
-						} else {
-							inst.settings.yearRange = Number(nowYear) - 100 + ':' + Number(Number(nowYear) + 1);
-						}
-					}
-			    } */
-			}).keyup(function(e) {
-		    if(e.keyCode == 8 || e.keyCode == 46) {
-		        $.datepicker._clearDate(this);
-		    }});
-			
-			//datepicker 달력 아이콘 클릭 시 활성
-			$('.datepiker-wrapper').bind('click', function(){
-				$('#' + $(this).data('target')).focus();
-			});
-		});
-		
-		if(!fn_br_chrome_browser_check()){
-			jsAlert.alert('경고', '해당 사이트는 크롬브라우저에 최적화되어 있습니다.<br/>크롬브라우저에서 이용해주세요.', null, fn_login, '확인');
-		}
-
-		$(document).ready(function(){
-			//다음 주소 검색
-			$('#coZipcode, #coZipcodeBtn').bind('click', function(){
-				fn_daum_zipcode_search('coZipcode', 'coAddr', 'coAddrDtl');
-			});
-		});
-	</script>
-	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 </head>
 <body class="nav-md">
 	<div class="container body">
@@ -235,7 +181,141 @@
 				</div>
 			  </div>
 			  <!-- e:top_nav -->
+			  
+	        <!-- Page level plugins -->
+			<link rel="stylesheet" href="vendor/datatables/dataTables.bootstrap4.min.css" />
+			<link rel="stylesheet" href="vendor/datatables/buttons.dataTables.min.css" />
+			<link rel="stylesheet" href="vendor/datatables/responsive.dataTables.min.css" /> 
+			<link rel="stylesheet" href="vendor/datatables/select.dataTables.min.css" />  
+			<link rel="stylesheet" href="css/tables.css" />
+			<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+			<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+			<script src="vendor/datatables/dataTables.buttons.min.js"></script>
+			<script src="vendor/datatables/buttons.html5.min.js"></script>
+			<script src="vendor/datatables/jszip.min.js"></script>
+			<script src="vendor/datatables/dataTables.responsive.min.js"></script>
+            <script src="vendor/datatables/dataTables.select.min.js"></script>
+            
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    $('#searchDrop .dropdown-menu a').bind('click', function (e) {
+                        var html = $(this).html();
+                        var value = $(this).attr('value');
+                        $('#searchDrop button.dropdown-toggle').html(html);
+                        $('#searchFilter').val(value);
+                    });
+                    
+                    var enterTbl = $('#enter-tbl').DataTable({
+                        language: {
+                            "emptyTable": "조회된 기획사 정보가 없습니다."
+                        },
+                        ajax: "25.정산 신청 관리.txt",
+                        columns: [
+                            {"data": "col1",
+								"render": function(data, type, row){
+			// 		        		console.log("data : " + data + ", type : " + type + ", row : " + JSON.stringify(row));
+									if(type=='display'){
+										var v = data;
+										data = '';
+										data += '<div class="custom-control custom-checkbox custom-control-inline" style="margin-right:0px;width:24px;min-height: unset;">\n';
+										data += '	<input type="checkbox" name="boardSeqNos" id="boardSeqNo_' + v + '" value="' + v + '" class="custom-control-input seq-boxs"/>\n';
+										data += '	<label class="custom-control-label" for="boardSeqNo_' + v + '" style="top:1px;left:4px;">&nbsp;</label>\n';
+										data += '</div>\n';
+									}
+									return data;
+								}, "visible":true
+                            },
+                            {"data": "col2",
+                                "render": function(data, type, row){
+                                    //console.log('data : ' + data + ", type : " + type + ", row : " + JSON.stringify(row));
+                                    if(type=='display'){
+                                        data = '<a href="#">'+row.col2+'</a>\n';
+                                    }
+                                    return data;
+                                }
+                            },
+                            {"data": "col3"},
+                            {"data": "col4"},
+                            {"data": "col5"}
+                        ],
+                        columnDefs: [
+                            {	//tbody 텍스트 가운데 정렬 클레스 추가
+                                targets: [ 0, 1, 2, 3, 4],
+                                className: 'tbl-align-center'
+                            },
+                            {	//헤더 정렬 기능 제외 처리
+                                targets: [0,1,4],
+                                orderable: false
+                            },
+                            {	//검색 제외 처리
+                                targets: [],
+                                searchable: false
+                            }
+						],
+						footerCallback: function (row, data, start, end, display) {
+							var api = this.api();
+							
+							tblRows = api.rows({ page: 'current' }).data().length;
+							
+							// Remove the formatting to get integer data for summation
+							var intVal = function (i) {
+								return typeof i === 'string' ? i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0;
+							};
+							
+							// 정산 합계
+							var totsum = api.column().data().reduce(function () {
+								var tot = 0
+								api.column(3).data().filter(function (v, i) {
+									tot += intVal(api.column(3).data()[i]);
+								});
+								return tot;
+							}, 0);
+							
+							$("#totsum").html(totsum.toLocaleString() + '원');
+						},
+						info:false,
+                        searching: false, 		//테이블 내 데이터 검색 사용 여부(이때 생성되는 조회창은 사용하지 않을 경우 따로 숨겨주어야 한다.)
+                        paging: false,			//페이징 사용 여부
+                        responsive: true,		//테이블 크기 보정
+                        processing: false,
+                        lengthChange: true,
+                        select: true,
+                        //ordering: false,		//헤더 정렬 기능 사용 여부
+                        order: [[ 2, "desc" ]]	//첫 로딩 후 데이터 정렬 기준
+                    });
+										
+					//체크 박스 전체 체크
+					$('#checkAll').bind("click", function(){
+						//리스트 내 체크박스 체크 / 해제
+						$('.seq-boxs').prop("checked", $(this).prop('checked'));
+						//테이블 row select / deselect 처리
+						fn_datatables_rowSelected($(this).prop('checked'), $('.seq-boxs').parents('tr'));	
+					});
+					
+					//체크박스 클릭 이벤트
+					$(document).on('click', '.seq-boxs', function(){
+						//테이블 row select / deselect 처리
+						fn_datatables_rowSelected($(this).is(':checked'), $(this).parents('tr'));
+					});
+					
+					//테이블 로우 클릭 이벤트
+					$(document).on('click', '#enter-tbl tbody tr', function(){
+						//해당 row 내 체크박스 체크 / 해제 처리
+						var o = $(this).find('.seq-boxs').eq(0);
+						if(!$(o).is(':checked')){
+							$(o).prop("checked", true);
+						}else{
+							$(o).prop("checked", false);
+						}
+						
+						//row select / deselect 처리
+						fn_datatables_rowSelected($(o).is(':checked'), $(this));
+						//console.log('i : ' + $('#enter-tbl').DataTable().row(this).index() + ', data : ' + $('#enter-tbl').DataTable().row(this).data());
+					});
 
+					
+                });
+            </script>
 	        <!-- s:right_col -->
 			<div class="right_col" role="main">
 
@@ -244,138 +324,66 @@
 					<ol id="global-nav" class="breadcrumb">
 						<li class="breadcrumb-item"><a href="/index"><i class="fas fa-home"></i></a></li>
 						<li class="breadcrumb-item"><a href="#;">정산 관리</a></li>
-						<li class="breadcrumb-item active" aria-current="page">세금계산서 설정</li>
+						<li class="breadcrumb-item active" aria-current="page">정산 신청 관리</li>
 					</ol>
 				</nav>
 
 				<div class="card shadow">
-					<a href="#regManager" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="regManager">
-						<h6 class="m-0 font-weight-bold text-primary">세금계산서 설정</h6>
-					</a>
-					<div class="collapse show in" id="regManager">
-						<div class="card bg-gray-100" style="margin: 20px; margin-bottom: 5px;">
-							<div class="card-body" style="padding: 15px;">
-								<ul style="font-size: small;">
-									<li>· 세금계산서 설정 페이지 입니다.</li>
-									<li>· 정확한 정보를 입력해 주세요.
-									</li>
-								</ul>
-							</div>
-						</div>
+                    <div class="card bg-gray-100" style="margin: 20px; margin-bottom: 5px;">
+                        <div class="card-body" style="padding: 15px;">
+                            <ul style="font-size: small;">
+                                <li>· 매주 월요일 ~ 일요일 매출금액별로 정산신청 됩니다.</li>
+                                <li>· 매주 화요일 ~ 목요일 사이에 정산신청 가능합니다. 정산을 원하는 주간을 선택하여 정산신청 해주세요.</li>
+                                <li>· 신청하신 정산에 관해서 본사에서 신청 종료 다음일부터 심사 후 이상이 없을 경우 차주 목요일 지급 처리 됩니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+					<div class="collapse show" id="regManager">
 						<div class="card-body">
-							<form name="" id="" method="post">
-								<table class="table table-bordered table-sm tbl-td-pd-1 mb-0 custom-tbl">
+							<div class="table-responsive-sm">
+								<table id="enter-tbl" class="table table-bordered table-striped table-sm tbl-td-pd-1 mb-0" style="width:100%">
 									<colgroup>
-										<col width="16%"/>
-										<col width="34%"/>
-										<col width="16%"/>
-										<col width="34%"/>
+										<col width="2%"/>
+                                        <col width="2%"/>
+                                        <col width="40%"/>
+                                        <col width="25%"/>
+                                        <col width="20%"/>
 									</colgroup>
+									<thead class="thead-dark">
+										<tr>
+                                            <th scope="col" class="text-center noExport">
+												<div class="custom-control custom-checkbox custom-control-inline" style="margin-right:0px;width:24px;min-height: unset;">
+													<input type="checkbox" class="custom-control-input" id="checkAll"/>
+													<label class="custom-control-label" for="checkAll" style="top:1px;left:4px;">&nbsp;</label>
+												</div>
+											</th>
+											<th scope="col" class="text-center">No.</th>
+											<th scope="col" class="text-center">정산 기간</th>
+											<th scope="col" class="text-center">신청금액</th>
+                                            <th scope="col" class="text-center">상세보기</th>
+										</tr>
+									</thead>
 									<tbody>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">자동발행 여부</th>
-											<td colspan="3">
-												<div class="custom-control custom-checkbox custom-control-inline checkbox">
-													<input type="checkbox" class="custom-control-input" name="" id="chk_a" value="" checked />
-													<label class="custom-control-label" for="chk_a">세금계산서를 자동발행 합니다.</label>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center bdr-none">신청자 정보</th>
-											<th colspan="3" class="bg-gray-100 bdl-none">&nbsp;</th>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">신청자 이름</th>
-											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="신청자 이름 입력" />
-											</td>
-											<th scope="row" class="bg-gray-100 text-center">전화번호</th>
-											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="신청자 전화번호 입력" />
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">요금 담당자 이름</th>
-											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="요금 담당자 이름 입력" />
-											</td>
-											<th scope="row" class="bg-gray-100 text-center">핸드폰 번호</th>
-											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="신청자 휴대폰 번호 입력" />
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">담당자 이메일</th>
-											<td colspan="3">
-												<input type="text" name="" id="" value="" class="form-control form-control-sm mr-3" placeholder="담당자 이메일 입력" style="width:40%;float:left;" />
-												<div>입력하신 메일로 세금계산서 승인 메일이 발송 됩니다.<br/>발송된 승인 메일에서 반드시 승인 처리를 해주셔야 세금계산서 발행이 완료됩니다.</div>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center bdr-none">세금계산서 정보</th>
-											<th colspan="3" class="bg-gray-100 bdl-none">&nbsp;</th>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">사업자등록번호</th>
-											<td>
-												<input type="text" name="" id="" value="320-88-00921" class="form-control form-control-sm" placeholder="사업자등록번호 입력" />
-											</td>
-											<th scope="row" class="bg-gray-100 text-center">상호</th>
-											<td>
-												<input type="text" name="" id="" value="㈜제나" class="form-control form-control-sm" placeholder="상호 입력" />
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">대표자 명</th>
-											<td>
-												<input type="text" name="" id="" value="윤명철" class="form-control form-control-sm" placeholder="대표자 명 입력" />
-											</td>
-											<th scope="row" class="bg-gray-100 text-center">핸드폰 번호</th>
-											<td>
-												<input type="text" name="" id="" value="02-653-6503" class="form-control form-control-sm" placeholder="대표자 휴대폰 번호 입력" />
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">주소</th>
-											<td colspan="3">
-												<div class="input-group mb-1 post_wrap">
-													<input type="text" name="" id="coZipcode" value="" class="form-control form-control-sm input-radius" placeholder="우편번호" />
-													<div class="input-group-append">
-														<button class="btn btn-secondary btn-sm input-radius-button" type="button" id="coZipcodeBtn">우편번호 검색</button>
-													</div>
-												</div>
-												<div class="input-group mb-1">
-													<input type="text" name="" id="coAddr" value="" class="form-control form-control-sm" placeholder="기본주소 입력" readOnly />
-												</div>
-												<div class="input-group mb-0">
-													<input type="text" name="" id="coAddrDtl" value="" class="form-control form-control-sm" placeholder="상세주소 입력" />
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">업태</th>
-											<td>
-												<input type="text" name="" id="" value="서비스,도소매" class="form-control form-control-sm" placeholder="업태 입력" />
-											</td>
-											<th scope="row" class="bg-gray-100 text-center">종목</th>
-											<td>
-												<input type="text" name="" id="" value="소프트웨어개발,전자상거래업,S/W개발자문및공급" class="form-control form-control-sm" placeholder="종목 입력" />
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</form>
-						</div>
-						<div class="card-body pt-0">
-							<div class="d-flex justify-content-between">
-								<div class="input-group justify-content-end" role="group" style="margin-bottom:0;">
-									<a href="" class="btn btn-primary btn-sm btn-icon-split">
-					                   	<span class="icon text-white-50">
-											<i class="fas fa-check"></i>
-					                   	</span>
-					                   	<span class="text">저장</span>
-									</a>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3">미신청 금액 합계</td>
+                                            <td id="totsum"></td>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="card-body pt-4">
+									<div class="d-flex justify-content-between">
+										<div class="input-group justify-content-center" role="group">
+											<a href="" class="btn btn-primary btn-sm btn-icon-split">
+												   <span class="icon text-white-50">
+													<i class="fas fa-check"></i>
+												   </span>
+												   <span class="text">정산신청</span>
+											</a>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>

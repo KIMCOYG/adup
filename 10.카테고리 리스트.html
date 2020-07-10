@@ -13,7 +13,7 @@
 	<meta property="og:description" content="" />
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 	
-	<title>ZENA.Biz :: 관리자</title>
+	<title>카테고리 리스트</title>
 	
 	<!-- Custom fonts for this template-->
 	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -107,8 +107,121 @@
 				fn_daum_zipcode_search('coZipcode', 'coAddr', 'coAddrDtl');
 			});
 		});
+
+		var conId = 0; //에러 가능성
+		function addCategory(){ //카테고리 추가 버튼
+			// var id = $(".creat").size();
+			conId = conId + 1;
+			$("#inputCategory").append(createInput(conId+1));
+			console.log(conId+1);
+			
+		}
+
+		function registInput(clickId){ //카테고리 입력 부분 등록 버튼
+			var id = clickId.substring(9,10);
+			var val = $("#inputValue").val();
+			$("#registCategory").append(registHtml(val, id));
+			console.log(id);
+			$("#creat"+id).remove();
+		}
+
+		function removeInput(clickId){ //카테고리 입력 부분 삭제 버튼
+			var id = clickId.substring(9,10);
+			$("#creat"+id).remove();
+		}
+
+		function removeRegit(clickId){
+			var id = clickId.substring(14,15);
+			console.log(id);
+			
+			$("#regit"+id).remove();
+		}
+
+		function changeTag(clickId){ //태그 변경
+			var id = clickId.substring(9,10);
+			var clk = $("#regitVal"+id).is(":disabled");
+			
+			if(clk==true){
+				$("#regitVal"+id).removeAttr('disabled');
+			} else{
+				$("#regitVal"+id).attr('disabled', true);
+			}
+		}
+		
+		function allowDrag(clickId){ //드래그 버튼
+			var id = clickId.substring(7,8);
+			$("#regit"+id).attr("draggable", true);
+		}
+
+
+		function createInput(id){
+			var html = '';
+
+			html += '<div class="container m-2 creat" id="creat'+id+'">\n';
+			html += '<div class="form-inline span12 border border-0">\n';
+			html += '<div class="col-11">\n';
+			html += '<input type="text" value="" id="inputValue" placeholder="카테고리 입력">\n';
+			html += '</div>\n';
+			html += '<div class="form-group float-right">\n';
+			html += '<button type="button" class="btn btn-default" id="registBtn'+id+'" onclick="registInput(this.id);"><span class="glyphicon glyphicon-ok" style="color: blue;"></span></button>\n';
+			html += '<button type="button" class="btn btn-default" id="removeBtn'+id+'" onclick="removeInput(this.id);"><span class="glyphicon glyphicon-remove-sign" style="color: red;"></span></button>\n';
+			html += '</div>\n';
+			html += '</div>\n';
+			html += '</div>\n';
+
+			return html;
+		}
+
+		function registHtml(val, id){
+			var html = '';
+
+			html += '<div class="container m-2 regit" id="regit'+id+'" draggable="true">\n';
+			html += '<div class="span12 border border-secondary d-flex justify-content-between p-1">\n';
+			html += '<input type="text" class="ml-3" id="regitVal'+id+'" value="'+val+'" disabled>\n';
+			html += '<div class="btn-group" role="group" aria-label="regitBtnGroup">\n';
+			html += '<button type="button" class="btn btn-default" id= "changeBtn'+id+'" onclick="changeTag(this.id);"><span class="glyphicon glyphicon-pencil"></span></button>\n';
+			html += '<button type="button" class="btn btn-default" id="removeRegitBtn'+id+'" onclick="removeRegit(this.id);"><span class="glyphicon glyphicon-trash"></span></button>\n';
+			html += '<button type="button" class="btn btn-default" id="dragBtn'+id+'" onclick="allowDrag();"><span class="glyphicon glyphicon-align-justify"></span></button>\n';
+			html += '</div>\n';
+			html += '</div>\n';
+			html += '</div>\n';
+
+			return html;
+		}
+
+		//Drag
+
+		dragula([
+				document.getElementById("registCategory"),
+			]);
+			removeOnSpill: false
+				.on("drag", function (el) {
+					el.className.replace("ex-moved", "");
+				})
+				.on("drop", function (el) {
+					el.className += "ex-moved";
+				})
+				.on("over", function (el, container) {
+					container.className += "ex-over";
+				})
+				.on("out", function (el, container) {
+					container.className.replace("ex-over", "");
+				});
+	
+	function allowDrop(ev){
+		ev.preventDefault();
+	}
+	function drag(ev){
+		ev.dataTransfer.setData("text", ev.target.id);
+	}
+	function drop(ev){
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("text");
+		ev.target.appendChild(document.getElementById(data));
+	}
 	</script>
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.js"></script>
 </head>
 <body class="nav-md">
 	<div class="container body">
@@ -116,14 +229,14 @@
 
 			<!-- s:left_col -->
 			<div class="col-md-3 left_col">
-				<div class="left_col scroll-view">
-				  <div class="navbar nav_title" style="border: 0;">
-					<a href="index.html" class="site_title"><img src="images/login_logo_wht.png" alt="" /></a>
-				  </div>
-  
-				  <div class="clearfix"></div>
-  
-				  <!-- sidebar menu -->
+			  <div class="left_col scroll-view">
+			    <div class="navbar nav_title" style="border: 0;">
+			      <a href="index.html" class="site_title"><img src="images/login_logo_wht.png" alt="" /></a>
+			    </div>
+
+			    <div class="clearfix"></div>
+
+			    <!-- sidebar menu -->
 				<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 					<div class="menu_section">
 						<ul class="nav side-menu">
@@ -172,69 +285,69 @@
 						</ul>
 					</div>
 				</div>
-				  <!-- /sidebar menu -->
-				</div>
+			    <!-- /sidebar menu -->
 			  </div>
-			  <!-- e:left_col -->
-  
-			  <!-- s:top_nav -->
-			  <div class="top_nav">
-				<div class="nav_menu">
-				  <nav>
-					<div class="nav toggle">
-					  <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-					</div>
-  
-					  <ul class="nav navbar-nav navbar-right">
-						  <li>
-							  <span>진선미 차장</span>
-							  <a href="login.html" class="user-profile" aria-expanded="false">
-								   <i class="fa fa-sign-out"></i>
-							  </a>
-						  </li>
-						  <li role="presentation" class="dropdown">
-							  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-								  <i class="fa fa-bell-o"></i>
-								  <span class="badge bg-green">6</span>
-							  </a>
-							  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-								  <li>
-									  <a href="#">
-										  <p class="cate">공지사항</p>
-										  <p class="content">신규공지사항이 있습니다.</p>
-									  </a>
-								  </li>
-								  <li>
-									  <a href="#">
-										  <p class="cate">모집글</p>
-										  <p class="content">신규공지사항이 있습니다.</p>
-									  </a>
-								  </li>
-								  <li>
-									  <a href="#">
-										  <p class="cate">Q&amp;A</p>
-										  <p class="content">신규공지사항이 있습니다.</p>
-									  </a>
-								  </li>
-								  <li>
-									  <a href="#">
-										  <p class="cate">결제</p>
-										  <p class="content">신규공지사항이 있습니다.신규공지사항이 있습니다.신규공지사항이 있습니다.신규공지사항이 있습니다.</p>
-									  </a>
-								  </li>
-							  </ul>
-						  </li>
-						  <li>
-							  <a class="nav-link" href="#;">
-							  <span class="d-none d-lg-inline text-gray-600">2020.04.22(수)</span></span> 
-							  </a>
-						  </li>
-					  </ul>
-  
-				  </nav>
-				</div>
-			  </div>
-			  <!-- e:top_nav -->
+			</div>
+			<!-- e:left_col -->
+
+			<!-- s:top_nav -->
+			<div class="top_nav">
+	          <div class="nav_menu">
+	            <nav>
+	              <div class="nav toggle">
+	                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+	              </div>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<span>진선미 차장</span>
+							<a href="login.html" class="user-profile" aria-expanded="false">
+								 <i class="fa fa-sign-out"></i>
+							</a>
+						</li>
+						<li role="presentation" class="dropdown">
+							<a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+								<i class="fa fa-bell-o"></i>
+								<span class="badge bg-green">6</span>
+							</a>
+							<ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+			                    <li>
+			                    	<a href="#">
+			                    		<p class="cate">공지사항</p>
+			                    		<p class="content">신규공지사항이 있습니다.</p>
+			                    	</a>
+			                    </li>
+			                    <li>
+			                    	<a href="#">
+			                    		<p class="cate">모집글</p>
+			                    		<p class="content">신규공지사항이 있습니다.</p>
+			                    	</a>
+			                    </li>
+			                    <li>
+			                    	<a href="#">
+			                    		<p class="cate">Q&amp;A</p>
+			                    		<p class="content">신규공지사항이 있습니다.</p>
+			                    	</a>
+			                    </li>
+			                    <li>
+			                    	<a href="#">
+			                    		<p class="cate">결제</p>
+			                    		<p class="content">신규공지사항이 있습니다.신규공지사항이 있습니다.신규공지사항이 있습니다.신규공지사항이 있습니다.</p>
+			                    	</a>
+			                    </li>
+			                </ul>
+						</li>
+						<li>
+							<a class="nav-link" href="#;">
+							<span class="d-none d-lg-inline text-gray-600">2020.04.22(수)</span></span> 
+							</a>
+						</li>
+					</ul>
+
+	            </nav>
+	          </div>
+	        </div>
+	        <!-- e:top_nav -->
 
 	        <!-- s:right_col -->
 			<div class="right_col" role="main">
@@ -243,141 +356,73 @@
 				<nav aria-label="breadcrumb">
 					<ol id="global-nav" class="breadcrumb">
 						<li class="breadcrumb-item"><a href="/index"><i class="fas fa-home"></i></a></li>
-						<li class="breadcrumb-item"><a href="#;">정산 관리</a></li>
-						<li class="breadcrumb-item active" aria-current="page">세금계산서 설정</li>
+						<li class="breadcrumb-item"><a href="#;">상품 관리</a></li>
+						<li class="breadcrumb-item active" aria-current="page">카테고리 관리</li>
 					</ol>
 				</nav>
 
-				<div class="card shadow">
-					<a href="#regManager" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="regManager">
-						<h6 class="m-0 font-weight-bold text-primary">세금계산서 설정</h6>
-					</a>
-					<div class="collapse show in" id="regManager">
-						<div class="card bg-gray-100" style="margin: 20px; margin-bottom: 5px;">
-							<div class="card-body" style="padding: 15px;">
-								<ul style="font-size: small;">
-									<li>· 세금계산서 설정 페이지 입니다.</li>
-									<li>· 정확한 정보를 입력해 주세요.
-									</li>
-								</ul>
-							</div>
-						</div>
+				<div class="card shadow mb-3">
+					<a href="" class="d-block card-header py-3">
+						<h6 class="m-0 font-weight-bold text-primary">카테고리 리스트</h6>
+                    </a>
+                    <div class="collapse show in">
 						<div class="card-body">
-							<form name="" id="" method="post">
-								<table class="table table-bordered table-sm tbl-td-pd-1 mb-0 custom-tbl">
-									<colgroup>
-										<col width="16%"/>
-										<col width="34%"/>
-										<col width="16%"/>
-										<col width="34%"/>
-									</colgroup>
+							<form action="" method="post">
+								<div class="card bg-gray-100" style="margin-bottom: 5px;">
+									<div class="card-body" style="padding: 15px;">
+			                            <ul style="font-size: small;">
+			                                <li>· 판매하는 상품 목록의 카테고리를 설정 가능합니다.</li>
+											<li>· 카테고리를 추가하여 카테고리명을 입력해주세요</li>
+											<li>· (메뉴) 아이콘을 이동하여 사용자에게 노출되는 순서를 변경할 수 있습니다.</li>
+			                            </ul>
+			                        </div>
+								</div>
+								<table class="table table-boredred table-sm tbl-td-pd-1 mb-0 custom-tbl mt-2">
 									<tbody>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">자동발행 여부</th>
-											<td colspan="3">
-												<div class="custom-control custom-checkbox custom-control-inline checkbox">
-													<input type="checkbox" class="custom-control-input" name="" id="chk_a" value="" checked />
-													<label class="custom-control-label" for="chk_a">세금계산서를 자동발행 합니다.</label>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center bdr-none">신청자 정보</th>
-											<th colspan="3" class="bg-gray-100 bdl-none">&nbsp;</th>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">신청자 이름</th>
-											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="신청자 이름 입력" />
-											</td>
-											<th scope="row" class="bg-gray-100 text-center">전화번호</th>
-											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="신청자 전화번호 입력" />
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">요금 담당자 이름</th>
-											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="요금 담당자 이름 입력" />
-											</td>
-											<th scope="row" class="bg-gray-100 text-center">핸드폰 번호</th>
-											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="신청자 휴대폰 번호 입력" />
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">담당자 이메일</th>
-											<td colspan="3">
-												<input type="text" name="" id="" value="" class="form-control form-control-sm mr-3" placeholder="담당자 이메일 입력" style="width:40%;float:left;" />
-												<div>입력하신 메일로 세금계산서 승인 메일이 발송 됩니다.<br/>발송된 승인 메일에서 반드시 승인 처리를 해주셔야 세금계산서 발행이 완료됩니다.</div>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center bdr-none">세금계산서 정보</th>
-											<th colspan="3" class="bg-gray-100 bdl-none">&nbsp;</th>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">사업자등록번호</th>
-											<td>
-												<input type="text" name="" id="" value="320-88-00921" class="form-control form-control-sm" placeholder="사업자등록번호 입력" />
-											</td>
-											<th scope="row" class="bg-gray-100 text-center">상호</th>
-											<td>
-												<input type="text" name="" id="" value="㈜제나" class="form-control form-control-sm" placeholder="상호 입력" />
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">대표자 명</th>
-											<td>
-												<input type="text" name="" id="" value="윤명철" class="form-control form-control-sm" placeholder="대표자 명 입력" />
-											</td>
-											<th scope="row" class="bg-gray-100 text-center">핸드폰 번호</th>
-											<td>
-												<input type="text" name="" id="" value="02-653-6503" class="form-control form-control-sm" placeholder="대표자 휴대폰 번호 입력" />
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="bg-gray-100 text-center">주소</th>
-											<td colspan="3">
-												<div class="input-group mb-1 post_wrap">
-													<input type="text" name="" id="coZipcode" value="" class="form-control form-control-sm input-radius" placeholder="우편번호" />
-													<div class="input-group-append">
-														<button class="btn btn-secondary btn-sm input-radius-button" type="button" id="coZipcodeBtn">우편번호 검색</button>
+										<tr id="addCategory">
+											<div class="row">
+												<div class="container m-2">
+													<div class="span12 border border-secondary">
+														<button type="button" class="btn btn-default" id="addBtn" onclick="addCategory();">
+															<span class="glyphicon glyphicon-plus"></span>
+														</button>
+														<span>카테고리 추가</span>
 													</div>
 												</div>
-												<div class="input-group mb-1">
-													<input type="text" name="" id="coAddr" value="" class="form-control form-control-sm" placeholder="기본주소 입력" readOnly />
-												</div>
-												<div class="input-group mb-0">
-													<input type="text" name="" id="coAddrDtl" value="" class="form-control form-control-sm" placeholder="상세주소 입력" />
-												</div>
-											</td>
+											</div>
 										</tr>
 										<tr>
-											<th scope="row" class="bg-gray-100 text-center">업태</th>
-											<td>
-												<input type="text" name="" id="" value="서비스,도소매" class="form-control form-control-sm" placeholder="업태 입력" />
-											</td>
-											<th scope="row" class="bg-gray-100 text-center">종목</th>
-											<td>
-												<input type="text" name="" id="" value="소프트웨어개발,전자상거래업,S/W개발자문및공급" class="form-control form-control-sm" placeholder="종목 입력" />
-											</td>
+											<div class="form-row" id="inputCategory">
+												<!-- <div class="container m-2">
+													<div class="form-inline span12 border border-0">
+														<div class="col-11">
+															<input type="text" id="categoryName"placeholder="카테고리 입력">
+														</div>
+														<div class="form-group float-right">
+															<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-ok" style="color: blue;"></span></button>
+															<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove-sign" style="color: red;"></span></button>
+														</div>
+													</div>
+												</div> -->
+											</div>
+										</tr>
+										<tr>
+											<div class="form-row" id="registCategory">
+												<!-- <div class="container m-2">
+													<div class="span12 border border-secondary d-flex justify-content-between p-1">
+														<input type="text" class="ml-3" value="coffee" disabled>
+														<div class="btn-group" role="group" aria-label="regitBtnGroup">
+															<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>
+															<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
+															<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span></button>
+														</div>
+													</div>
+												</div> -->
+											</div>
 										</tr>
 									</tbody>
 								</table>
 							</form>
-						</div>
-						<div class="card-body pt-0">
-							<div class="d-flex justify-content-between">
-								<div class="input-group justify-content-end" role="group" style="margin-bottom:0;">
-									<a href="" class="btn btn-primary btn-sm btn-icon-split">
-					                   	<span class="icon text-white-50">
-											<i class="fas fa-check"></i>
-					                   	</span>
-					                   	<span class="text">저장</span>
-									</a>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>	
