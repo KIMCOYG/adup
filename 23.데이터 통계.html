@@ -65,27 +65,11 @@
 				monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 				dayNamesMin:['일','월','화','수','목','금','토'],
 				changeYear: true,
-				/* minDate: '-100y', */
-				/* yearRange: 'c-100:c+1', */
 				changeMonth: true,
 				showMonthAfterYear: true,
 				dateFormat: 'yy-mm-dd',
 				duration: '',
 				isRTL: false,
-				/* beforeShow : function(input, inst) {
-			        if($(this).val() != ""){
-			        	var selectYear = new Date($(this).val());
-			        	var nowYear = dtNow.getFullYear();
-			        	var num = parseInt(selectYear.getFullYear()) - nowYear;
-			        	if(num > 100){
-							inst.settings.yearRange = Number(nowYear) - 1 + ':' + Number(Number(nowYear) + num);
-						} else if (num < -100){
-							inst.settings.yearRange = Number(Number(Number(nowYear) + num) - 1) + ':' + Number(Number(nowYear) + 1);
-						} else {
-							inst.settings.yearRange = Number(nowYear) - 100 + ':' + Number(Number(nowYear) + 1);
-						}
-					}
-			    } */
 			}).keyup(function(e) {
 		    if(e.keyCode == 8 || e.keyCode == 46) {
 		        $.datepicker._clearDate(this);
@@ -600,7 +584,6 @@
 								hoverBorderColor: "rgba(234, 236, 244, 1)",
 							}],
 
-							// These labels appear in the legend and in the tooltips when hovering different arcs
 							labels: labels
 						};
 					var options = {
@@ -648,7 +631,6 @@
 								hoverBorderColor: "rgba(234, 236, 244, 1)",
 							}],
 
-							// These labels appear in the legend and in the tooltips when hovering different arcs
 							labels: labels
 						};
 					var options = {

@@ -65,27 +65,11 @@
 				monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 				dayNamesMin:['일','월','화','수','목','금','토'],
 				changeYear: true,
-				/* minDate: '-100y', */
-				/* yearRange: 'c-100:c+1', */
 				changeMonth: true,
 				showMonthAfterYear: true,
 				dateFormat: 'yy-mm-dd',
 				duration: '',
 				isRTL: false,
-				/* beforeShow : function(input, inst) {
-			        if($(this).val() != ""){
-			        	var selectYear = new Date($(this).val());
-			        	var nowYear = dtNow.getFullYear();
-			        	var num = parseInt(selectYear.getFullYear()) - nowYear;
-			        	if(num > 100){
-							inst.settings.yearRange = Number(nowYear) - 1 + ':' + Number(Number(nowYear) + num);
-						} else if (num < -100){
-							inst.settings.yearRange = Number(Number(Number(nowYear) + num) - 1) + ':' + Number(Number(nowYear) + 1);
-						} else {
-							inst.settings.yearRange = Number(nowYear) - 100 + ':' + Number(Number(nowYear) + 1);
-						}
-					}
-			    } */
 			}).keyup(function(e) {
 		    if(e.keyCode == 8 || e.keyCode == 46) {
 		        $.datepicker._clearDate(this);
@@ -439,9 +423,9 @@
                         <div class="d-flex justify-content-between">
                             <div class="input-group justify-content-start">
                                 <div class="btn-group" role="group" aria-label="Basic example" style="margin-right : 20px; border-color: #d9d9d9;">
-                                    <a href="#"><button type="button" class="btn btn-light btn-sm" style="box-shadow: none; border-color: #d9d9d9; border-top-left-radius: 5px; border-bottom-left-radius: 5px; margin-right: -1px;">일간</button></a>
-                                    <a href="#"><button type="button" class="btn btn-light btn-sm active" style="box-shadow: none;  border-color: #d9d9d9; margin-left: -1px; margin-right: -1px">월간</button></a>
-                                    <a href="#"><button type="button" class="btn btn-light btn-sm" style="box-shadow: none;  border-color: #d9d9d9; border-top-right-radius: 5px; border-bottom-right-radius: 5px; margin-left: -1px;">년간</button></a>
+                                    <a href="#"><button type="button" class="btn btn-light btn-sm ymd-button" style="box-shadow: none; border-top-left-radius: 5px; border-bottom-left-radius: 5px; margin-right: -1px;">일간</button></a>
+                                    <a href="#"><button type="button" class="btn btn-light btn-sm active ymd-button" style="box-shadow: none; margin-left: -1px; margin-right: -1px">월간</button></a>
+                                    <a href="#"><button type="button" class="btn btn-light btn-sm ymd-button" style=" box-shadow: none; border-top-right-radius: 5px; border-bottom-right-radius: 5px; margin-left: -1px;">년간</button></a>
                                 </div>
                                 <div class="dropdown no-arrow">					
                                     <div class="input-group">							

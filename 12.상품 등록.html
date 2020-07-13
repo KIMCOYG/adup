@@ -327,11 +327,18 @@
 				</nav>
 
 				<div class="card shadow">
-					<a href="#regManager" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="regManager">
+					<a href="#regManager" class="d-block card-header py-3" role="button" aria-expanded="true" aria-controls="regManager">
 						<h6 class="m-0 font-weight-bold text-primary">상품 등록</h6>
 					</a>
 					<div class="collapse show in" id="regManager">
 						<div class="card-body">
+							<div class="card bg-gray-100" style="margin-bottom: 5px;">
+								<div class="card-body" style="padding: 15px;">
+									<ul style="font-size: small;">
+										<li>· 판매 상품을 등록하고 옵션을 추가 할 수 있습니다.</li>
+									</ul>
+								</div>
+							</div>
 							<form name="" id="" method="post">
 								<table class="table table-bordered table-sm tbl-td-pd-1 mb-0 custom-tbl">
 									<colgroup>
@@ -375,8 +382,9 @@
 											<td>
 												<div class="form-row">
 													<div class="col">
-														<div class="">
-															<input type="text" name="" id="" value="12000" class="form-control form-control-sm" placeholder="상품명 입력"/>
+														<div class="d-flex">
+															<input type="text" name="" id="" value="12000" class="form-control form-control-sm" placeholder="상품명 입력" style="padding-left: 30px;"/>
+															<span style="margin-right: 20px; position: absolute; padding-left: 5px;">$</span>
 														</div>
 													</div>
 													<div class="col form-check form-check-inline">
@@ -392,9 +400,11 @@
 												<div class="form-row pt-1">
 													<div class="col input-group">
 														<input type="text" name="" id="" value="8.3" class="form-control form-control-sm col-xs-2" placeholder=""/>
+														<span style="margin-right: 20px; position: relative; padding-left: 5px;">%</span>
 													</div>
-													<div class="col">
+													<div class="col d-flex">
 														<input type="text" name="" id="" value="11,000" class="form-control form-control-sm col-xs-2" placeholder=""/>
+														<span style="position: relative;">원</span>
 													</div>
                                                     <span class="col"><b>* 입력 시 자동 계산</b></span>
                                                 </div>

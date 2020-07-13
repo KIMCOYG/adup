@@ -241,7 +241,7 @@
 						],
 						columnDefs: [
 							{	//tbody 텍스트 가운데 정렬 클레스 추가
-								targets: [ 0,1, 2, 3, 4, 5, 6, 7, 8 ],
+								targets: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ],
 								className: 'tbl-align-center'
 							},
 							{	//헤더 정렬 기능 제외 처리
@@ -294,6 +294,7 @@
 							
 							$("#totsum3").html(totsum3.toLocaleString() + '원');
 						},
+						info: false,
 						searching: true, 		//테이블 내 데이터 검색 사용 여부(이때 생성되는 조회창은 사용하지 않을 경우 따로 숨겨주어야 한다.)
 						paging: false,			//페이징 사용 여부
 						responsive: true,		//테이블 크기 보정
@@ -326,8 +327,8 @@
 				function fn_input_search_make(){
                     var html = '';
                     html += '<div class="collapse show" id="regManager" style="width:100%;">\n'
-                    html += '   <div class="table-responsive-sm">\n'
-                    html += '<table class="table table-bordered  table-sm tbl-td-pd-1 mb-0" ">\n'
+                    html += '<div class="table-responsive-sm">\n'
+                    html += '<table class="table table-bordered  table-sm tbl-td-pd-1 mb-0">\n'
                     html += '<colgroup>\n'
                     html += '<col width="20%"/>\n'
                     html += '<col width="30%"/>\n'
@@ -364,18 +365,18 @@
                     html += '</tr>'
                     html +=	'</tbody>'
                     html +=	'</table>'
-					//html += '	<input type="button" id="searchBtn" class="form-control ml-0 input-radius type2 btn btn-success" onkeydown="if(event.keyCode==13) fn_search();" value="조회" aria-describedby="searchBtn">\n';
+					html += '<div class="input-group justify-content-end m-0 pl-2" role="group">'
 					html += '	<div style="float:right;" >\n';
-					html += '		<button class="btn btn-success" type="button" onclick="fn_search();" id="searchBtn" style = "text-align: right; margin: 5px; padding: 5px"><small>조회</small></button>\n';
-					html += '	        </div>\n';
-                    html += '	</div>\n';
+					html += '		<button class="btn btn-success" type="button" onclick="fn_search();" id="searchBtn" style = "height:31px; width: 50px; text-align: center; margin: 5px; padding: 3px"; ><small>조회</small></button>\n';
+					html += '	</div>\n';
+                    html += '</div>\n';
+					html += '</div>\n';
                     html += '</div>\n';
 					return html;
 				}
 
 				//검색 버튼 & input enter..
 				function fn_search(){
-					//var column_idx = Number($('#searchFilter').val());
 					$('#enter-tbl').DataTable().column(1).search($('#searchText').val()).draw();
 				}
 			</script>

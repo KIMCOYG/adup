@@ -72,20 +72,6 @@
 				dateFormat: 'yy-mm-dd',
 				duration: '',
 				isRTL: false,
-				/* beforeShow : function(input, inst) {
-			        if($(this).val() != ""){
-			        	var selectYear = new Date($(this).val());
-			        	var nowYear = dtNow.getFullYear();
-			        	var num = parseInt(selectYear.getFullYear()) - nowYear;
-			        	if(num > 100){
-							inst.settings.yearRange = Number(nowYear) - 1 + ':' + Number(Number(nowYear) + num);
-						} else if (num < -100){
-							inst.settings.yearRange = Number(Number(Number(nowYear) + num) - 1) + ':' + Number(Number(nowYear) + 1);
-						} else {
-							inst.settings.yearRange = Number(nowYear) - 100 + ':' + Number(Number(nowYear) + 1);
-						}
-					}
-			    } */
 			}).keyup(function(e) {
 		    if(e.keyCode == 8 || e.keyCode == 46) {
 		        $.datepicker._clearDate(this);

@@ -65,27 +65,11 @@
 				monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 				dayNamesMin:['일','월','화','수','목','금','토'],
 				changeYear: true,
-				/* minDate: '-100y', */
-				/* yearRange: 'c-100:c+1', */
 				changeMonth: true,
 				showMonthAfterYear: true,
 				dateFormat: 'yy-mm-dd',
 				duration: '',
 				isRTL: false,
-				/* beforeShow : function(input, inst) {
-			        if($(this).val() != ""){
-			        	var selectYear = new Date($(this).val());
-			        	var nowYear = dtNow.getFullYear();
-			        	var num = parseInt(selectYear.getFullYear()) - nowYear;
-			        	if(num > 100){
-							inst.settings.yearRange = Number(nowYear) - 1 + ':' + Number(Number(nowYear) + num);
-						} else if (num < -100){
-							inst.settings.yearRange = Number(Number(Number(nowYear) + num) - 1) + ':' + Number(Number(nowYear) + 1);
-						} else {
-							inst.settings.yearRange = Number(nowYear) - 100 + ':' + Number(Number(nowYear) + 1);
-						}
-					}
-			    } */
 			}).keyup(function(e) {
 		    if(e.keyCode == 8 || e.keyCode == 46) {
 		        $.datepicker._clearDate(this);
@@ -306,7 +290,6 @@
 					{"data": "col2"},
 					{"data": "col3",
 						"render": function(data, type, row){
-							//console.log('data : ' + data + ", type : " + type + ", row : " + JSON.stringify(row));
 							if(type=='display'){
 								data = '<a href="#" onclick="$(\'.answer\').hide();$(\'#answer'+row.col1+'\').show();">'+row.col3+'</a>\n';
 								data += '<div id="answer'+row.col1+'" class="answer" style="margin-top: 5px;border-top: 2px solid #ddd;width: 100%;padding: 5px;display:none;">\n';
@@ -416,7 +399,7 @@
                     </a>
 					<div class="collapse show in" id="regManager">
 						<div class="card-body">
-                            <div style="white-space: nowrap;">
+                            <div style="white-space: nowrap; margin-top: 10px; margin-bottom: 15px;">
                                 <div style="font-size: large; font-weight: 700; display: inline;">6월 3주차</div>
                                 <div style="display: inline;">(2020-06-15 ~ 2020-06-21)</div>
                             </div>

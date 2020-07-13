@@ -140,12 +140,8 @@
 			var chk = $("#chk_a").is(":checked");
 			if(chk==true){
 				$(".passwd").removeAttr("disabled");
-				// $("input[id=newPw1]").removeAttr("disabled");
-				// $("input[id=newPw1]").removeAttr("disabled");
 			} else{
 				$(".passwd").attr('disabled', 'disabled');
-				// $("input[id=newPw1]").attr('disabled', true);
-				// $("input[id=newPw1]").attr('disabled', true);
 			}
 		}
 	</script>
@@ -290,11 +286,19 @@
 				</nav>
 
 				<div class="card shadow">
-					<a href="#regManager" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="regManager">
+					<a href="#regManager" class="d-block card-header py-3" role="button" aria-expanded="true" aria-controls="regManager">
 						<h6 class="m-0 font-weight-bold text-primary">F&B 환경설정</h6>
 					</a>
 					<div class="collapse show in" id="regManager">
 						<div class="card-body">
+							<div class="card bg-gray-100" style="margin-bottom: 5px;">
+								<div class="card-body" style="padding: 15px;">
+									<ul style="font-size: small;">
+										<li>· 가맹점 환경설정 페이지 입니다.</li>
+										<li>· 정산 및 세금계산서 발행을 위해 요금 담당자 정보를 꼭 입력해 주세요.</li>
+									</ul>
+								</div>
+							</div>
 							<form name="" id="" method="post">
 								<table class="table table-bordered table-sm tbl-td-pd-1 mb-0 custom-tbl">
 									<colgroup>
@@ -307,7 +311,7 @@
 										<tr>
 											<th scope="row" class="bg-gray-100 text-center">아이디</th>
 											<td>
-												<p class="text-justify txt-normal">gakorea</p>
+												<p class="text-justify txt-normal">moonbucks</p>
 											</td>
 											<th scope="row" rowspan="3" class="bg-gray-100 text-center">로고</th>
 											<td rowspan="3">
@@ -342,15 +346,15 @@
 											</td>
 										</tr>
 										<tr>
-											<th scope="row" class="bg-gray-100 text-center">회사명(한글)</th>
+											<th scope="row" class="bg-gray-100 text-center">업체명(한글)</th>
 											<td>
-												<p class="text-justify txt-normal">지에이코리아</p>
+												<p class="text-justify txt-normal">문벅스</p>
 											</td>
 										</tr>
 										<tr>
-											<th scope="row" class="bg-gray-100 text-center">회사명(영문)</th>
+											<th scope="row" class="bg-gray-100 text-center">업체명(영문)</th>
 											<td>
-												<p class="text-justify txt-normal">GA Korea</p>
+												<p class="text-justify txt-normal">Moon bucks</p>
 											</td>							
 											<th scope="row" class="bg-gray-100 text-center">사업자 등록번호</th>
 											<td>
@@ -358,9 +362,9 @@
 											</td>
 										</tr>
 										<tr>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>전화번호</th>
+											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>업체전화번호</th>
 											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="전화번호 입력" />
+												<input type="text" name="" id="" value="02-543-6500" class="form-control form-control-sm" placeholder="전화번호 입력" />
 											</td>
 											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>업종 카테고리</th>
 											<td>
@@ -393,11 +397,11 @@
 										<tr>
 											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>대표자명</th>
 											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="대표자명 입력" />
+												<input type="text" name="" id="" value="박보검" class="form-control form-control-sm" placeholder="대표자명 입력" />
 											</td>
 											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>대표자 연락처</th>
 											<td>
-												<input type="text" name="" id="" value="" class="form-control form-control-sm" placeholder="대표자 연락처 입력" />
+												<input type="text" name="" id="" value="010-1234-5678" class="form-control form-control-sm" placeholder="대표자 연락처 입력" />
 											</td>
 										</tr>
 										<tr>
@@ -449,15 +453,15 @@
 											</td>
 										</tr>
 										<tr>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>업체 소개</th>
+											<th scope="row" class="bg-gray-100 text-center">업체 소개</th>
 											<td colspan="3">
 												<textarea name="" id="" class="form-control form-control-sm mr-1" style="height: 100px;" placeholder="업체 소개"></textarea>
 											</td>
 										</tr>
 										<tr>
-											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>해시 태그</th>
+											<th scope="row" class="bg-gray-100 text-center">해시 태그</th>
 											<td colspan="3">
-												<input type="text" name="" id="" value="" class="form-control form-control-sm mr-1" style="width:70%;float:left;" placeholder="해시태그 입력" />
+												<input type="text" name="" id="" value="#카페 #데이트" class="form-control form-control-sm mr-1" style="width:70%;float:left;" placeholder="해시태그 입력" />
 												<p class="pt-2">해시 태그 10개까지 등록 가능</p>
 											</td>
 										</tr>

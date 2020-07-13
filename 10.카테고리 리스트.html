@@ -148,21 +148,20 @@
 			}
 		}
 		
-		function allowDrag(clickId){ //드래그 버튼
-			var id = clickId.substring(7,8);
-			$("#regit"+id).attr("draggable", true);
-		}
-
+		// function allowDrag(clickId){ //드래그 버튼
+		// 	var id = clickId.substring(7,8);
+		// 	$("#regit"+id).attr("draggable", true);
+		// }
 
 		function createInput(id){
 			var html = '';
 
 			html += '<div class="container m-2 creat" id="creat'+id+'">\n';
 			html += '<div class="form-inline span12 border border-0">\n';
-			html += '<div class="col-11">\n';
+			html += '<div class="col-md-10 col-xs-4">\n';
 			html += '<input type="text" value="" id="inputValue" placeholder="카테고리 입력">\n';
 			html += '</div>\n';
-			html += '<div class="form-group float-right">\n';
+			html += '<div class="row form-group float-right">\n';
 			html += '<button type="button" class="btn btn-default" id="registBtn'+id+'" onclick="registInput(this.id);"><span class="glyphicon glyphicon-ok" style="color: blue;"></span></button>\n';
 			html += '<button type="button" class="btn btn-default" id="removeBtn'+id+'" onclick="removeInput(this.id);"><span class="glyphicon glyphicon-remove-sign" style="color: red;"></span></button>\n';
 			html += '</div>\n';
@@ -175,51 +174,89 @@
 		function registHtml(val, id){
 			var html = '';
 
-			html += '<div class="container m-2 regit" id="regit'+id+'" draggable="true">\n';
-			html += '<div class="span12 border border-secondary d-flex justify-content-between p-1">\n';
+			// html += '<li id="list'+id+'">\n';
+			html += '<div class="container m-2 regit" id="regit'+id+'" ondragstart="drag(event)" draggable="true">\n';
+			html += '<div class="span12 border border-secondary d-flex justify-content-between p-1" id="regitI'+id+'">\n';
 			html += '<input type="text" class="ml-3" id="regitVal'+id+'" value="'+val+'" disabled>\n';
 			html += '<div class="btn-group" role="group" aria-label="regitBtnGroup">\n';
 			html += '<button type="button" class="btn btn-default" id= "changeBtn'+id+'" onclick="changeTag(this.id);"><span class="glyphicon glyphicon-pencil"></span></button>\n';
 			html += '<button type="button" class="btn btn-default" id="removeRegitBtn'+id+'" onclick="removeRegit(this.id);"><span class="glyphicon glyphicon-trash"></span></button>\n';
-			html += '<button type="button" class="btn btn-default" id="dragBtn'+id+'" onclick="allowDrag();"><span class="glyphicon glyphicon-align-justify"></span></button>\n';
+			html += '<button type="button" class="btn btn-default" id="dragBtn'+id+'""><span class="glyphicon glyphicon-align-justify"></span></button>\n';
 			html += '</div>\n';
 			html += '</div>\n';
 			html += '</div>\n';
+			// html += '</li>\n';
 
 			return html;
 		}
 
 		//Drag
-
-		dragula([
-				document.getElementById("registCategory"),
-			]);
-			removeOnSpill: false
-				.on("drag", function (el) {
-					el.className.replace("ex-moved", "");
-				})
-				.on("drop", function (el) {
-					el.className += "ex-moved";
-				})
-				.on("over", function (el, container) {
-					container.className += "ex-over";
-				})
-				.on("out", function (el, container) {
-					container.className.replace("ex-over", "");
-				});
 	
-	function allowDrop(ev){
-		ev.preventDefault();
-	}
-	function drag(ev){
-		ev.dataTransfer.setData("text", ev.target.id);
-	}
-	function drop(ev){
-		ev.preventDefault();
-		var data = ev.dataTransfer.getData("text");
-		ev.target.appendChild(document.getElementById(data));
-	}
+		function allowDrop(ev){
+			ev.preventDefault();
+		}
+		function drag(ev){
+			ev.dataTransfer.setData("text", ev.target.id);
+		}
+		function drop(ev){
+			ev.preventDefault();
+			var data = ev.dataTransfer.getData("text");
+
+			if(ev.target.id=="registCategory")
+				ev.target.appendChild(document.getElementById(data));
+		}
+
+		
 	</script>
+
+	<!-- <script>
+		// 드래그 event new
+		function dragstart_handler(ev) {
+			console.log("dragStart");
+			ev.dataTransfer.setData("text/plain", ev.target.id)
+		}
+
+		window.addEventListener('DOMContentLoaded', () => {
+			const element = document.getElementById("p1");
+			element.addEventListener("dragstart", dragstart_handler);
+		});
+
+		function dragover_handler(ev) {
+			ev.preventDefault();
+			// dropEffect를 move로 설정.
+			ev.dataTransfer.dropEffect = "move";
+		}
+		function drop_handler(ev) {
+			ev.preventDefault();
+			// 대상의 id를 가져와 대상 DOM에 움직인 요소를 추가합니다. 
+			const data = ev.dataTransfer.getData("text/plain");
+			ev.target.appendChild(document.getElementById(data));
+		}
+
+		allowDrop = function() {
+			event.preventDefault();
+		};
+
+		dropItem = function() {
+		var _targetEle = event.target;
+		var _id = event.dataTransfer.getData('text');
+		var _moveEle = document.getElementById(_id );
+		_targetEle.before(_moveEle);
+		};
+
+		dragStart = function() {
+		var _thisEle = event.target;
+		var _thisId = _thisEle.id;
+		_thisEle.classList.add('is-dragging');
+		event.dataTransfer.setData('text/plain', _thisId);
+		};
+
+		dragEnd = function() {
+		var _thisEle = event.target;
+		_thisEle.classList.remove('is-dragging');
+		};
+	</script> -->
+
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.js"></script>
 </head>
@@ -393,31 +430,11 @@
 										</tr>
 										<tr>
 											<div class="form-row" id="inputCategory">
-												<!-- <div class="container m-2">
-													<div class="form-inline span12 border border-0">
-														<div class="col-11">
-															<input type="text" id="categoryName"placeholder="카테고리 입력">
-														</div>
-														<div class="form-group float-right">
-															<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-ok" style="color: blue;"></span></button>
-															<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove-sign" style="color: red;"></span></button>
-														</div>
-													</div>
-												</div> -->
 											</div>
 										</tr>
 										<tr>
-											<div class="form-row" id="registCategory">
-												<!-- <div class="container m-2">
-													<div class="span12 border border-secondary d-flex justify-content-between p-1">
-														<input type="text" class="ml-3" value="coffee" disabled>
-														<div class="btn-group" role="group" aria-label="regitBtnGroup">
-															<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>
-															<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
-															<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span></button>
-														</div>
-													</div>
-												</div> -->
+											<div class="form-row bucket" id="registCategory" ondrop="drop(event)" ondragover="allowDrop(event)">
+												
 											</div>
 										</tr>
 									</tbody>
