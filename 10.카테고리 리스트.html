@@ -120,7 +120,7 @@
 		function registInput(clickId){ //카테고리 입력 부분 등록 버튼
 			var id = clickId.substring(9,10);
 			var val = $("#inputValue").val();
-			$("#registCategory").append(registHtml(val, id));
+			$("#sortable").append(registHtml(val, id));
 			console.log(id);
 			$("#creat"+id).remove();
 		}
@@ -147,16 +147,11 @@
 				$("#regitVal"+id).attr('disabled', true);
 			}
 		}
-		
-		// function allowDrag(clickId){ //드래그 버튼
-		// 	var id = clickId.substring(7,8);
-		// 	$("#regit"+id).attr("draggable", true);
-		// }
 
 		function createInput(id){
 			var html = '';
 
-			html += '<div class="container m-2 creat" id="creat'+id+'">\n';
+			html += '<div class="ui-state-default container m-2 creat" id="creat'+id+'">\n';
 			html += '<div class="form-inline span12 border border-0">\n';
 			html += '<div class="col-md-10 col-xs-4">\n';
 			html += '<input type="text" value="" id="inputValue" placeholder="카테고리 입력">\n';
@@ -173,19 +168,17 @@
 
 		function registHtml(val, id){
 			var html = '';
-
-			// html += '<li id="list'+id+'">\n';
-			html += '<div class="container m-2 regit" id="regit'+id+'" ondragstart="drag(event)" draggable="true">\n';
-			html += '<div class="span12 border border-secondary d-flex justify-content-between p-1" id="regitI'+id+'">\n';
+			html += '<div class="ui-state-default container mt-2 mb-2 col-md-12 col-xs-6" id="regit'+id+'">\n';
+			html += '<div class="col-md-8 col-xs-3" style="margin-top:8px; margin-left:-1px">\n';
 			html += '<input type="text" class="ml-3" id="regitVal'+id+'" value="'+val+'" disabled>\n';
-			html += '<div class="btn-group" role="group" aria-label="regitBtnGroup">\n';
-			html += '<button type="button" class="btn btn-default" id= "changeBtn'+id+'" onclick="changeTag(this.id);"><span class="glyphicon glyphicon-pencil"></span></button>\n';
-			html += '<button type="button" class="btn btn-default" id="removeRegitBtn'+id+'" onclick="removeRegit(this.id);"><span class="glyphicon glyphicon-trash"></span></button>\n';
-			html += '<button type="button" class="btn btn-default" id="dragBtn'+id+'""><span class="glyphicon glyphicon-align-justify"></span></button>\n';
 			html += '</div>\n';
+			html += '<div class="btn-group" role="group" aria-label="regitBtnGroup" style="float: right">\n';
+			html += '<button type="button" style="border: 0px; outline: 0px; background-color:transparent; margin:10px 10px 10px 12px" id= "changeBtn'+id+'" onclick="changeTag(this.id);"><span class="glyphicon glyphicon-pencil"></span></button>\n';
+			html += '<button type="button" style="border: 0px; outline: 0px; background-color:transparent; margin:10px 10px 10px 12px" id="removeRegitBtn'+id+'" onclick="removeRegit(this.id);"><span class="glyphicon glyphicon-trash"></span></button>\n';
+			html += '<div style="width: 25px; margin:10px 10px 10px 12px"><span class="glyphicon glyphicon-align-justify"></span></div>\n';
 			html += '</div>\n';
+			// html += '</div>\n';
 			html += '</div>\n';
-			// html += '</li>\n';
 
 			return html;
 		}
@@ -195,70 +188,67 @@
 		function allowDrop(ev){
 			ev.preventDefault();
 		}
-		function drag(ev){
-			ev.dataTransfer.setData("text", ev.target.id);
+		function drag(ev){			
+			ev.dataTransfer.setData('text', ev.target.id);		
 		}
 		function drop(ev){
 			ev.preventDefault();
-			var data = ev.dataTransfer.getData("text");
-
-			if(ev.target.id=="registCategory")
-				ev.target.appendChild(document.getElementById(data));
+			var data = ev.dataTransfer.getData('text');
 		}
 
+		function dragEnter(e) {
+			this.classList.add('over');
+		}
 		
-	</script>
-
-	<!-- <script>
-		// 드래그 event new
-		function dragstart_handler(ev) {
-			console.log("dragStart");
-			ev.dataTransfer.setData("text/plain", ev.target.id)
+		function dragLeave(e) {
+			e.stopPropagation();
+			this.classList.remove('over');
+		}
+		
+		function dragOver(e) {
+			e.preventDefault();
+			e.dataTransfer.dropEffect = 'move';
+		return false;
 		}
 
-		window.addEventListener('DOMContentLoaded', () => {
-			const element = document.getElementById("p1");
-			element.addEventListener("dragstart", dragstart_handler);
+		function addEventsDragAndDrop(el) {
+			el.addEventListener('dragstart', drag, false);
+			el.addEventListener('dragenter', dragEnter, false);
+			el.addEventListener('dragover', dragOver, false);
+			el.addEventListener('dragleave', dragLeave, false);
+			el.addEventListener('drop', drop, false);
+			el.addEventListener('dragend', dragEnd, false);
+		}
+
+		var listItens = document.querySelectorAll('.draggable');
+			[].forEach.call(listItens, function(item) {
+			addEventsDragAndDrop(item);
 		});
 
-		function dragover_handler(ev) {
-			ev.preventDefault();
-			// dropEffect를 move로 설정.
-			ev.dataTransfer.dropEffect = "move";
+		function dragEnd(e) {
+			var listItens = document.querySelectorAll('.draggable');
+			[].forEach.call(listItens, function(item) {
+				item.classList.remove('over');
+		});
+		// this.style.opacity = '1';
 		}
-		function drop_handler(ev) {
-			ev.preventDefault();
-			// 대상의 id를 가져와 대상 DOM에 움직인 요소를 추가합니다. 
-			const data = ev.dataTransfer.getData("text/plain");
-			ev.target.appendChild(document.getElementById(data));
-		}
-
-		allowDrop = function() {
-			event.preventDefault();
-		};
-
-		dropItem = function() {
-		var _targetEle = event.target;
-		var _id = event.dataTransfer.getData('text');
-		var _moveEle = document.getElementById(_id );
-		_targetEle.before(_moveEle);
-		};
-
-		dragStart = function() {
-		var _thisEle = event.target;
-		var _thisId = _thisEle.id;
-		_thisEle.classList.add('is-dragging');
-		event.dataTransfer.setData('text/plain', _thisId);
-		};
-
-		dragEnd = function() {
-		var _thisEle = event.target;
-		_thisEle.classList.remove('is-dragging');
-		};
-	</script> -->
-
-	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.js"></script>
+	</script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="/resources/demos/style.css">
+	<style>
+	#sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+	#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+	#sortable li span { position: absolute; margin-left: -1.3em; }
+	</style>
+	<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+	<script>
+	$( function() {
+		$( "#sortable" ).sortable();
+		$( "#sortable" ).disableSelection();
+	} );
+	</script>
+	
 </head>
 <body class="nav-md">
 	<div class="container body">
@@ -433,8 +423,10 @@
 											</div>
 										</tr>
 										<tr>
-											<div class="form-row bucket" id="registCategory" ondrop="drop(event)" ondragover="allowDrop(event)">
-												
+											<div class="form-row bucket" id="registCategory">
+												<ul  class="form-row bucket w-100" id="sortable" ondrop="drop(event)" ondragover="allowDrop(event)">
+													
+												</ul>
 											</div>
 										</tr>
 									</tbody>
