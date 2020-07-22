@@ -168,9 +168,9 @@
 
 		function registHtml(val, id){
 			var html = '';
-			// html += '<div class="ui-state-default draggable" id="regit'+id+'">\n';
+			html += '<div class="ui-state-default" id="regit'+id+'">\n';
 			// html += '<li class="ui-state-default ">\n';
-			html += '<div class="ui-state-default container m-2 creat span12 border border-secondary d-flex justify-content-between p-1" id="regitI'+id+'" style="margin: 10px 10px 0px 0px">\n';
+			html += '<div class="ui-state-default container m-2 creat span12 border border-secondary d-flex justify-content-between p-1" id="creat'+id+'" style="margin: 10px 10px 0px 0px">\n';
 			html += '<input type="text" class="ml-3" id="regitVal'+id+'" value="'+val+'" disabled>\n';
 			html += '<div class="btn-group" role="group" aria-label="regitBtnGroup">\n';
 			html += '<button type="button" class="btn btn-default" id= "changeBtn'+id+'" onclick="changeTag(this.id);"><span class="glyphicon glyphicon-pencil"></span></button>\n';
@@ -179,7 +179,7 @@
 			html += '</div>\n';
 			html += '</div>\n';
 			// html += '</li>\n';
-			// html += '</div>\n';
+			html += '</div>\n';
 
 			return html;
 		}

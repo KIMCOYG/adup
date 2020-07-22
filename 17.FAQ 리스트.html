@@ -13,6 +13,7 @@
 	<meta property="og:description" content="" />
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 	
+	
 	<title>ZENA.Biz :: 관리자</title>
 	
 	<!-- Custom fonts for this template-->
@@ -40,7 +41,7 @@
 	<script type="text/javascript">
 		var base = '.';	
 	</script>
-	
+
 	<!-- datepicker -->
 	<link rel="stylesheet" href="js/lib/jquery-ui/1.12.1/themes/dark-hive/jquery-ui.min.css" media="screen, projection"/>
 	<script src="js/lib/jquery-ui/1.12.1/jquery-ui.min.js"></script>
@@ -108,6 +109,7 @@
 			});
 		});
 	</script>
+	
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 </head>
 <body class="nav-md">
@@ -294,21 +296,19 @@
 						language: {
 							"emptyTable": "조회된 기획사 정보가 없습니다."
 						},
-						ajax: "17.FAQ 리스트.txt",
+						ajax: "http://resource.zenacare.net/html/17.FAQ 리스트.txt",
 						columns: [
 							{"data": "col1"},
 							{"data": "col2"},
 							{"data": "col3",
+								"className": 'details-control',
+								"orderable": false,
+								"data": null,
+								"defaultContent": '',
 								"render": function(data, type, row){
-									//console.log('data : ' + data + ", type : " + type + ", row : " + JSON.stringify(row));
+									// console.log('data : ' + data + ", type : " + type + ", row : " + JSON.stringify(row));
 									if(type=='display'){
-										data = '<a href="#" onclick="$(\'.answer\').hide();$(\'#answer'+row.col1+'\').show();">'+row.col3+'</a>\n';
-										data += '<div id="answer'+row.col1+'" class="answer" style="margin-top: 5px;border-top: 2px solid #ddd;width: 100%;padding: 5px;display:none;">\n';
-										data += '결제일자는 10일, 15일, 20일, 25일 4개의 일자를 선택하실 수 있습니다.<br/>\n';
-										data += '최초 가입신청 시 희망 하는 결제일자를 선택하시게 됩니다.<br/><br/>\n';
-										data += '변경을 원하실 경우는 고객센터 02-523-6500으로 전화 주시면 변경처리 가능합니다.<br/>\n';
-										data += '변경된 결제일자는 익월부터 적용되어집니다.<br/><br/>\n';
-										data += '변경을 원하신 달에는 기존 결제일이 적용되니 주의해 주시기 바랍니다.</div>';
+										data = row.col3;
 									}
 									return data;
 								}
@@ -330,13 +330,31 @@
 						],
 						searching: true, 		//테이블 내 데이터 검색 사용 여부(이때 생성되는 조회창은 사용하지 않을 경우 따로 숨겨주어야 한다.)
 						paging: true,			//페이징 사용 여부
-						responsive: true,		//테이블 크기 보정
+						responsive: false,		//테이블 크기 보정
 						processing: false,
 						lengthChange: true,
 						select: true,
 						ordering: false,		//헤더 정렬 기능 사용 여부
 						order: [[ 0, "desc" ]]	//첫 로딩 후 데이터 정렬 기준
 					});
+
+					
+					// Add event listener for opening and closing details
+					$('#enter-tbl tbody').on('click', 'td.details-control', function () {
+						var tr = $(this).closest('tr');
+						var row = enterTbl.row( tr );
+				 
+						if ( row.child.isShown() ) {
+							// This row is already open - close it
+							row.child.hide();
+							tr.removeClass('shown');
+						}
+						else {
+							// Open this row
+							row.child( format(row.data()) ).show();
+							tr.addClass('shown');
+						}
+					} );
 			
 					//테이블 내 데이터 조회 설정을 하면 생성되는 내부 조회 입력폼을 숨겨준다.
 					//$("#enter-tbl_filter").hide();
@@ -356,6 +374,16 @@
 					});
 				});
 
+				function format ( d ) {
+					// `d` is the original data object for the row
+					return '<table cellpadding="5" cellspacing="0" border="0" style="width:100%;padding-left:50px;">'+
+						'<tr>'+
+							'<td>결제일자는 10일, 15일, 20일, 25일 4개의 일자를 선택하실 수 있습니다.<br/>최초 가입신청 시 희망 하는 결제일자를 선택하시게 됩니다.<br/><br/>'+
+							'변경을 원하실 경우는 고객센터 02-523-6500으로 전화 주시면 변경처리 가능합니다.<br/>변경된 결제일자는 익월부터 적용되어집니다.<br/><br/>'+
+							'변경을 원하신 달에는 기존 결제일이 적용되니 주의해 주시기 바랍니다.</td>'+
+						'</tr>'+
+					'</table>';
+				}
 				//입력 필드 및 버튼 추가
 				function fn_input_search_make(){
 					var html = '';
@@ -386,6 +414,19 @@
 				}
 			</script>
 
+			<style>
+				.mtz-monthpicker select {color:#ffffff;background-color:#000000;}
+
+				td.details-control {
+					padding-left:30px !important;
+					background: url('resources/details_open.png') no-repeat 5px center;
+					cursor: pointer;
+				}
+				tr.shown td.details-control {
+					background-image: url('resources/details_close.png');
+				}
+			</style>
+
 	        <!-- s:right_col -->
 			<div class="right_col" role="main">
 
@@ -399,13 +440,13 @@
 				</nav>
 
 				<div class="card shadow">
-					<a href="#regManager" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="regManager">
+					<a href="#regManager" class="d-block card-header py-3" role="button" aria-expanded="true" aria-controls="regManager">
 						<h6 class="m-0 font-weight-bold text-primary">FAQ</h6>
 					</a>
 					<div class="collapse show in" id="regManager">
 						<div class="card-body">
 							<div class="table-responsive-sm">
-								<table id="enter-tbl" class="table table-bordered table-striped table-sm tbl-td-pd-1 mb-0" style="width:100%">
+								<table id="enter-tbl" class="table table-bordered table-striped table-sm tbl-td-pd-1 mb-0 no-responsive-table" style="width:100%">
 									<colgroup>
 										<col width="5%"/>
 										<col width="10%"/>

@@ -13,7 +13,7 @@
 	<meta property="og:description" content="" />
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 	
-	<title>로그인 로그ddd</title>
+	<title>로그인 로그</title>
 	
 	<!-- Custom fonts for this template-->
 	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -287,7 +287,7 @@
 						language: {
 							"emptyTable": "조회된 기획사 정보가 없습니다."
 						},
-						ajax: "9.로그인 로그.txt",
+						ajax: "http://resource.zenacare.net/html/9.로그인 로그.txt",
 						columns: [
 							{"data": "col1"},
 							{"data": "col2"},
@@ -312,7 +312,7 @@
 						],
 						searching: true, 		//테이블 내 데이터 검색 사용 여부(이때 생성되는 조회창은 사용하지 않을 경우 따로 숨겨주어야 한다.)
 						paging: true,			//페이징 사용 여부
-						responsive: true,		//테이블 크기 보정
+						responsive: false,		//테이블 크기 보정
 						processing: false,
 						lengthChange: true,
 						select: true,
@@ -332,9 +332,10 @@
 					//3. 생성된 그룹 내 각 조회 조건 생성
 					$('#search_filter_div').append(fn_input_search_make());
 
-					$('#enter-tbl_length > label').css("float", "left");
+					$('#enter-tbl_length > label').css({float:"left",position:"relative",zIndex:"1"});
 					$('#enter-tbl_length').append(fn_check_search_make());
 					$('#enter-tbl_length').parents('.row').addClass('none');
+					$('#enter-tbl_length').addClass('col-xs-12');
 
 					//검색 버튼 조회 실행
 					$(document).on('click', '#searchBtn', function(){
@@ -363,11 +364,11 @@
 					var html = '';
 					html += '<div class="input-group justify-content-end pt-0" role="group" style="position: absolute;top:0px;">\n';
 					html += '	<div class="datepiker-wrapper" data-target="startYmd">\n';
-					html += '		<input type="text" name="startYmd" id="startYmd" data-search-type="start" value="" class="form-control form-control-sm datepicker hasDatepicker" alt="시작일자" placeholder="시작일자" readonly="">\n';
+					html += '		<input type="text" name="startYmd" id="startYmd" data-search-type="start" value="" class="form-control form-control-sm form-control-xs datepicker hasDatepicker" alt="시작일자" placeholder="시작일자" readonly="">\n';
 					html += '	</div>\n';
 					html += '	<div class="text-center text-wrap" style="width:2rem;padding:.5rem .4rem;"> ~ </div>\n';
 					html += '	<div class="datepiker-wrapper mr-1" data-target="endYmd">\n';
-					html += '		<input type="text" name="endYmd" id="endYmd" data-search-type="end" value="" class="form-control form-control-sm datepicker hasDatepicker" alt="종료일자" placeholder="종료일자" readonly="">\n';
+					html += '		<input type="text" name="endYmd" id="endYmd" data-search-type="end" value="" class="form-control form-control-sm form-control-xs datepicker hasDatepicker" alt="종료일자" placeholder="종료일자" readonly="">\n';
 					html += '	</div>\n';
 					html += '</div>\n';
 					return html;
@@ -417,13 +418,13 @@
 					<div class="card-body">
 						<div class="card bg-gray-100" style="margin-bottom: 10px;">
 							<div class="card-body" style="padding: 15px;">
-								<ul style="font-size: small;">
+								<ul style="font-size: .8rem;">
 									<li>· 시스템 사용자들의 로그인 기록을 확인합니다.</li>
 								</ul>
 							</div>
 						</div>
 						<div class="table-responsive-sm">
-							<table id="enter-tbl" class="table table-bordered table-striped table-sm tbl-td-pd-1 mb-0" style="width:100%">
+							<table id="enter-tbl" class="table table-bordered table-striped table-sm tbl-td-pd-1 mb-0 no-responsive-table" style="width:100%">
 								<colgroup>
 									<col width="5%"/>
 									<col width="*"/>

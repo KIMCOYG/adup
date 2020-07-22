@@ -294,7 +294,7 @@
 						language: {
 							"emptyTable": "조회된 기획사 정보가 없습니다."
 						},
-						ajax: "15.공지사항 리스트.txt",
+						ajax: "http://resource.zenacare.net/html/15.공지사항 리스트.txt",
 						columns: [
 							{"data": "col1"},
 							{"data": "col2",
@@ -325,7 +325,7 @@
 						],
 						searching: true, 		//테이블 내 데이터 검색 사용 여부(이때 생성되는 조회창은 사용하지 않을 경우 따로 숨겨주어야 한다.)
 						paging: true,			//페이징 사용 여부
-						responsive: true,		//테이블 크기 보정
+						responsive: false,		//테이블 크기 보정
 						processing: false,
 						lengthChange: true,
 						select: true,
@@ -337,7 +337,7 @@
 						language: {
 							"emptyTable": "조회된 기획사 정보가 없습니다."
 						},
-						ajax: "15.공지사항 리스트 - 공지.txt",
+						ajax: "http://resource.zenacare.net/html/15.공지사항 리스트 - 공지.txt",
 						columns: [
 							{"data": "col1"},
 							{"data": "col2",
@@ -369,7 +369,7 @@
 						info:false,
 						searching: true, 		//테이블 내 데이터 검색 사용 여부(이때 생성되는 조회창은 사용하지 않을 경우 따로 숨겨주어야 한다.)
 						paging: false,			//페이징 사용 여부
-						responsive: true,		//테이블 크기 보정
+						responsive: false,		//테이블 크기 보정
 						processing: false,
 						lengthChange: true,
 						select: true,
@@ -429,14 +429,14 @@
 				</nav>
 
 				<div class="card shadow">
-					<a href="#regManager" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="regManager">
+					<a href="#regManager" class="d-block card-header py-3" role="button" aria-expanded="true" aria-controls="regManager">
 						<h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
 					</a>
 					
 					<div class="collapse show in" id="regManager">
 						<div class="card-body">
 							<div class="table-responsive-sm mb-2">
-								<table id="enter-tbl2" class="table table-bordered table-striped table-sm tbl-td-pd-1 mb-0" style="width:100%">
+								<table id="enter-tbl2" class="table table-bordered table-striped table-sm tbl-td-pd-1 mb-0 no-responsive-table" style="width:100%">
 									<colgroup>
 										<col width="5%"/>
 										<col width="*"/>
@@ -457,7 +457,7 @@
 							</div>
 
 							<div class="table-responsive-sm">
-								<table id="enter-tbl" class="table table-bordered table-striped table-sm tbl-td-pd-1 mb-0" style="width:100%">
+								<table id="enter-tbl" class="table table-bordered table-striped table-sm tbl-td-pd-1 mb-0 no-responsive-table" style="width:100%">
 									<colgroup>
 										<col width="5%"/>
 										<col width="*"/>

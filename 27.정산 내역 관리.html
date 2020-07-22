@@ -211,7 +211,7 @@
 						language: {
 							"emptyTable": "조회된 기획사 정보가 없습니다."
 						},
-						ajax: "27.정산 내역 관리.txt",
+						ajax: "http://resource.zenacare.net/html/27.정산 내역 관리.txt",
 						columns: [
 							{"data": "col1"},
 							{"data": "col2",
@@ -297,7 +297,7 @@
 						info: false,
 						searching: true, 		//테이블 내 데이터 검색 사용 여부(이때 생성되는 조회창은 사용하지 않을 경우 따로 숨겨주어야 한다.)
 						paging: false,			//페이징 사용 여부
-						responsive: true,		//테이블 크기 보정
+						responsive: false,		//테이블 크기 보정
 						processing: false,
 						lengthChange: true,
 						select: true,
@@ -326,42 +326,41 @@
 				//입력 필드 및 버튼 추가
 				function fn_input_search_make(){
                     var html = '';
-                    html += '<div class="collapse show" id="regManager" style="width:100%;">\n'
+                    html += '<div class="collapse show col-sm-12" id="regManager" style="width:100%;">\n'
                     html += '<div class="table-responsive-sm">\n'
                     html += '<table class="table table-bordered  table-sm tbl-td-pd-1 mb-0">\n'
                     html += '<colgroup>\n'
+                    html += '<col width="10%"/>\n'
                     html += '<col width="20%"/>\n'
-                    html += '<col width="30%"/>\n'
-                    html += '<col width="30%"/>\n'
-                    html += '<col width="*"/>\n'
+                    html += '<col width="20%"/>\n'
+					html += '<col width="50%"/>\n'
 					html +=	'</colgroup>\n'
                     html += '<tbody>'
                     html += '<tr>'
                     html += '<th scope="row" class="text-center bg-gray-100">정산 현황</th>\n'
-                    html += '<td>'
-                    html += '	<select name="" id="searchFilter" class="custom-select input-group-prepend">\n';
+					html += '<td colspan="4">'
+
+                    html += '	<div style="display: inline; margin-right:3px"><select name="" id="searchFilter" class="custom-select input-group-prepend" style="width: 20%">\n';
                     html += '		<option value="">심사상태 전체</option>\n';
                     html += '		<option value="">승인중</option>\n';
                     html += '		<option value="">승인보류</option>\n';
                     html += '		<option value="">승인거절</option>\n';
                     html += '		<option value="">승인완료</option>\n';
-                    html += '	</select>\n';
-                    html += '</td>\n'
-                    html += '<td>'
-                    html += '	<select name="" id="searchFilter" class="custom-select input-group-prepend">\n';
+					html += '	</select>\n</div>';
+                    html += '	<select name="" id="searchFilter" class="custom-select input-group-prepend" style="width: 20%">\n';
                     html += '		<option value="">지급상태 전체</option>\n';
                     html += '		<option value="">지급대기</option>\n';
                     html += '		<option value="">지급완료</option>\n';
                     html += '	</select>\n';
-                    html += '</td>'
+                    html += '</td>\n'
                     html += '</tr>'
                     html += '<tr>'
                     html += '<th scope="row" class="text-center bg-gray-100">기간</th>'
-                    html += '<td colspan="2">'
-                    html += '	<select name="" id="searchFilter" class="custom-select input-group-prepend">\n';
+                    html += '<td colspan="4">'
+					html += '	<select name="" id="searchFilter" class="custom-select input-group-prepend" style="width: 20%">\n';
                     html += '		<option value="">2020</option>\n';
                     html += '	</select>\n';
-                    html += '</td>'
+					html += '</td>'
                     html += '</tr>'
                     html +=	'</tbody>'
                     html +=	'</table>'
@@ -408,7 +407,7 @@
 					</div>
                     <div class="card bg-gray-100" style="margin: 20px; margin-bottom: 5px;">
                         <div class="card-body" style="padding: 15px;">
-                            <ul style="font-size: small;">
+                            <ul style="font-size: .8rem;">
                                 <li>· 정산 신청 내역 및 진행상황을 확인 할 수 있습니다..</li>
                                 <li>· 정산현황별, 지급상태별, 기간별 정산 내역을 조회할 수 있습니다.</li>
                                 <li>· 상세보기를 통해 신청한 정산금액의 상세내역을 확인 할 수 있습니다.</li>
@@ -418,7 +417,7 @@
 					<div class="collapse show" id="regManager">
 						<div class="card-body">
 							<div class="table-responsive-sm">
-								<table id="enter-tbl" class="table table-bordered table-striped table-sm tbl-td-pd-1 mb-0" style="width:100%">
+								<table id="enter-tbl" class="table table-bordered table-striped table-sm tbl-td-pd-1 mb-0 no-responsive-table" style="width:100%">
 									<colgroup>
 										<col width="3%"/>
                                         <col width="13%"/>

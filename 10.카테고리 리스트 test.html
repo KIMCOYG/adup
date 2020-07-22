@@ -168,18 +168,17 @@
 
 		function registHtml(val, id){
 			var html = '';
-			// html += '<div class="ui-state-default draggable" id="regit'+id+'">\n';
-			// html += '<li class="ui-state-default ">\n';
-			html += '<div class="ui-state-default container m-2 creat span12 border border-secondary d-flex justify-content-between p-1" id="regitI'+id+'" style="margin: 10px 10px 0px 0px">\n';
+			html += '<div class="ui-state-default container mt-2 mb-2 col-md-12 col-xs-6" id="regit'+id+'">\n';
+			html += '<div class="col-md-8 col-xs-3" style="margin-top:8px; margin-left:-1px">\n';
 			html += '<input type="text" class="ml-3" id="regitVal'+id+'" value="'+val+'" disabled>\n';
-			html += '<div class="btn-group" role="group" aria-label="regitBtnGroup">\n';
-			html += '<button type="button" class="btn btn-default" id= "changeBtn'+id+'" onclick="changeTag(this.id);"><span class="glyphicon glyphicon-pencil"></span></button>\n';
-			html += '<button type="button" class="btn btn-default" id="removeRegitBtn'+id+'" onclick="removeRegit(this.id);"><span class="glyphicon glyphicon-trash"></span></button>\n';
-			html += '<button type="button" class="btn btn-default" id="dragBtn'+id+'""><span class="glyphicon glyphicon-align-justify"></span></button>\n';
 			html += '</div>\n';
+			html += '<div class="btn-group" role="group" aria-label="regitBtnGroup" style="float: right">\n';
+			html += '<button type="button" style="border: 0px; outline: 0px; background-color:transparent; margin:10px 10px 10px 12px" id= "changeBtn'+id+'" onclick="changeTag(this.id);"><span class="glyphicon glyphicon-pencil"></span></button>\n';
+			html += '<button type="button" style="border: 0px; outline: 0px; background-color:transparent; margin:10px 10px 10px 12px" id="removeRegitBtn'+id+'" onclick="removeRegit(this.id);"><span class="glyphicon glyphicon-trash"></span></button>\n';
+			html += '<div style="width: 25px; margin:10px 10px 10px 12px"><span class="glyphicon glyphicon-align-justify"></span></div>\n';
 			html += '</div>\n';
-			// html += '</li>\n';
 			// html += '</div>\n';
+			html += '</div>\n';
 
 			return html;
 		}
@@ -189,10 +188,8 @@
 		function allowDrop(ev){
 			ev.preventDefault();
 		}
-		function drag(ev){
-			
-			ev.dataTransfer.setData('text', ev.target.id);
-		
+		function drag(ev){			
+			ev.dataTransfer.setData('text', ev.target.id);		
 		}
 		function drop(ev){
 			ev.preventDefault();
@@ -240,7 +237,6 @@
 		// this.style.opacity = '1';
 		}
 	</script>
-	//new
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" href="/resources/demos/style.css">
 	<style>
@@ -248,16 +244,16 @@
 	#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
 	#sortable li span { position: absolute; margin-left: -1.3em; }
 	</style>
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
 	<script>
 	$( function() {
 		$( "#sortable" ).sortable();
 		$( "#sortable" ).disableSelection();
 	} );
 	</script>
-	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.js"></script>
+	<!-- <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.js"></script> -->
 </head>
 <body class="nav-md">
 	<div class="container body">
@@ -433,7 +429,7 @@
 										</tr>
 										<tr>
 											<div class="form-row bucket" id="registCategory">
-												<ul  class="form-row bucket" id="sortable" ondrop="drop(event)" ondragover="allowDrop(event)">
+												<ul  class="form-row bucket w-100" id="sortable" ondrop="drop(event)" ondragover="allowDrop(event)">
 													
 												</ul>
 											</div>

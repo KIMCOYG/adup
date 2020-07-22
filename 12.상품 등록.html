@@ -14,7 +14,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 	
 	<title>상품 등록</title>
-	
+
 	<!-- Custom fonts for this template-->
 	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -147,7 +147,31 @@
 			// var detailID = "detailOp"+id;
 			
 			$("#detailOp"+id).append(option2(id));
+			// alert($(".subOption"+id).length);
+			var subOptionCnt = $(".subOption"+id).length;
+			
+			var html = '';
+
+			for(var i=0;i<=subOptionCnt;i++){
+				html += '<option>'+i+'</option>\n';
+			}
+			$("#sel_option").empty();
+			$("#sel_option").append(html);
+
+			
 		}
+
+		$(document).on('click', "#chk_option", function(){
+			var chk = $("#chk_option").is(":checked");
+			
+			if(chk===true){
+				$("#optionGroup").addClass("d-none");
+			} else{
+				$("#optionGroup").removeClass("d-none");
+			}
+		});
+
+		
 		
 		function option1(count){
 			var html = '';
@@ -155,25 +179,39 @@
 			html += '<div id="option'+count+'"">\n';
 			html += '<div class="form-inline ao1" id="option'+count+'">\n';
 			html += '<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>\n';
-			html += '<input type="text" name="" id="" value="" class="" placeholder="상품 설명 입력"/>\n';
-			html += '<button class="btn btn-dark glyphicon glyphicon-plus ml-1 mt-1" id="'+count+'" onclick="appendOp2(this.id);"></button>\n';
+			html += '<input type="text" name="" id="" value="" class="border border-dark" placeholder="옵션명 입력"/>\n';
+			html += '<button class="btn btn-dark glyphicon glyphicon-plus ml-1 mt-1" id="'+count+'" style= "opacity: 0.8;" onclick="appendOp2(this.id);"></button>\n';
 			html += '<div class="form-group">\n';
 			html += '<label class="mr-2 pl-2 form-check-label" for="chk_option">옵션 필수</label>\n';
 			html += '<input type="checkbox" id="chk_option" class="form-check-input">\n';
 			html += '</div>\n';
+			html += '<div class="form-group" id="optionGroup">\n';
+			html += '<label class="mr-2 pl-2" for="sel_option">선택 가능 옵션 수</label>\n';
+			html += '<select class="mr-2 pl-2" id="sel_option">\n';
+			// html += '<option>1</option>\n';
+			html += '</select>\n';
+			html += '</div>\n'; //
 			html += '</div>\n'; //
 			html += '<div class="form-group" id="detailOp'+count+'"></div>\n';
 
 			return html;
 		}
 
+		function moneyCnt(id, val) {
+			val = val.replace(/[^0-9]/g, '');   // 입력값이 숫자가 아니면 공백
+			val = val.replace(/,/g, '');          // ,값 공백처리
+			$("#"+id).val(val.replace(/\B(?=(\d{3})+(?!\d))/g, ",")); // 정규식을 이용해서 3자리 마다 , 추가 
+			// alert(val);
+		}
+
 		function option2(id){
 			var html = '';
 			
 			// html += '<div class="form-group">\n';
-			html += '<div class="pl-5 mt-2 form-inline row detail_row" id="detailRow'+id+'">\n';
-			html += '<input type="text" placeholder="상세 옵션 값">\n';
-			html += '<input type="text" class="ml-2" placeholder="금액" style="width: 100px;">\n';
+			html += '<div class="pl-5 mt-2 form-inline row detail_row subOption'+id+'" id="detailRow'+id+'">\n';
+			html += '<input type="text" class="border border-dark" placeholder="상세 옵션 값">\n';
+			html += '<input id="moneyVal'+id+'" type="text" value="" class="ml-2 border border-dark text-right moneyVal" placeholder="금액" style="width: 100px;" onkeyup="moneyCnt(this.id, this.value);">\n';
+			html += '<span style="position: relative;" class="ml-1"><b>원</b></span>\n';
 			html += '<button class="btn btn-default btn_remove"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true" style="color: red;"></span></button>\n';
 			html += '</div>\n';
 
@@ -182,8 +220,42 @@
 		//추가 상세옵션 삭제
 		$(document).on("click",".btn_remove",function(e){
 			e.preventDefault();
+			var id = $(this).parent().attr('id');
+			id = id.substring(9,10);
 
 			$(this).parents(".detail_row").remove();
+			var subOptionCnt = $(".subOption"+id).length;
+			
+			var html = '';
+
+			for(var i=0;i<=subOptionCnt;i++){
+				html += '<option>'+i+'</option>\n';
+			}
+			$("#sel_option").empty();
+			$("#sel_option").append(html);
+		});
+
+		// 가격 정보 없음
+		$(document).on('click', "#price", function(){
+			var chk = $("#price").is(":checked");
+			if(chk===true)
+				$("#priceInfo").attr('disabled', 'disabled');
+			else
+				$("#priceInfo").removeAttr('disabled');
+		});
+		// 할인판매적용
+		$(document).on('keyup', "#discountPer", function(){
+			var val = $("#discountPer").val();
+			var price = $("#priceInfo").val();
+			val = 1 - (val/100);
+			$("#discountVal").val(price*val);
+		});
+
+		$(document).on('keyup', "#discountVal", function(){
+			var ans = $("#discountVal").val();
+			var price = $("#priceInfo").val();
+			var val = (1 - (ans/price))*100;
+			$("#discountPer").val(val);
 		});
 	</script>
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -312,7 +384,7 @@
 	            </nav>
 	          </div>
 	        </div>
-	        <!-- e:top_nav -->
+			<!-- e:top_nav -->
 
 	        <!-- s:right_col -->
 			<div class="right_col" role="main">
@@ -334,7 +406,7 @@
 						<div class="card-body">
 							<div class="card bg-gray-100" style="margin-bottom: 5px;">
 								<div class="card-body" style="padding: 15px;">
-									<ul style="font-size: small;">
+									<ul style="font-size: .8rem;">
 										<li>· 판매 상품을 등록하고 옵션을 추가 할 수 있습니다.</li>
 									</ul>
 								</div>
@@ -360,7 +432,7 @@
 												<div class="input-group text-center mb-0">
 													<div class="input-group text-center profile-group mb-0">
 														<img id="profileImageView" src="" class="img-thumbnail img-celeb-profile" alt="" style="display:none;">
-														<p id="profileNoImageText" class="text-monospace img-thumbnail img-celeb-profile img-celeb-profile-no" style="height:500px;">No image</p>
+														<p id="profileNoImageText" class="text-monospace img-thumbnail img-celeb-profile img-celeb-profile-no">No image</p>
 													</div>
 													<div class="input-group-append custom-file-right-btn">
 														<input type="file" class="custom-file-input" name="profileImage" id="profileImage" alt="프로필 사진" imagefile="true" required="">
@@ -381,11 +453,9 @@
 											<th scope="row" class="bg-gray-100 text-center"><span class="text-danger">* </span>가격</th>
 											<td>
 												<div class="form-row">
-													<div class="col">
-														<div class="d-flex">
-															<input type="text" name="" id="" value="12000" class="form-control form-control-sm" placeholder="상품명 입력" style="padding-left: 30px;"/>
-															<span style="margin-right: 20px; position: absolute; padding-left: 5px;"><b>$</b></span>
-														</div>
+													<div class="col d-flex">
+														<input type="text" name="" id="priceInfo" value="12000" class="form-control form-control-sm col-xs-2 text-right" placeholder=""/>
+														<span class="ml-1"><b>원</b></span>
 													</div>
 													<div class="col form-check form-check-inline">
 														<input type="checkbox" class="form-check-input" name="" id="price" value=""/>
@@ -398,15 +468,15 @@
 											<th scope="row" class="bg-gray-100 text-center">할인판매적용</th>
 											<td>
 												<div class="form-row pt-1">
-													<div class="col input-group">
-														<input type="text" name="" id="" value="8.3" class="form-control form-control-sm col-xs-2" placeholder=""/>
-														<span style="margin-right: 20px; position: relative; padding-left: 5px;"><b>%</b></span>
+													<div class="col input-group col-half">
+														<input type="text" name="" id="discountPer" value="8.3" class="form-control form-control-sm col-xs-2 text-right" placeholder=""/>
+														<span class="ml-1"><b>%</b></span>
 													</div>
-													<div class="col d-flex">
-														<input type="text" name="" id="" value="11,000" class="form-control form-control-sm col-xs-2" placeholder=""/>
-														<span style="position: relative;" class="ml-1"><b>원</b></span>
+													<div class="col d-flex col-half">
+														<input type="text" name="" id="discountVal" value="11,004" class="form-control form-control-sm col-xs-2 text-right" placeholder=""/>
+														<span class="ml-1"><b>원</b></span>
 													</div>
-                                                    <span class="col ml-2"><b>* 입력 시 자동 계산</b></span>
+                                                    <span class="col"><b>* 입력 시 자동 계산</b></span>
                                                 </div>
 											</td>							
 											
@@ -419,10 +489,10 @@
 										</tr>
 										<tr>
 											<th scope="row" rowspan="2" class="bg-gray-100 text-center">옵션 설정</th>
-											<td colspan="3">
+											<td colspan="3" rowspan="2">
 												<div>
 													<span>옵션 추가</span>
-													<button class="btn btn-dark glyphicon glyphicon-plus ml-1" id="plusBtn1" onclick="appendOp1();"></button>
+													<button class="btn btn-dark glyphicon glyphicon-plus ml-1" id="plusBtn1" style="opacity: 0.8;" onclick="appendOp1();"></button>
 												</div>
 												<div id="addOption1">
 													

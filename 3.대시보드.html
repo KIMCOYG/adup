@@ -325,7 +325,7 @@
 						language: {
 							"emptyTable": "조회된 기획사 정보가 없습니다."
 						},
-						ajax: "3.대시보드 - 알림내역.txt",
+						ajax: "http://resource.zenacare.net/html/3.대시보드 - 알림내역.txt",
 						columns: [
 							{"data": "col2"},
 							{"data": "col3"}
@@ -359,7 +359,7 @@
 						language: {
 							"emptyTable": "조회된 기획사 정보가 없습니다."
 						},
-						ajax: "3.대시보드 - 모집글현황.txt",
+						ajax: "http://resource.zenacare.net/html/3.대시보드 - 모집글현황.txt",
 						columns: [
 							{"data": "col1"},
 							{"data": "col2"},
@@ -413,7 +413,8 @@
 				];
 				var data3 = [158,94,89,75,42];
 				var data4 = [
-					{label:'주문 건수', type:'bar',data:[145,137,128,116,108,91,84,75,59,42]},
+					{label:'주문 건수', type:'bar',data:[145,137,128,116,108,91,84]},
+					{label:'금액', type:'line', data:[145,137,128,116,108,91,84]}
 				];
 
 				var labels = ['10대', '20대', '30대', '40대', '50대', '60대 이상'];
@@ -743,105 +744,107 @@
 				<div class="row">
 					<div class="col-sm-12 col-md-12">
 						<div class="card shadow mb-3">
-							<a href="#regManager" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="regManager">
+							<a href="#regManager" class="d-block card-header py-3" role="button" aria-expanded="true" aria-controls="regManager">
 								<h6 class="m-0 font-weight-bold text-primary">주문관리</h6>
 							</a>
 							<div class="collapse show in" id="regManager">
-								<div class="card-body">
-									<table class="table table-borderless" style="border-top-style: none;">
-										<colgroup>
-											<col>
-											<col>
-											<col>
-											<col>
-										</colgroup>
-										<tbody>
-											<tr>
-												<td>
-													<div class="col-10 border border-secondary rounded">
+								<div class="card-body dashboard-top">
+									<div class="row">
+										<div class="col-sm-6 col-xs-12">
+											<div class="row">
+												<div class="col-sm-6 col-xs-12">
+													<div class="bdr-wrap border border-secondary rounded">
 														<div class="d-flex justify-content-start">
-															<span><b>TODAY</b></span>
+															<span class="tit"><b>TODAY</b></span>
 														</div>
-														<br>
 														<div class="d-flex justify-content-end">
-															<span><b style="font-size: 20px;">235,000</b> 원</span>
+															<span><b>235,000</b> 원</span>
 														</div>
 													</div>
-												</td>
-												<td>
-													<div class="col-10 border border-secondary rounded">
+												</div>
+												<div class="col-sm-6 col-xs-12">
+													<div class="bdr-wrap border border-secondary rounded">
 														<div class="d-flex justify-content-start">
-															<span><b>This Week</b></span>
+															<span class="tit"><b>This Week</b></span>
 														</div>
-														<br>
 														<div class="d-flex justify-content-end">
-															<span><b style="font-size: 20px;">835,000</b> 원</span>
+															<span><b>835,000</b> 원</span>
 														</div>
 													</div>
-												</td>
-												<td>
-													<div class="col-10 border border-secondary rounded">
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-6 col-xs-12">
+											<div class="row">
+												<div class="col-sm-6 col-xs-12">
+													<div class="bdr-wrap border border-secondary rounded">
 														<div class="d-flex justify-content-start">
-															<span><b>This Month</b></span>
+															<span class="tit"><b>This Month</b></span>
 														</div>
-														<br>
 														<div class="d-flex justify-content-end">
-															<span><b style="font-size: 20px;">4,035,000</b> 원</span>
+															<span><b>4,035,000</b> 원</span>
 														</div>
 													</div>
-												</td>
-												<td>
-													<div class="col-10 border border-secondary rounded">
+												</div>		
+												<div class="col-sm-6 col-xs-12">
+													<div class="bdr-wrap border border-secondary rounded">
 														<div class="d-flex justify-content-start">
-															<span><b>This Year</b></span>
+															<span class="tit"><b>This Year</b></span>
 														</div>
-														<br>
 														<div class="d-flex justify-content-end">
-															<span><b style="font-size: 20px;">13,335,000</b> 원</span>
+															<span><b>13,335,000</b> 원</span>
 														</div>
 													</div>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<div class="col-10 border border-secondary rounded">
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="clearfix"></div>
+
+									<div class="row">
+										<div class="col-sm-6 col-xs-12">
+											<div class="row">
+												<div class="col-sm-6 col-xs-12">
+													<div class="bdr-wrap border border-secondary rounded">
 														<div class="d-flex justify-content-start">
-															<span><b>오늘 총 주문 수</b></span>
+															<span class="tit"><b>오늘 총 주문 수</b></span>
 														</div>
-														<br>
 														<div class="d-flex justify-content-between">
-															<span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="font-size: 40px;"></span>
-															<span class="pt-2"><b style="font-size: 40px;">20</b> 건</span>
+															<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+															<span><b>20</b> 건</span>
 														</div>
 													</div>
-												</td>
-												<td>
-													<div class="col-10 border border-secondary rounded">
+												</div>
+												<div class="col-sm-6 col-xs-12">
+													<div class="bdr-wrap border border-secondary rounded">
 														<div class="d-flex justify-content-start">
-															<span><b>오늘 총 주문 수</b></span>
+															<span class="tit"><b>오늘 총 주문 수</b></span>
 														</div>
-														<br>
 														<div class="d-flex justify-content-between">
-															<span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="font-size: 40px;"></span>
-															<span class="pt-2"><b style="font-size: 40px;">8</b> 건</span>
+															<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+															<span><b>8</b> 건</span>
 														</div>
 													</div>
-												</td>
-												<td colspan="2">
-													<div class="col-11 border border-secondary rounded">
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-6 col-xs-12">
+											<div class="row">
+												<div class="col-sm-12 col-xs-12">
+													<div class="bdr-wrap border border-secondary rounded last">
 														<div class="d-flex justify-content-start">
-															<span><b>신규 주문</b></span>
+															<span class="tit"><b>신규 주문</b></span>
 														</div>
-														<br>
-														<div class="d-flex justify-content-end">
-															<span><b style="font-size: 40px;">3</b> 건</span>
-															<span class="glyphicon glyphicon-circle-arrow-right ml-3 text-center" style="color: yellow; font-size: 40px;"></span>
+														<div class="d-flex justify-content-end align-items-end">
+															<span><b>3</b> 건</span>
+															<span class="glyphicon glyphicon-circle-arrow-right ml-3 text-center"></span>
 														</div>
 													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -850,12 +853,12 @@
 				<div class="row">
 					<div class="col-sm-12 col-md-6">
 						<div class="card shadow mb-3">
-							<a href="#regManager3" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="regManager3">
+							<a href="#regManager3" class="d-block card-header py-3" role="button" aria-expanded="true" aria-controls="regManager3">
 								<h6 class="m-0 font-weight-bold text-primary">요일별 통계</h6>
 							</a>
-							<div class="collapse show in" id="regManager3">
+							<div class="collapse show in" id="regManager3" style="width: 100%;">
 								<div class="card-body">
-									<div class="chart-bar chart-body" style="height:300px !important;">
+									<div class="chart-bar chart-body">
 										<canvas id="joinChart"></canvas>
 									</div>
 								</div>
@@ -864,12 +867,12 @@
 					</div>
 					<div class="col-sm-12 col-md-6">
 						<div class="card shadow mb-3">
-							<a href="#regManager4" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="regManager4">
+							<a href="#regManager4" class="d-block card-header py-3" role="button" aria-expanded="true" aria-controls="regManager4">
 								<h6 class="m-0 font-weight-bold text-primary">메뉴별 통계</h6>
 							</a>
-							<div class="collapse show in" id="regManager4">
+							<div class="collapse show in" id="regManager4" style="width: 100%;">
 								<div class="card-body">
-									<div class="chart-bar chart-body" style="height:300px !important;">
+									<div class="chart-bar chart-body">
 										<canvas id="joinChart2"></canvas>
 									</div>
 								</div>

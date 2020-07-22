@@ -1,6 +1,38 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+	<style>
+		body { text-align: center; }
+		.tooltip {
+			position: relative;
+			display: inline-block;
+			margin: auto;
+		}
+		.tooltip .tooltip-content {
+			visibility: hidden;
+			width: 220px;
+			background-color: white;
+			padding: 0;
+			color: black;
+			text-align: center;
+			position: absolute;
+			z-index: 1;
+			bottom: 180%;
+			left: 50%;
+			margin-left: -110px;
+		}
+		.tooltip .tooltip-content::after {
+			content: " ";
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			margin-left: -10px;
+			border-width: 10px;
+			border-style: solid;
+			border-color: black transparent transparent transparent;
+		}
+		.tooltip:hover .tooltip-content { visibility: visible; }
+	</style>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="Content-Script-Type" content="text/javascript" />
 	<meta http-equiv="Content-Style-Type" content="text/css" />
@@ -14,7 +46,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 	
 	<title>ZENA.Biz :: 관리자</title>
-	
+
 	<!-- Custom fonts for this template-->
 	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -207,7 +239,33 @@
 					</div>
 				</div>
 				<!-- /sidebar menu -->
+
 			  </div>
+
+			  <!-- s:pop-alert -->
+				<div class="pop-alert">
+					<div class="alert alert-success alert-dismissible fade" role="alert">
+						<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+						<a href="#"><strong>신규 주문이 도착했습니다.</strong></a>
+					</div>
+
+					<div class="alert alert-info alert-dismissible fade" role="alert">
+						<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+						<a href="#"><strong>취소 요청이 도착했습니다.</strong></a>
+					</div>
+
+					<div class="alert alert-warning alert-dismissible fade" role="alert">
+						<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+						<a href="#"><strong>취소 요청이 도착했습니다.</strong></a>
+					</div>
+
+					<div class="alert alert-danger alert-dismissible fade" role="alert">
+						<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+						<a href="#"><strong>취소 요청이 도착했습니다.</strong></a>
+					</div>
+				</div>
+				<!-- e:pop-alert -->
+
 			</div>
 			<!-- e:left_col -->
 
@@ -325,7 +383,7 @@
 						language: {
 							"emptyTable": "조회된 기획사 정보가 없습니다."
 						},
-						ajax: "14.실시간 주문관리2.txt",
+						ajax: "http://resource.zenacare.net/html/14.실시간 주문관리2.txt",
 						columns: [
 							{"data": "col1"},
 							{"data": "col2",
@@ -433,7 +491,7 @@
 						],
 						columnDefs: [
 							{	//tbody 텍스트 가운데 정렬 클레스 추가
-								targets: [ 0, 2, 5 ],
+								targets: [ 0, 2 ],
 								className: 'tbl-align-center'
 							},
 							{	//헤더 정렬 기능 제외 처리
@@ -443,12 +501,20 @@
 							{	//검색 제외 처리
 								targets: [ 0, 1, 2, 5 ],
 								searchable: false
+							},
+							{	//오른쪽 정렬
+								targets: [ 6 ],
+								className: 'text-right'
+							},
+							{	//왼쪽 정렬
+								targets: [ 5, 7 ],
+								className: 'text-left'
 							}
 						],
 						info: false,
 						searching: true, 		//테이블 내 데이터 검색 사용 여부(이때 생성되는 조회창은 사용하지 않을 경우 따로 숨겨주어야 한다.)
 						paging:false,			//페이징 사용 여부
-						responsive: true,		//테이블 크기 보정
+						responsive: false,		//테이블 크기 보정
 						processing: false,
 						lengthChange: true,
 						select: true,
@@ -461,6 +527,7 @@
 					//$("#enter-tbl2_filter").hide();
 					$('.dt-buttons').hide();
 
+					$("#enter-tbl tbody").addClass("text-center");
 
 					$('#enter-tbl_filter').parent().parent().children(":eq(0)").append(fn_button_make());
 					$('#enter-tbl_filter').css("padding-top", "20px");
@@ -486,7 +553,10 @@
 						console.log("test");
 						$("#waitModal").modal();
 					})
+
+					
 				});
+
 
 				//입력 필드 및 버튼 추가
 				function fn_input_search_make(){
@@ -503,15 +573,14 @@
 				function fn_button_make(){
 					var html = '';
 					
-					html += '<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="margin: 1px; padding-top:1px;/*margin-top: 20px;*/">\n';
-					//html += '    <div>\n';
-					html += '        <button type="button" class="btn btn-light new-menu" style="white-space: nowrap; float:left"><div class="new-menu-number" id="menu1" style="float:left; background: pink">1</div>전체</button>\n';
-					html += '        <button type="button" class="btn btn-light new-menu" style="white-space: nowrap; float:left"><div class="new-menu-number" id="menu2" style="float:left; background:#e9e9e9">2</div>주문</button>\n';
+					
+					html += '<div class="btn-toolbar btn-order-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="margin: 1px; padding-top:1px;/*margin-top: 20px;*/">\n';
+					html += '        <button type="button" class="btn btn-light new-menu" style="white-space: nowrap; float:left"><div class="new-menu-number" id="menu1" style="float:left; background: pink">1</div>전체</button></tbody></table>\n';
+					html += '        <button type="button" class="btn btn-light new-menu new-order new" style="white-space: nowrap; float:left;"><div class="new-menu-number" id="menu2" style="float:left; background:#e9e9e9;">2</div><span style="color: red">주문</span></button>\n';
 					html += '        <button type="button" class="btn btn-light new-menu" style="white-space: nowrap; float:left"><div class="new-menu-number" id="menu3" style="float:left; background: beige">3</div>접수</button>\n';
 					html += '        <button type="button" class="btn btn-light new-menu" style="white-space: nowrap; float:left"><div class="new-menu-number" id="menu4" style="float:left; background: pink">4</div>완료</button>\n';
-					html += '        <button type="button" class="btn btn-light new-menu" style="white-space: nowrap; float:left"><div class="new-menu-number" id="menu5" style="float:left; background:#e9e9e9">5</div>취소</button>\n';
-					html += '        <button type="button" class="btn btn-light new-menu" style="white-space: nowrap; float:left"><div class="new-menu-number" id="menu6" style="float:left; background:#e9e9e9">6</div>취소요청</button>\n';
-					//html += '    </div>\n';
+					html += '        <button type="button" class="btn btn-light new-menu new-order new" style="white-space: nowrap; float:left"><div class="new-menu-number" id="menu5" style="float:left; background:#e9e9e9">5</div>취소</button>\n';
+					html += '        <button type="button" class="btn btn-light new-menu" style="white-space: nowrap; float:left"><div class="new-menu-number" id="menu6" style="float:left; background:#e9e9e9">6</div><span style="color: red">취소요청</span></button>\n';
 					html += '</div>\n';
 
 					return html;
@@ -525,8 +594,20 @@
 
 				function alarm(){
 					var audio = new Audio('dos_warning2.wav');
-					audio.play();
+						audio.play();
+					$(".pop-alert .alert").addClass("in");
+
+					setTimeout(function(){
+						$(".pop-alert .alert").removeClass("in");
+					},4000)
 				}
+
+				$(document).ready(function(){
+					$('.btn-tooltip').popover({
+						container: 'body',
+						html:true
+					})
+				});
 			</script>
 			
             <!-- Page level plugins
@@ -546,7 +627,7 @@
             <style>
 				.mtz-monthpicker select {color:#ffffff;background-color:#000000;}
 			</style>
-
+	
 	        <!-- s:right_col -->
 			<div class="right_col" role="main">
 
@@ -560,7 +641,7 @@
 				</nav>
 
 				<div class="card shadow">
-					<a href="#regManager" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="regManager">
+					<a href="#regManager" class="d-block card-header py-3" role="button" aria-expanded="true" aria-controls="regManager">
 						<h6 class="m-0 font-weight-bold text-primary">실시간 주문관리</h6>
 					</a>
 					<div class="collapse show in" id="regManager">
@@ -575,30 +656,32 @@
 								</a>						
 							</div>							
 							<div class="table-responsive-sm">
-                                <div class="row col-sm-12 col-md-6 justify-content-right" role="group" style="width: 300px; margin-left: 0px; float: right;">
-                                    <table style="width: 300px;">
-                                        <colgroup>
-                                            <col  width="35%">
-                                            <col  width="5%">
-                                            <col  width="60%">
-                                        </colgroup>
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                <h6  style="margin: 1px;">총 주문 수</h6>
-                                                <h4 style="font-weight: 700; margin: 0px;">20 건</h4>
-                                            </td>
-                                            <td></td>
-                                            <td>
-                                                <h6  style="margin: 1px;">총 결제 금액</h6>
-                                                <h4 style="font-weight: 700; margin: 0px;">235,000 원</h4>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="input-group justify-content-right" role="group">
+                                	<div class="table-wrapper text-right">
+	                                    <table class="inline-block">
+	                                        <colgroup>
+	                                            <col width="140">
+	                                            <col width="10">
+	                                            <col width="160">
+	                                        </colgroup>
+	                                        <tbody>
+	                                        <tr>
+	                                            <td>
+	                                                <h6  style="margin: 1px;">총 주문 수</h6>
+	                                                <h4 style="font-weight: 700; margin: 0px;">20 건</h4>
+	                                            </td>
+	                                            <td></td>
+	                                            <td>
+	                                                <h6  style="margin: 1px;">총 결제 금액</h6>
+	                                                <h4 style="font-weight: 700; margin: 0px;">235,000 원</h4>
+	                                            </td>
+	                                        </tr>
+	                                        </tbody>
+	                                    </table>
+	                                </div>
                                 </div>
                              
-								<table id="enter-tbl" class="table table-bordered table-striped table-sm tbl-td-pd-1 mb-0" style="width:100%">
+								<table id="enter-tbl" class="table table-bordered table-striped table-sm tbl-td-pd-1 mb-0 table-order no-responsive-table">
 									<colgroup>
 										<col width="5%"/>
 										<col width="10%"/>
@@ -622,7 +705,9 @@
 											<th rowspan="2" scope="col" class="text-center">주문내역</th>
 											<th rowspan="2" scope="col" class="text-center">판매금액</th>
                                             <th rowspan="2" scope="col" class="text-center">기타</th>
-											<th colspan="3" scope="col" class="text-center">접수처리</th>
+											<th colspan="3" scope="col" class="text-center">접수처리
+												<button type="button" class="btn-tooltip" data-toggle="popover"  data-placement="left" title="" data-content="* 접수 : 즉시 접수<br>* 지연접수 : 선택 시간 지연 접수<br>* 취소 : 주문 취소"><i class="fa fa-question-circle"></i></button>
+											</th>
 										</tr>
 										<tr style="display: none">
 											<th>접수처리</th>
@@ -637,7 +722,6 @@
 						</div>
 					</div>
 				</div>
-					
 				<!-- e:레이아웃 -->
 
 				<!-- 주문 취소 모달 -->
@@ -651,26 +735,26 @@
 								</button>
 							</div>
 							<div class="modal-body">
-								<div class="d-flex justify-content-between">
-									<div class="input-group justify-content-around">
+								<div class="">
+									<div class="input-group justify-content-around" style="font-size: medium; font-weight: 600;">
 										<b>주문 취소 사유를 선택해주세요</b>
 									</div>
 								</div>
 							
-								<form>
-									<div class="form-group mt-4" style="margin-left: 200px;">
+								<form class="input-group" style="font-size: medium; font-weight: 600;">
+									<div class="mx-auto mt-5">
 										<div class="form-check form-inline form-row">
-											<input type="checkbox" class="form-check-input" id="chk_sold_out">
-											<label for="chk_sold_out" class="form-check-label">주문 취소</label>
+											<input type="radio" class="form-check-input" id="chk_sold_out">
+											<label for="chk_sold_out" class="form-check-label">재료 소진</label>
 										</div>
 										<br>
 										<div class="form-check form-inline form-row">
-											<input type="checkbox" class="form-check-input" id="chk_reserve_dead">
+											<input type="radio" class="form-check-input" id="chk_reserve_dead">
 											<label for="chk_reserve_dead" class="form-check-label">예약 마감</label>
 										</div>
 										<br>
 										<div class="form-check form-inline form-row">
-											<input type="checkbox" class="form-check-input" id="chk_etc">
+											<input type="radio" class="form-check-input" id="chk_etc">
 											<label for="chk_etc" class="form-check-label">기타</label>
 											<input type="text" class="form-control form-control-input ml-2" placeholder="입력" value="">
 										</div>
@@ -693,24 +777,24 @@
 					</div>
 				</div>
 
-				<!-- 주문 지연접수 접수 모달 -->
+				<!-- 주문 지연접수 모달 -->
 				<div class="modal fade" id="waitModal" tabindex="-1" role="dialog" aria-labelledby="waitModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
 					<div class="modal-dialog modal-dialog-centered" role="document" style="max-width:640px;">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title font-weight-bold h6" id="title">주문 지연접수 접수</h5>
+								<h5 class="modal-title font-weight-bold h6" id="title">주문 지연 접수</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
 							<div class="modal-body">
 								<div class="input-group justify-content-around" style="margin: 0px; margin-top: 10px;">
-									<p style="font-size: medium; font-weight: 600;">지연접수 시간을 선택해주세요</p>
+									<p style="font-size: medium; font-weight: 600;">지연 접수 시간을 선택해주세요</p>
 								</div>
-								<table style="margin-left: auto; margin-right: auto text-align-center">
+								<table style="margin-left: auto; margin-right: auto">
 									<tbody>
 									<tr>
-										<th><label for="waitTime" style="margin-right: 10px; font-size: medium">시간 지연접수</label></th>
+										<th><label for="waitTime" style="margin-right: 10px; font-size: medium">시간 지연 접수</label></th>
 										<td>
 											<form>
 												<div class="dropdown no-arrow">					

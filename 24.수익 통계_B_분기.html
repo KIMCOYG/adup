@@ -282,7 +282,7 @@
 						language: {
 							"emptyTable": "조회된 기획사 정보가 없습니다."
 						},
-						ajax: "24.수익 통계_B_분기.txt",
+						ajax: "http://resource.zenacare.net/html/24.수익 통계_B_분기.txt",
 						columns: [
 							{"data": "col2",
 								"render": function(data, type, row){
@@ -320,7 +320,7 @@
 						info:false,
 						searching: true, 		//테이블 내 데이터 검색 사용 여부(이때 생성되는 조회창은 사용하지 않을 경우 따로 숨겨주어야 한다.)
 						paging: false,			//페이징 사용 여부
-						responsive: true,		//테이블 크기 보정
+						responsive: false,		//테이블 크기 보정
 						processing: false,
 						lengthChange: true,
 						select: true,
@@ -352,7 +352,7 @@
 					</div>
                     <div class="card bg-gray-100" style="margin: 20px; margin-bottom: 5px;">
                         <div class="card-body" style="padding: 15px;">
-                            <ul style="font-size: small;">
+                            <ul style="font-size: .8rem;">
                                 <li>· 월별/분기별/반기별/연간별 수익 통계를 확인 가능합니다.</li>
                             </ul>
                         </div>
@@ -388,7 +388,7 @@
                                 </table>
                             </div>
                         </div>
-                        <table id="enter-tbl1" class="table table-bordered table-striped table-sm tbl-td-pd-1 mb-0" style="width:100%">
+                        <table id="enter-tbl1" class="table table-bordered table-striped table-sm tbl-td-pd-1 mb-0 no-responsive-table" style="width:100%">
                             <colgroup>
                                 <col width="*"/>
                             </colgroup>

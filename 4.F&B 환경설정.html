@@ -139,9 +139,14 @@
 		function modifyPw(){
 			var chk = $("#chk_a").is(":checked");
 			if(chk==true){
-				$(".passwd").removeAttr("disabled");
+				// $(".passwd").removeAttr("disabled");
+				// $(".passwd").removeClass('invisible');
+				$(".passwd").removeClass('d-none');
 			} else{
-				$(".passwd").attr('disabled', 'disabled');
+				// $(".passwd").attr('disabled', 'disabled');
+				// $(".passwd").addClass('invisible');
+				$(".passwd").addClass('d-none');
+				$(".passwd").val("");
 			}
 		}
 	</script>
@@ -271,7 +276,7 @@
 	            </nav>
 	          </div>
 	        </div>
-	        <!-- e:top_nav -->
+			<!-- e:top_nav -->
 
 	        <!-- s:right_col -->
 			<div class="right_col" role="main">
@@ -293,7 +298,7 @@
 						<div class="card-body">
 							<div class="card bg-gray-100" style="margin-bottom: 5px;">
 								<div class="card-body" style="padding: 15px;">
-									<ul style="font-size: small;">
+									<ul style="font-size: .8rem;">
 										<li>· 가맹점 환경설정 페이지 입니다.</li>
 										<li>· 정산 및 세금계산서 발행을 위해 요금 담당자 정보를 꼭 입력해 주세요.</li>
 									</ul>
@@ -315,14 +320,17 @@
 											</td>
 											<th scope="row" rowspan="3" class="bg-gray-100 text-center">로고</th>
 											<td rowspan="3">
-												<div class="input-group text-center">
-													<div class="input-group text-center profile-group">
-														<img id="profileImageView" src="" class="img-thumbnail img-celeb-profile" alt="" style="display:none;">
-														<p id="profileNoImageText" class="text-monospace img-thumbnail img-celeb-profile img-celeb-profile-no">No image</p>
-													</div>
-													<div class="input-group-append custom-file-right-btn">
-														<input type="file" class="custom-file-input" name="profileImage" id="profileImage" alt="프로필 사진" imagefile="true" required="">
-														<label class="custom-file-label input-group-right-btn icon-btn-background-opacity-20 bbrr-0" for="profileImage"></label>
+												<div>
+													<span><b>※ 가맹점 소개화면에 노출됩니다.</b></span>
+													<div class="input-group text-center">
+														<div class="input-group text-center profile-group">
+															<img id="profileImageView" src="" class="img-thumbnail img-celeb-profile img-fluid max-small" alt="" style="display:none;">
+															<p id="profileNoImageText" class="text-monospace img-thumbnail img-celeb-profile img-celeb-profile-no">No image</p>
+														</div>
+														<div class="input-group-append custom-file-right-btn">
+															<input type="file" class="custom-file-input" name="profileImage" id="profileImage" alt="프로필 사진" imagefile="true" required="">
+															<label class="custom-file-label input-group-right-btn icon-btn-background-opacity-20 bbrr-0" for="profileImage"></label>
+														</div>
 													</div>
 												</div>
 											</td>
@@ -330,18 +338,20 @@
 										<tr>
 											<th scope="row" class="bg-gray-100 text-center">비밀번호</th>
 											<td>
-												<div class="custom-control custom-checkbox custom-control-inline checkbox">
-													<input type="checkbox" class="custom-control-input" name="" id="chk_a" value="" checked="true" onclick="modifyPw();"/>
-													<label class="custom-control-label" for="chk_a">비밀번호 변경</label>
-												</div>
-												<div class="input-group mb-1 passwd" id="oldPw">
-													<input type="text" name="" id="" value="" class="form-control form-control-sm passwd" placeholder="현재 비밀번호 입력"/>
-												</div>
-												<div class="input-group mb-1 passwd" id="newPw1">
-													<input type="text" name="" id="" value="" class="form-control form-control-sm passwd" placeholder="신규 비밀번호 입력"/>
-												</div>
-												<div class="input-group mb-0 passwd" id="newPw2">
-													<input type="text" name="" id="" value="" class="form-control form-control-sm passwd" placeholder="신규 비밀번호 확인"/>
+												<div>
+													<div class="custom-control custom-checkbox custom-control-inline checkbox">
+														<input type="checkbox" class="custom-control-input" name="" id="chk_a" value="" checked="true" onclick="modifyPw();"/>
+														<label class="custom-control-label" for="chk_a">비밀번호 변경</label>
+													</div>
+													<div class="input-group mb-1 passwd" id="oldPw">
+														<input type="text" name="" id="" value="" class="form-control form-control-sm passwd" placeholder="현재 비밀번호 입력"/>
+													</div>
+													<div class="input-group mb-1 passwd" id="newPw1">
+														<input type="text" name="" id="" value="" class="form-control form-control-sm passwd" placeholder="신규 비밀번호 입력"/>
+													</div>
+													<div class="input-group mb-0 passwd" id="newPw2">
+														<input type="text" name="" id="" value="" class="form-control form-control-sm passwd" placeholder="신규 비밀번호 확인"/>
+													</div>
 												</div>
 											</td>
 										</tr>
@@ -383,8 +393,9 @@
 												<div class="input-group mb-1 post_wrap">
 													<input type="text" name="" id="coZipcode" value="" class="form-control form-control-sm input-radius" placeholder="우편번호" />
 													<div class="input-group-append">
-														<button class="btn btn-secondary btn-sm input-radius-button" type="button" id="coZipcodeBtn">우편번호 검색</button>
+														<button class="btn btn-secondary btn-sm input-radius-button rounded" type="button" id="coZipcodeBtn">우편번호 검색</button>
 													</div>
+													<span class="ml-2"><b>※ 사용자들에게 안내 되는 정보이므로 정확하게 입력 바랍니다.</b></span>
 												</div>
 												<div class="input-group mb-1">
 													<input type="text" name="" id="coAddr" value="" class="form-control form-control-sm" placeholder="기본주소 입력" readOnly />
@@ -425,7 +436,7 @@
 											<td>
 												<div class="input-group">
 													<div class="custom-file">
-														<input type="file" class="custom-file-input" name="uploadFile" id="uploadFile" alt="" data-display-target="uploadFileLabel" required />
+														<input type="file" class="custom-file-input" name="uploadFile" id="uploadFile" alt="" data-display-target="uploadFileLabel" placeholder="등록할 첨부파일 선택" required />
 														<label class="custom-file-label" for="uploadFile" id="uploadFileLabel" data-browse="첨부">등록할 첨부파일 선택</label>
 													</div>
 												</div>

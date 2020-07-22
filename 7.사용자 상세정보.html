@@ -316,6 +316,10 @@
 					</ol>
 				</nav>
 
+				<style>
+					
+				</style>
+
 				<div class="card shadow">
 					<a href="#regManager" class="d-block card-header py-3" role="button" aria-expanded="true" aria-controls="regManager">
 						<h6 class="m-0 font-weight-bold text-primary">사용자 상세정보</h6>
@@ -324,14 +328,14 @@
 						<div class="card-body">
 							<div class="card bg-gray-100" style="margin-bottom: 5px;">
 								<div class="card-body" style="padding: 15px;">
-									<ul style="font-size: small;">
+									<ul style="font-size: .8rem;">
 										<li>· 사용자의 상세정보 페이지 입니다.</li>
 										<li>· 사용자의 기본 정보와 메뉴의 권한을 관리할 수 있습니다.</li>
 									</ul>
 								</div>
 							</div>
 							<form name="" id="" method="post">
-								<table class="table table-bordered table-sm tbl-td-pd-1 mb-0 custom-tbl">
+								<table id="" class="table table-bordered table-sm tbl-td-pd-1 mb-0 custom-tbl">
 									<colgroup>
 										<col width="16%"/>
 										<col width="34%"/>
@@ -377,38 +381,50 @@
 						</div>
 						<div class="card-body pt-0">
 							<div class="d-flex justify-content-between">
-								<div class="input-group justify-content-start" role="group">
-									<a href="" class="btn btn-secondary btn-sm btn-icon-split">
-										   <span class="icon text-white-50">
-											<i class="fas fa-list"></i>
-										   </span>
-										   <span class="text">목록</span>
-									</a>
+								<div class="col-sm-12 col-md-6">
+									<div class="input-group justify-content-start" role="group">
+										<a href="" class="btn btn-secondary btn-sm btn-icon-split">
+											<span class="icon text-white-50">
+												<i class="fas fa-list"></i>
+											</span>
+											<span class="text">목록</span>
+										</a>
+									</div>
 								</div>
-								<div class="input-group justify-content-end" role="group">
-									<a href="" class="btn btn-secondary btn-sm btn-icon-split">
-										<span class="icon text-white-50">
-											<i class="fas fa-repeat"></i>
-										</span>
-										<span class="text">초기화</span>
-									</a>
-									<a href="" class="btn btn-danger btn-sm btn-icon-split ml-2">
-										<span class="icon text-white-50">
-											<i class="fas fa-trash"></i>
-										</span>
-										<span class="text">삭제</span>
-									</a>
-									<a href="" class="btn btn-warning btn-sm btn-icon-split ml-2">
-										<span class="icon text-white-50">
-											<i class="fas fa-edit"></i>
-										</span>
-										<span class="text">수정</span>
-									</a>
+								<div class="col-sm-12 col-md-6">
+									<div class="input-group justify-content-end" role="group">
+										<a href="" class="btn btn-secondary btn-sm btn-icon-split">
+											<span class="icon text-white-50">
+												<i class="fas fa-repeat"></i>
+											</span>
+											<span class="text">초기화</span>
+										</a>
+										<a href="" class="btn btn-danger btn-sm btn-icon-split ml-2">
+											<span class="icon text-white-50">
+												<i class="fas fa-trash"></i>
+											</span>
+											<span class="text">삭제</span>
+										</a>
+										<a href="" class="btn btn-warning btn-sm btn-icon-split ml-2">
+											<span class="icon text-white-50">
+												<i class="fas fa-edit"></i>
+											</span>
+											<span class="text">수정</span>
+										</a>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+
+				<style>
+					#menuTable  td{
+						padding-top: 3px;
+						padding-bottom: 3px;
+						/* color: red; */
+					}
+				</style>
 
 				<div class="card shadow mt-3">
 					<a href="#regManager2" class="d-block card-header py-3" data-toggle="collapse" role="button"
@@ -418,7 +434,7 @@
 					<div class="collapse show in" id="regManager2">
 						<div class="card-body">
 							<form name="" id="" method="post">
-								<table class="table table-bordered table-sm tbl-td-pd-1 mb-0 custom-tbl">
+								<table id="menuTable" class="table table-bordered table-sm tbl-td-pd-1 mb-0 custom-tbl">
 									<colgroup>
 										<col width="16%" />
 										<col width="42%" />
@@ -431,14 +447,14 @@
 											<th class="bg-gray-100"></th>
 											<td class="bg-gray-100">
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
-													<input type="checkbox" class="custom-control-input" name="" id="chk_m1" value=""
-														onclick="checkAll();" />
+													<input type="checkbox" class="custom-control-input" name="" id="chk_m1"
+														value="" onclick="checkAll();" />
 													<label class="custom-control-label" for="chk_m1">전체</label>
 												</div>
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
-													<input type="checkbox" class="custom-control-input" name="" id="chk_m2" value=""
-														onclick="checkAll();" />
-													<label class="custom-control-label" for="chk_m2">전체</label>
+													<input type="checkbox" class="custom-control-input" name="" id="chk_m2"
+														value="" onclick="checkAll();" />
+													<label class="custom-control-label cml-5" for="chk_m2">전체</label>
 												</div>
 											</td>
 										</tr>
@@ -453,7 +469,7 @@
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
 													<input type="checkbox" class="custom-control-input" name="chk_mw" id="chk_mw1"
 														value="" />
-													<label class="custom-control-label" for="chk_mw1">쓰기</label>
+													<label class="custom-control-label cml-5" for="chk_mw1">쓰기</label>
 												</div>
 											</td>
 										</tr>
@@ -468,7 +484,7 @@
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
 													<input type="checkbox" class="custom-control-input" name="chk_mw" id="chk_mw2"
 														value="" />
-													<label class="custom-control-label" for="chk_mw2">쓰기</label>
+													<label class="custom-control-label cml-5" for="chk_mw2">쓰기</label>
 												</div>
 											</td>
 										</tr>
@@ -483,7 +499,7 @@
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
 													<input type="checkbox" class="custom-control-input" name="chk_mw" id="chk_mw3"
 														value="" />
-													<label class="custom-control-label" for="chk_mw3">쓰기</label>
+													<label class="custom-control-label cml-5" for="chk_mw3">쓰기</label>
 												</div>
 											</td>
 										</tr>
@@ -499,7 +515,7 @@
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
 													<input type="checkbox" class="custom-control-input" name="" id="chk_i2" value=""
 														onclick="checkAll();" />
-													<label class="custom-control-label" for="chk_i2">전체</label>
+													<label class="custom-control-label cml-5" for="chk_i2">전체</label>
 												</div>
 											</td>
 										</tr>
@@ -514,7 +530,7 @@
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
 													<input type="checkbox" class="custom-control-input" name="chk_iw" id="chk_iw1"
 														value="" />
-													<label class="custom-control-label" for="chk_iw1">쓰기</label>
+													<label class="custom-control-label cml-5" for="chk_iw1">쓰기</label>
 												</div>
 											</td>
 										</tr>
@@ -529,7 +545,7 @@
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
 													<input type="checkbox" class="custom-control-input" name="chk_iw" id="chk_ir2"
 														value="" />
-													<label class="custom-control-label" for="chk_ir2">쓰기</label>
+													<label class="custom-control-label cml-5" for="chk_ir2">쓰기</label>
 												</div>
 											</td>
 										</tr>
@@ -545,7 +561,7 @@
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
 													<input type="checkbox" class="custom-control-input" name="" id="chk_o2" value=""
 														onclick="checkAll();" />
-													<label class="custom-control-label" for="chk_o2">전체</label>
+													<label class="custom-control-label cml-5" for="chk_o2">전체</label>
 												</div>
 											</td>
 										</tr>
@@ -560,7 +576,7 @@
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
 													<input type="checkbox" class="custom-control-input" name="chk_ow" id="chk_ow1"
 														value="" />
-													<label class="custom-control-label" for="chk_ow1">쓰기</label>
+													<label class="custom-control-label cml-5" for="chk_ow1">쓰기</label>
 												</div>
 											</td>
 										</tr>
@@ -576,7 +592,7 @@
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
 													<input type="checkbox" class="custom-control-input" name="" id="chk_p2" value=""
 														onclick="checkAll();" />
-													<label class="custom-control-label" for="chk_p2">전체</label>
+													<label class="custom-control-label cml-5" for="chk_p2">전체</label>
 												</div>
 											</td>
 										</tr>
@@ -591,7 +607,7 @@
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
 													<input type="checkbox" class="custom-control-input" name="chk_pw" id="chk_pw1"
 														value="" />
-													<label class="custom-control-label" for="chk_pw1">쓰기</label>
+													<label class="custom-control-label cml-5" for="chk_pw1">쓰기</label>
 												</div>
 											</td>
 										</tr>
@@ -606,7 +622,7 @@
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
 													<input type="checkbox" class="custom-control-input" name="chk_pw" id="chk_pw2"
 														value="" />
-													<label class="custom-control-label" for="chk_pw2">쓰기</label>
+													<label class="custom-control-label cml-5" for="chk_pw2">쓰기</label>
 												</div>
 											</td>
 										</tr>
@@ -621,7 +637,7 @@
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
 													<input type="checkbox" class="custom-control-input" name="chk_pw" id="chk_pw3"
 														value="" />
-													<label class="custom-control-label" for="chk_pw3">쓰기</label>
+													<label class="custom-control-label cml-5" for="chk_pw3">쓰기</label>
 												</div>
 											</td>
 										</tr>
@@ -637,7 +653,7 @@
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
 													<input type="checkbox" class="custom-control-input" name="" id="chk_s2" value=""
 														onclick="checkAll();" />
-													<label class="custom-control-label" for="chk_s2">전체</label>
+													<label class="custom-control-label cml-5" for="chk_s2">전체</label>
 												</div>
 											</td>
 										</tr>
@@ -652,7 +668,7 @@
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
 													<input type="checkbox" class="custom-control-input" name="chk_sw" id="chk_sw2"
 														value="" />
-													<label class="custom-control-label" for="chk_sw2">쓰기</label>
+													<label class="custom-control-label cml-5" for="chk_sw2">쓰기</label>
 												</div>
 											</td>
 										</tr>
@@ -667,7 +683,7 @@
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
 													<input type="checkbox" class="custom-control-input" name="chk_sw" id="chk_sw2"
 														value="" />
-													<label class="custom-control-label" for="chk_sw2">쓰기</label>
+													<label class="custom-control-label cml-5" for="chk_sw2">쓰기</label>
 												</div>
 											</td>
 										</tr>
@@ -683,7 +699,7 @@
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
 													<input type="checkbox" class="custom-control-input" name="" id="chk_c2" value=""
 														onclick="checkAll();" />
-													<label class="custom-control-label" for="chk_c2">전체</label>
+													<label class="custom-control-label cml-5" for="chk_c2">전체</label>
 												</div>
 											</td>
 										</tr>
@@ -698,7 +714,7 @@
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
 													<input type="checkbox" class="custom-control-input" name="chk_cw" id="chk_cw1"
 														value="" />
-													<label class="custom-control-label" for="chk_cw1">쓰기</label>
+													<label class="custom-control-label cml-5" for="chk_cw1">쓰기</label>
 												</div>
 											</td>
 										</tr>
@@ -713,7 +729,7 @@
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
 													<input type="checkbox" class="custom-control-input" name="chk_cw" id="chk_cw2"
 														value="" />
-													<label class="custom-control-label" for="chk_cw2">쓰기</label>
+													<label class="custom-control-label cml-5" for="chk_cw2">쓰기</label>
 												</div>
 											</td>
 										</tr>
@@ -728,7 +744,7 @@
 												<div class="custom-control custom-checkbox custom-control-inline checkbox">
 													<input type="checkbox" class="custom-control-input" name="chk_cw" id="chk_cw3"
 														value="" />
-													<label class="custom-control-label" for="chk_cw3">쓰기</label>
+													<label class="custom-control-label cml-5" for="chk_cw3">쓰기</label>
 												</div>
 											</td>
 										</tr>

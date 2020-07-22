@@ -120,7 +120,7 @@
 		function registInput(clickId){ //카테고리 입력 부분 등록 버튼
 			var id = clickId.substring(9,10);
 			var val = $("#inputValue").val();
-			$("#sortable").append(registHtml(val, id));
+			$("#sortable").prepend(registHtml(val, id));
 			console.log(id);
 			$("#creat"+id).remove();
 		}
@@ -143,22 +143,30 @@
 			
 			if(clk==true){
 				$("#regitVal"+id).removeAttr('disabled');
+				$("#changeBtnIcon"+id).removeClass('glyphicon-pencil');
+				$("#changeBtnIcon"+id).addClass('glyphicon-ok');
+				$("#changeBtnIcon"+id).css('color', 'blue');
 			} else{
 				$("#regitVal"+id).attr('disabled', true);
+				$("#changeBtnIcon"+id).removeClass('glyphicon-ok');
+				$("#changeBtnIcon"+id).addClass('glyphicon-pencil');
+				$("#changeBtnIcon"+id).css('color', '');
 			}
 		}
 
 		function createInput(id){
 			var html = '';
 
-			html += '<div class="ui-state-default container m-2 creat" id="creat'+id+'">\n';
-			html += '<div class="form-inline span12 border border-0">\n';
+			html += '<div class="ui-state-default mt-2 creat" id="creat'+id+'">\n';
+			html += '<div class="form-inline span12 border border-0" style="font-size: 1rem;">\n';
 			html += '<div class="col-md-10 col-xs-4">\n';
-			html += '<input type="text" value="" id="inputValue" placeholder="카테고리 입력">\n';
+			html += '<input type="text" value="" id="inputValue" class="pl-2" placeholder="카테고리 입력" style="color: black;">\n';
 			html += '</div>\n';
-			html += '<div class="row form-group float-right">\n';
+			html += '<div class="col-md-2 btn-group">\n';
+			html += '<div class="form-group">\n';
 			html += '<button type="button" class="btn btn-default" id="registBtn'+id+'" onclick="registInput(this.id);"><span class="glyphicon glyphicon-ok" style="color: blue;"></span></button>\n';
 			html += '<button type="button" class="btn btn-default" id="removeBtn'+id+'" onclick="removeInput(this.id);"><span class="glyphicon glyphicon-remove-sign" style="color: red;"></span></button>\n';
+			html += '</div>\n';
 			html += '</div>\n';
 			html += '</div>\n';
 			html += '</div>\n';
@@ -168,14 +176,16 @@
 
 		function registHtml(val, id){
 			var html = '';
-			html += '<div class="ui-state-default container mt-2 mb-2 col-md-12 col-xs-6" id="regit'+id+'">\n';
-			html += '<div class="col-md-8 col-xs-3" style="margin-top:8px; margin-left:-1px">\n';
-			html += '<input type="text" class="ml-3" id="regitVal'+id+'" value="'+val+'" disabled>\n';
+			html += '<div class="ui-state-default mt-2" id="regit'+id+'">\n';
+			html += '<div class="cate-input">\n';
+			html += '<input type="text" class="pl-2" id="regitVal'+id+'" value="'+val+'" disabled style="color: black;">\n';
 			html += '</div>\n';
-			html += '<div class="btn-group" role="group" aria-label="regitBtnGroup" style="float: right">\n';
-			html += '<button type="button" style="border: 0px; outline: 0px; background-color:transparent; margin:10px 10px 10px 12px" id= "changeBtn'+id+'" onclick="changeTag(this.id);"><span class="glyphicon glyphicon-pencil"></span></button>\n';
-			html += '<button type="button" style="border: 0px; outline: 0px; background-color:transparent; margin:10px 10px 10px 12px" id="removeRegitBtn'+id+'" onclick="removeRegit(this.id);"><span class="glyphicon glyphicon-trash"></span></button>\n';
-			html += '<div style="width: 25px; margin:10px 10px 10px 12px"><span class="glyphicon glyphicon-align-justify"></span></div>\n';
+			html += '<div class="cate-resist-group">\n';
+			html += '<div class="btn-group" role="group" aria-label="regitBtnGroup">\n';
+			html += '<button type="button" id="changeBtn'+id+'" class="btn btn-default" onclick="changeTag(this.id);"><span id="changeBtnIcon'+id+'" class="glyphicon glyphicon-pencil"></span></button>\n';
+			html += '<button type="button" id="removeRegitBtn'+id+'" class="btn btn-default" onclick="removeRegit(this.id);"><span class="glyphicon glyphicon-trash"></span></button>\n';
+			html += '<div class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span></div>\n';
+			html += '</div>\n';
 			html += '</div>\n';
 			// html += '</div>\n';
 			html += '</div>\n';
@@ -388,7 +398,7 @@
 					</ol>
 				</nav>
 
-				<div class="card shadow mb-3">
+				<div class="card shadow mb-3 add_cate_list" style="font-size: 1rem;">
 					<a href="" class="d-block card-header py-3">
 						<h6 class="m-0 font-weight-bold text-primary">카테고리 리스트</h6>
                     </a>
@@ -397,40 +407,37 @@
 							<form action="" method="post">
 								<div class="card bg-gray-100" style="margin-bottom: 5px;">
 									<div class="card-body" style="padding: 15px;">
-			                            <ul style="font-size: small;">
+			                            <ul style="font-size: .8rem;">
 			                                <li>· 판매하는 상품 목록의 카테고리를 설정 가능합니다.</li>
 											<li>· 카테고리를 추가하여 카테고리명을 입력해주세요</li>
 											<li>· (메뉴) 아이콘을 이동하여 사용자에게 노출되는 순서를 변경할 수 있습니다.</li>
 			                            </ul>
 			                        </div>
 								</div>
-								<table class="table table-boredred table-sm tbl-td-pd-1 mb-0 custom-tbl mt-2">
-									<tbody>
-										<tr id="addCategory">
-											<div class="row">
-												<div class="container m-2">
-													<div class="span12 border border-secondary">
-														<button type="button" class="btn btn-default" id="addBtn" onclick="addCategory();">
-															<span class="glyphicon glyphicon-plus"></span>
-														</button>
-														<span>카테고리 추가</span>
-													</div>
-												</div>
+								<ul class="custom-tbl mt-2">
+									<li>
+										<div id="addCategory">
+											<div class="span12 border border-secondary">
+												<button type="button" class="btn btn-default" id="addBtn" onclick="addCategory();">
+													<span class="glyphicon glyphicon-plus"></span>
+												</button>
+												<span>카테고리 추가</span>
 											</div>
-										</tr>
-										<tr>
-											<div class="form-row" id="inputCategory">
-											</div>
-										</tr>
-										<tr>
-											<div class="form-row bucket" id="registCategory">
-												<ul  class="form-row bucket w-100" id="sortable" ondrop="drop(event)" ondragover="allowDrop(event)">
-													
-												</ul>
-											</div>
-										</tr>
-									</tbody>
-								</table>
+										</div>
+									</li>
+									<li>
+										<div id="inputCategory">
+
+										</div>
+									</li>
+									<li>
+										<div class="bucket" id="registCategory">
+											<ul class="bucket w-100" id="sortable" ondrop="drop(event)" ondragover="allowDrop(event)">
+												
+											</ul>
+										</div>
+									</li>
+								</ul>
 							</form>
 						</div>
 					</div>

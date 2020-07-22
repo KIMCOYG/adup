@@ -1,0 +1,139 @@
+@charset "UTF-8";
+
+.bg-gradient-primary {
+    /* background-color: #fff;
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(10%,#fff),to(#fff));
+    background-image: linear-gradient(180deg,#fff 10%,#fff 100%);
+    background-size: cover; */
+    background:#fff url(../images/empty_bg.png);
+}
+
+.container-login {
+    /* width:720px; */
+}
+
+.container-login .login-logo {
+	width:20rem;
+	margin-top:-6.3rem;
+}
+
+@media (max-width: 576px) {
+  	.container-login .login-logo {
+		width:14rem;
+	}
+}
+
+@media (max-width: 320px) {
+  	.container-login .login-logo {
+		width:11rem;
+	}
+}
+
+.flex-basis-all {
+	flex-basis:100%;	
+}
+
+.max-width-all {
+	max-width:100%;
+}
+
+.login-collabo-x h1 {
+	font-weight:800;
+	margin-bottom:0px;
+	margin-top:-1rem;
+}
+
+.login-collabo-x img {	
+	margin-bottom:1rem;
+}
+
+.error-content {
+	margin-top: 12rem;
+}
+
+.login-logo-box {
+	width: 179px;
+    height: 179px;
+    border-radius: 89px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    margin:.5rem auto 1rem;
+}
+.login_btm {
+	font-size:0;
+}
+.login_btm a {
+ 	display: inline-block;
+ 	position:relative;
+ 	width:50%;
+ 	font-size:16px;
+ 	color:#000;
+}
+.login_btm a + a:before {
+	content:'';
+	display:block;
+	position:absolute;
+	left:0;
+	top:0;
+	height:100%;
+	border-left:1px solid #000;
+}
+.nav.side-menu>li {
+	width:100%;
+}
+.fas {
+	width:26px !important;
+	text-align:center;
+}
+.checkbox label, .radio label {
+	min-height:auto;
+	padding-left:0;
+}
+.top_nav .dropdown-menu li a:after {
+	content:'';
+	display:block;
+	clear: both;
+}
+.top_nav .dropdown-menu li a p {
+	margin:0;
+}
+.top_nav .dropdown-menu li a p.cate {
+	position:relative;
+	float:left;
+	width:60px;
+}
+.top_nav .dropdown-menu li a p.cate:after {
+	content:'';
+	display:block;
+	position:absolute;
+	right:7px;
+	top:0;
+	height:100%;
+	border-right:1px solid #999;
+}
+.top_nav .dropdown-menu li a p.content {
+	float:left;
+	width:calc(100% - 60px);
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+}
+.top_nav .dropdown-menu.msg_list li:last-child {
+	padding:5px;
+}
+.dropdown-user {
+	left:auto;
+	right:0;
+}
+.custom-checkbox #save_id + .custom-control-label::before,
+.custom-checkbox #save_id + .custom-control-label::after {
+	top:0.25rem;
+}
+footer .col-md-6 h1, 
+footer .col-md-6 h2 {
+	margin:0;
+}
+footer .col-md-6.second {
+	padding-top:48px;
+}
